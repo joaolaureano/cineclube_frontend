@@ -1,8 +1,8 @@
 {
-  "name": "cine-cube-frontend",
+  "name": "cine-clube-frontend",
   "version": "0.1.0",
   "private": true,
-  "author": "Time AGES 2021/1 - Cine Club",
+  "author": "Time AGES 2021/1 - Cine Clube",
   "repository": {
     "type": "git",
     "url": "http://tools.ages.pucrs.br/cine-clube/frontend.git"
