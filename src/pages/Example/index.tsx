@@ -1,12 +1,12 @@
 import React from "react";
-
+import { logIn } from "../../services/login";
 import "./styles.scss";
 
 const Example = (): JSX.Element => {
   return (
     <div>
       <h1>Example Page Title</h1>
-      <button>Submit</button>
+      <button onClick={logIn}>Submit</button>
     </div>
   );
 };
