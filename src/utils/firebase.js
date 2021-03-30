@@ -1,12 +1,13 @@
 import firebase from 'firebase';
+import env from "react-dotenv";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBDrEmCsDdZv7-lYsZYBZ5U09XduuEtxTE",
-    authDomain: "cineclube-1d284.firebaseapp.com",
-    projectId: "cineclube-1d284",
-    storageBucket: "cineclube-1d284.appspot.com",
-    messagingSenderId: "446980044439",
-    appId: "1:446980044439:web:f18eda1d6f569bdedb9bd2"
+    apiKey: env.FIREBASE_APIKEY,
+    authDomain: env.FIREBASE_AUTHDOMAIN,
+    projectId: env.FIREBASE_PROJECTID,
+    storageBucket: env.FIREBASE_STORAGEBUCKET,
+    messagingSenderId: env.FIREBASE_MESSAGINGSENDERID,
+    appId: env.FIREBASE_APPID
   };
 
   firebase.initializeApp(firebaseConfig);
