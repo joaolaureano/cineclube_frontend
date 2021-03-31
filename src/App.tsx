@@ -4,6 +4,7 @@ import { ThemeProvider } from "@material-ui/core";
 
 import theme from "./assets/styles/theme";
 import Example from "./pages/Example";
+import Login from "./pages/Login";
 
 import "./assets/styles/reset.scss";
 import "./assets/styles/global.scss";
@@ -13,6 +14,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <Router>
         <Route path="/" exact component={Example} />
+        <Route path="/login" exact component={Login} />
       </Router>
     </ThemeProvider>
   );
