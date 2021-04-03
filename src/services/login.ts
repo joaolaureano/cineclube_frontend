@@ -1,31 +1,27 @@
-// import {firebase} from '../utils/firebase'
+import { useEffect, useState, useCallback } from "react";
 import { firebaseAuth } from "../utils/firebase";
-import firebase from "firebase";
 
-export const logIn = () => {
-  const provider = new firebaseAuth.GoogleAuthProvider();
+const useFirebase = () => {
+  const [authUser, setAuthUser] = useState(firebaseAuth().currentUser);
 
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then((result) => {
-      const user = result.user;
+  useEffect(() => {
+    const unsubscribe = firebaseAuth().onAuthStateChanged((user) =>
+      setAuthUser(user)
+    );
+    return () => {
+      console.log(authUser);
+      unsubscribe();
+    };
+  }, []);
 
-      const token = user?.getIdToken;
+  const login = useCallback(
+    () => firebaseAuth().signInWithPopup(new firebaseAuth.GoogleAuthProvider()),
+    []
+  );
 
-      return token;
-    })
-    .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
+  const logout = useCallback(() => firebaseAuth().signOut(), []);
 
-      // The email of the user's account used.
-      const email = error.email;
-
-      // The firebase.auth.AuthCredential type that was used.
-      const credential = error.credential;
-
-      console.log(errorCode, errorMessage, email, credential);
-    });
+  return { login, authUser, logout };
 };
+
+export { useFirebase };
