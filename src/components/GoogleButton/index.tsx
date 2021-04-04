@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import { FcGoogle } from "react-icons/fc";
 
 import useStyles from "./styles";
@@ -13,16 +13,14 @@ export const GoogleButton: React.FC<
   ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
 > = (props: ButtonProps): JSX.Element => {
   const styles = useStyles();
+
   return (
-    <Button
-      className={styles.button}
-      startIcon={<FcGoogle size={30} />}
-      variant="contained"
-      color="secondary"
-      size="large"
-      onClick={props.onClick}
-    >
-      {props.children}
-    </Button>
+    <div className={styles.button} onClick={props.onClick}>
+      <FcGoogle className={styles.icon} size={30} />
+
+      <Typography className={styles.text} variant="body1">
+        {props.children}
+      </Typography>
+    </div>
   );
 };

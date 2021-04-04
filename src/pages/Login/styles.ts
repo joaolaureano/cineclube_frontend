@@ -14,11 +14,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     header: {
-      background: theme.palette.primary.main,
-      height: "40%",
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
+      alignItems: "center",
+      height: "50%",
+
+      marginTop: "-50px",
+
+      background: theme.palette.primary.main,
     },
 
     container: {
@@ -26,10 +30,26 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       flexDirection: "column",
       justifyContent: "stretch",
+      background: theme.palette.primary.main,
+    },
+
+    loginWrapper: {
+      maxWidth: "600px",
     },
 
     text: {
       fontSize: 45,
+      color: theme.palette.primary.dark,
+    },
+
+    subTitle: {
+      margin: "0 28px 16px 28px",
+    },
+
+    placeholderLogo: {
+      background: theme.palette.primary.dark,
+      width: "160px",
+      height: "90px",
     },
   })
 );

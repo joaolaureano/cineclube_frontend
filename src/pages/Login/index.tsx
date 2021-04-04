@@ -1,7 +1,6 @@
 import React from "react";
 
-import { Button, Typography } from "@material-ui/core";
-import { FcGoogle } from "react-icons/fc";
+import { Typography, Container } from "@material-ui/core";
 import { logIn } from "../../services/login";
 import { GoogleButton } from "../../components/GoogleButton";
 
@@ -12,20 +11,26 @@ const Login = (): JSX.Element => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <Typography
-          className={styles.text}
-          variant="h1"
-          color="textPrimary"
-          align="center"
-        >
+      <header className={styles.header}>
+        <div className={styles.placeholderLogo}></div>
+        <Typography className={styles.text} variant="h1" align="center">
           CineClube
         </Typography>
-      </div>
+      </header>
 
-      <div className={styles.root}>
-        <GoogleButton onClick={logIn}>Continuar com Google</GoogleButton>
-      </div>
+      <Container className={styles.root}>
+        <div className={styles.loginWrapper}>
+          <Typography
+            className={styles.subTitle}
+            align="center"
+            variant="h5"
+            color="textPrimary"
+          >
+            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+          </Typography>
+          <GoogleButton onClick={logIn}>Continuar com Google</GoogleButton>
+        </div>
+      </Container>
     </div>
   );
 };
