@@ -4,12 +4,15 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: "flex",
-      background: theme.palette.background.default,
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "center",
       height: "70%",
+      maxWidth: "900px",
+
+      background: theme.palette.background.default,
       borderRadius: "25px 25px 0 0",
+
       marginTop: "-50px",
     },
 
@@ -26,10 +29,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     container: {
-      height: "100vh",
       display: "flex",
       flexDirection: "column",
       justifyContent: "stretch",
+      height: "100vh",
+
       background: theme.palette.primary.main,
     },
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Typography } from "@material-ui/core";
+import { Typography } from "@material-ui/core";
 import { FcGoogle } from "react-icons/fc";
 
 import useStyles from "./styles";
@@ -9,9 +9,7 @@ export interface ButtonProps {
   children: React.ReactNode;
 }
 
-export const GoogleButton: React.FC<
-  ButtonProps & React.ButtonHTMLAttributes<HTMLButtonElement>
-> = (props: ButtonProps): JSX.Element => {
+export const GoogleButton = (props: ButtonProps): JSX.Element => {
   const styles = useStyles();
 
   return (
