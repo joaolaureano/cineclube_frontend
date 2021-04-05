@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Container, Typography } from "@material-ui/core";
 
 import { useFirebase } from "../../services/login";
-import useStyles from "./styles";
 
 const Example = (): JSX.Element => {
-  const styles = useStyles();
   const history = useHistory();
-  const { login, logout, getToken, authUser } = useFirebase();
+  const { login, logout, getToken } = useFirebase();
 
   const setToken = (token: string) => {
     localStorage.setItem("token", token);
@@ -35,19 +33,25 @@ const Example = (): JSX.Element => {
 
   return (
     <Container>
-      <Typography variant="h1">Testing Login</Typography>
+      <Typography variant="h3">Login Test Page</Typography>
+      <br />
+      <br />
       <Button onClick={handleLogin} variant="contained" color="primary">
-        Login Test
+        Login
       </Button>
+      <br />
+      <br />
       <Button onClick={handleLogout} variant="contained" color="primary">
-        logout Test
+        Logout
       </Button>
+      <br />
+      <br />
       <Button
         onClick={handleTokenGeneration}
         variant="contained"
         color="primary"
       >
-        Generate new token
+        Get token
       </Button>
     </Container>
   );
