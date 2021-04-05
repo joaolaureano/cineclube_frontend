@@ -1,13 +1,28 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 
 import { Typography, Container } from "@material-ui/core";
-import { logIn } from "../../services/login";
+import { useFirebase } from "../../services/login";
 import { GoogleButton } from "../../components/GoogleButton";
 
 import useStyles from "./styles";
 
 const Login = (): JSX.Element => {
+  const history = useHistory();
   const styles = useStyles();
+  const auth = useFirebase();
+
+  const setToken = (token: string) => {
+    localStorage.setItem("token", token);
+  };
+
+  const handleLogin = async () => {
+    const token = await auth.login();
+    if (token) {
+      setToken(token);
+      history.push("/logintest");
+    }
+  };
 
   return (
     <div className={styles.container}>
@@ -28,7 +43,9 @@ const Login = (): JSX.Element => {
           >
             Lorem ipsum dolor sit amet consectetur adipisicing elit.
           </Typography>
-          <GoogleButton onClick={logIn}>Continuar com Google</GoogleButton>
+          <GoogleButton onClick={handleLogin}>
+            Continuar com Google
+          </GoogleButton>
         </div>
       </Container>
     </div>
