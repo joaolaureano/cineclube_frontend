@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Container, Typography } from "@material-ui/core";
 
-import { useFirebase } from "../../services/login";
+import { useFirebase } from "../../services/auth";
 
 const Example = (): JSX.Element => {
   const history = useHistory();

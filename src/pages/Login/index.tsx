@@ -2,7 +2,7 @@ import React from "react";
 import { useHistory } from "react-router-dom";
 
 import { Typography, Container } from "@material-ui/core";
-import { useFirebase } from "../../services/login";
+import { useFirebase } from "../../services/auth";
 import { GoogleButton } from "../../components/GoogleButton";
 
 import useStyles from "./styles";
