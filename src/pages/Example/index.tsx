@@ -1,7 +1,5 @@
 import React from "react";
 import { Button, Container, Typography } from "@material-ui/core";
-
-import { logIn } from "../../services/login";
 import useStyles from "./styles";
 
 const Example = (): JSX.Element => {
@@ -9,7 +7,13 @@ const Example = (): JSX.Element => {
 
   return (
     <Container>
-      <Button onClick={logIn} variant="contained" color="primary">
+      <Button
+        onClick={() => {
+          return 0;
+        }}
+        variant="contained"
+        color="primary"
+      >
         Login Test
       </Button>
       <Typography variant="h1">h1: Sample text</Typography>

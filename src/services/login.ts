@@ -1,31 +1,57 @@
-// import {firebase} from '../utils/firebase'
-import { firebaseAuth } from "../utils/firebase";
+import { useEffect, useState, useCallback } from "react";
 import firebase from "firebase";
 
-export const logIn = () => {
-  const provider = new firebaseAuth.GoogleAuthProvider();
+const firebaseAuth = firebase.auth;
 
-  firebase
-    .auth()
-    .signInWithPopup(provider)
-    .then((result) => {
+const useFirebase = () => {
+  const [authUser, setAuthUser] = useState(firebaseAuth().currentUser);
+
+  useEffect(() => {
+    const unsubscribe = firebaseAuth().onAuthStateChanged((user) => {
+      setAuthUser(user);
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  const login = async () => {
+    try {
+      const provider = new firebaseAuth.GoogleAuthProvider();
+      const result = await firebase.auth().signInWithPopup(provider);
       const user = result.user;
 
-      const token = user?.getIdToken;
+      const token = await user?.getIdToken();
 
       return token;
-    })
-    .catch((error) => {
-      // Handle Errors here.
-      const errorCode = error.code;
-      const errorMessage = error.message;
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
-      // The email of the user's account used.
-      const email = error.email;
+  const logout = async () => {
+    try {
+      await firebaseAuth().signOut();
+      return true;
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
 
-      // The firebase.auth.AuthCredential type that was used.
-      const credential = error.credential;
+  const getToken = async () => {
+    localStorage.removeItem("token");
 
-      console.log(errorCode, errorMessage, email, credential);
-    });
+    try {
+      const token = await authUser?.getIdToken();
+      if (token) localStorage.setItem("token", token);
+      return token;
+    } catch (err) {
+      console.log(err.message);
+    }
+  };
+
+  return { authUser, logout, login, getToken };
 };
+
+export { useFirebase };
