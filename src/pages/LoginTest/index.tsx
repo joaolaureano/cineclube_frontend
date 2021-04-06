@@ -2,18 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Container, Typography } from "@material-ui/core";
 import Snackbar from "@material-ui/core/Snackbar";
-
+import { Theme } from "@material-ui/core/styles";
 import { useFirebase } from "../../services/login";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
-import COLORS from "../../utils/color";
+import useStyles from "./styles";
 const Example = (): JSX.Element => {
-  const history = useHistory();
-
-  const { login, logout, getToken, authUser } = useFirebase();
-
   const [open, setOpen] = React.useState(false);
   const [isSuccessfull, setIsSuccessfull] = React.useState(false);
-
+  const history = useHistory();
+  const { login, logout, getToken, authUser } = useFirebase();
+  const styles = useStyles();
   const setToken = (token: string) => {
     localStorage.setItem("token", token);
   };
@@ -74,22 +72,12 @@ const Example = (): JSX.Element => {
       >
         {isSuccessfull ? (
           <SnackbarContent
-            style={{
-              backgroundColor: COLORS.VERDE_SUCESSO,
-              textAlign: "center",
-              justifyContent: "center",
-              margin: "auto",
-            }}
+            className={styles.snackSuccess}
             message={<span id="client-snackbar">Login feito com sucesso!</span>}
           />
         ) : (
           <SnackbarContent
-            style={{
-              backgroundColor: COLORS.VERMELHO_FALHA,
-              textAlign: "center",
-              justifyContent: "center",
-              margin: "auto",
-            }}
+            className={styles.snackFailure}
             message={
               <span id="client-snackbar">Login não foi bem-sucedido.</span>
             }
