@@ -9,7 +9,7 @@ const Router = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/" exact component={LoginTest} />
+        <Route path="/" exact component={Example} />
         <Route path="/logintest" exact component={LoginTest} />
         <ProtectedRoute path="/example" exact component={Example} />
       </Switch>
