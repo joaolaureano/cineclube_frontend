@@ -5,16 +5,14 @@ import Snackbar from "@material-ui/core/Snackbar";
 
 import { useFirebase } from "../../services/login";
 import SnackbarContent from "@material-ui/core/SnackbarContent";
-import useStyles from "./styles";
-import { withStyles } from "@material-ui/core/styles";
-
+import COLORS from "../../utils/color";
 const Example = (): JSX.Element => {
-  //const styles = useStyles();
   const history = useHistory();
 
   const { login, logout, getToken, authUser } = useFirebase();
 
   const [open, setOpen] = React.useState(false);
+  const [isSuccessfull, setIsSuccessfull] = React.useState(false);
 
   const setToken = (token: string) => {
     localStorage.setItem("token", token);
@@ -24,8 +22,15 @@ const Example = (): JSX.Element => {
     const token = await login();
     if (token) {
       setToken(token);
+      setIsSuccessfull(true);
+      setOpen(true);
+    } else {
+      setIsSuccessfull(false);
       setOpen(true);
     }
+  };
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleLogout = async () => {
@@ -40,16 +45,6 @@ const Example = (): JSX.Element => {
   const handleTokenGeneration = async () => {
     const token = await getToken();
     if (token) setToken(token);
-  };
-
-  const styles = {
-    snackbarStyleViaContentProps: {
-      backgroundColor: "orange",
-    },
-    snackbarStyleViaNestedContent: {
-      backgroundColor: "lightgreen",
-      color: "black",
-    },
   };
 
   return (
@@ -69,29 +64,38 @@ const Example = (): JSX.Element => {
         Generate new token
       </Button>
       <Snackbar
+        autoHideDuration={5000}
+        onClose={handleClose}
         anchorOrigin={{
           vertical: "top",
           horizontal: "center",
         }}
-        open={true}
-        message={
-          <span id="message-id">
-            <div>Hi there! Some message.</div>
-          </span>
-        }
-      />
-      {/* <Snackbar 
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'left',
-        }}
         open={open}
-        autoHideDuration={6000}
-        // onClose={handleClose}
-        message="Note archived"
-        bodyStyle={{ backgroundColor: 'teal', color: 'coral' }} 
       >
-      </Snackbar>  */}
+        {isSuccessfull ? (
+          <SnackbarContent
+            style={{
+              backgroundColor: COLORS.VERDE_SUCESSO,
+              textAlign: "center",
+              justifyContent: "center",
+              margin: "auto",
+            }}
+            message={<span id="client-snackbar">Login feito com sucesso!</span>}
+          />
+        ) : (
+          <SnackbarContent
+            style={{
+              backgroundColor: COLORS.VERMELHO_FALHA,
+              textAlign: "center",
+              justifyContent: "center",
+              margin: "auto",
+            }}
+            message={
+              <span id="client-snackbar">Login não foi bem-sucedido.</span>
+            }
+          />
+        )}
+      </Snackbar>
     </Container>
   );
 };
