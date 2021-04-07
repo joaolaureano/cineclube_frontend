@@ -4,7 +4,6 @@ const primary = "#e08314";
 const secondary = "#cccccc";
 const textPrimary = "#4d4d4d";
 const background = "#f2f2f2";
-
 const theme = createMuiTheme({
   palette: {
     primary: {
