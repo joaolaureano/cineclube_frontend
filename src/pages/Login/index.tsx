@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Typography, Container } from "@material-ui/core";
@@ -13,7 +13,8 @@ const Login = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
   const auth = useFirebase();
-  const { openSnackbar } = React.useContext(SharedSnackbarContext);
+  const { openSnackbar } = useContext(SharedSnackbarContext);
+
   const setToken = (token: string) => {
     localStorage.setItem("token", token);
   };

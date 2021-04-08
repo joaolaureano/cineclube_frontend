@@ -1,8 +1,7 @@
-import React, { Component, useCallback } from "react";
-import { useState } from "react";
-import SharedSnackbar from "./Snackbar";
+import React, { createContext, useState } from "react";
 
-export const SharedSnackbarContext = React.createContext({
+import SharedSnackbar from "./Snackbar";
+export const SharedSnackbarContext = createContext({
   isOpen: false,
   message: "",
   severity: "success",
@@ -35,15 +34,11 @@ export const SharedSnackbarProvider = (props: any) => {
         isOpen,
         message,
         severity,
-        openSnackbar: useCallback(
-          (message, severity) => openSnackbar(message, severity),
-          []
-        ),
-        closeSnackbar: useCallback(() => closeSnackbar(), []),
+        openSnackbar,
+        closeSnackbar,
       }}
     >
       <SharedSnackbar />
-
       {children}
     </SharedSnackbarContext.Provider>
   );

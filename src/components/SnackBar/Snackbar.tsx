@@ -1,8 +1,9 @@
+import React from "react";
 import { IconButton, Snackbar } from "@material-ui/core";
 import { Close } from "@material-ui/icons";
-import React from "react";
-import { SharedSnackbarConsumer } from "./SnackContext";
 import MuiAlert from "@material-ui/lab/Alert";
+
+import { SharedSnackbarConsumer } from "./SnackContext";
 
 function Alert(props: any) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
@@ -10,11 +11,11 @@ function Alert(props: any) {
 
 const SharedSnackbar = () => (
   <SharedSnackbarConsumer>
-    {({ isOpen, message, closeSnackbar }) => (
+    {({ isOpen, message, severity, closeSnackbar }) => (
       <Snackbar
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left",
+          horizontal: "center",
         }}
         open={isOpen}
         autoHideDuration={6000}
@@ -26,7 +27,7 @@ const SharedSnackbar = () => (
           </IconButton>,
         ]}
       >
-        <Alert severity="success">{message}</Alert>
+        <Alert severity={severity}>{message}</Alert>
       </Snackbar>
     )}
   </SharedSnackbarConsumer>
