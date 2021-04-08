@@ -22,6 +22,9 @@ const theme = createMuiTheme({
     },
   },
   typography: {
+    button: {
+      textTransform: "none",
+    },
     fontFamily: "Barlow",
     fontWeightLight: 400,
     fontWeightRegular: 500,

@@ -1,21 +1,27 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { Button, Container, Typography } from "@material-ui/core";
 import useStyles from "./styles";
 
 const Example = (): JSX.Element => {
+  const history = useHistory();
   const styles = useStyles();
 
   return (
     <Container>
+      <br />
+      <br />
       <Button
         onClick={() => {
-          return 0;
+          return history.push("/login");
         }}
         variant="contained"
         color="primary"
       >
-        Login Test
+        Login
       </Button>
+      <br />
+      <br />
       <Typography variant="h1">h1: Sample text</Typography>
       <Typography variant="h2">h2: Sample text</Typography>
       <Typography variant="h3">h3: Sample text</Typography>
