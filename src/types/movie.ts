@@ -1,3 +1,6 @@
+import { Platform } from "./platform";
+import { Tag } from "./tag";
+
 export interface Movie {
   id: number;
   title: string;
@@ -7,10 +10,24 @@ export interface Movie {
   curator: string;
   year: number;
   pathBanner: string;
-  // TODO: Platform[]
-  platforms: any;
-  // TODO: Tag[]
-  tags: any;
+  platforms: Platform[];
+  tags: Tag[];
   createdAt: Date;
   updatedAt: Date;
+}
+
+// export interface MovieState {
+//   movies: MovieMap;
+//   movieIds: string[];
+//   selectedMovieId: number;
+// }
+
+// interface MovieMap {
+//   [movieId: number] : Movie;
+// }
+
+// TODO: Decide best way to structure Movie State, maybe normalize as commented above?
+export interface MovieState {
+  movies: Movie[];
+  selectedMovieIndex: number;
 }
