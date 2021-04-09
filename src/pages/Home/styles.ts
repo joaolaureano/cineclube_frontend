@@ -1,24 +1,58 @@
-import { makeStyles, Theme, createStyles } from "@material-ui/core";
-import theme from "../../assets/styles/theme";
+import { makeStyles, createStyles } from "@material-ui/core";
 
-const useStyles = makeStyles({
-  buttons: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-around",
-  },
-  snackSuccess: {
-    backgroundColor: theme.palette.success.main,
-    textAlign: "center",
-    justifyContent: "center",
-    margin: "auto",
-  },
-  snackFailure: {
-    backgroundColor: theme.palette.error.main,
-    textAlign: "center",
-    justifyContent: "center",
-    margin: "auto",
-  },
+const useStyles = makeStyles((theme) => {
+  return createStyles({
+    root: {
+      height: "100%",
+      background: theme.palette.background.default,
+    },
+    media: {
+      height: 280,
+    },
+    hamburger: {
+      float: "left",
+    },
+    tinder: {
+      position: "sticky",
+    },
+    appBar: {
+      top: "auto",
+      bottom: 0,
+    },
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+
+      height: "100%",
+      paddingBottom: "65px",
+
+      background: theme.palette.background.default,
+    },
+    topMenu: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "flex-end",
+      alignItems: "flex-end",
+    },
+    bottomMenu: {
+      display: "flex",
+      justifyContent: "space-around",
+      alignItems: "center",
+
+      background: theme.palette.background.default,
+    },
+
+    cover: {
+      width: "100%",
+    },
+    movieInfo: {
+      marginTop: "24px",
+    },
+    movieTitle: {
+      marginBottom: "-4px",
+    },
+  });
 });
 
 export default useStyles;
