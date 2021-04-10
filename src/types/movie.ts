@@ -16,18 +16,23 @@ export interface Movie {
   updatedAt: Date;
 }
 
-// export interface MovieState {
-//   movies: MovieMap;
-//   movieIds: string[];
-//   selectedMovieId: number;
-// }
-
-// interface MovieMap {
-//   [movieId: number] : Movie;
-// }
-
-// TODO: Decide best way to structure Movie State, maybe normalize as commented above?
-export interface MovieState {
+export interface MoviesDto {
   movies: Movie[];
+  movieIds: number[];
+}
+
+export interface MovieState {
+  movies: MovieMap;
+  movieIds: number[];
   selectedMovieIndex: number;
+}
+
+export interface MovieMap {
+  [movieId: number]: Movie;
+}
+
+export enum MovieUserStatus {
+  ALREADY_WATCHED = "already_watched",
+  WANT_TO_WATCH = "want_to_watch",
+  DONT_WANT_TO_WATCH = "dont_want_to_watch",
 }
