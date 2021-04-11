@@ -4,7 +4,6 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Example from "./pages/Example";
 import LoginTest from "./pages/LoginTest";
 import { HomeWrapper } from "./pages/HomeWrapper/HomeWrapper";
-import { Home } from "./pages/HomeWrapper/Home/Home";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -14,7 +13,7 @@ const Router = (): JSX.Element => {
       <Switch>
         <Route path="/login" exact component={Login} />
         <Route path="/" exact component={Example} />
-        <Route path="/home" exact component={Home} />
+        <Route path="/home" exact component={HomeWrapper} />
         <ProtectedRoute path="/loginTest" exact component={LoginTest} />
       </Switch>
     </BrowserRouter>
