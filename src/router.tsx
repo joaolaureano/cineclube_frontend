@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import Example from "./pages/Example";
 import LoginTest from "./pages/LoginTest";
-import Home from "./pages/Home";
+import { HomeWrapper } from "./pages/HomeWrapper/HomeWrapper";
+import { Home } from "./pages/HomeWrapper/Home/Home";
 import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 

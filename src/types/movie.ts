@@ -10,10 +10,10 @@ export interface Movie {
   curator: string;
   year: number;
   pathBanner: string;
-  platforms: Platform[];
-  tags: Tag[];
-  createdAt: Date;
-  updatedAt: Date;
+  // platforms: Platform[];
+  // tags: Tag[];
+  // createdAt: Date;
+  // updatedAt: Date;
 }
 
 export interface MoviesDto {
