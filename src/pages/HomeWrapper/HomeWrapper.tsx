@@ -32,7 +32,7 @@ const mockMovie2: Movie = {
 
 const mockMovie3: Movie = {
   id: 3,
-  title: "Inferno na Ilha 2",
+  title: "Inferno na Ilha 3",
   originalTitle: "Kongen av Bastøy",
   year: 2013,
   synopsis:
@@ -47,6 +47,8 @@ mockMovieStateMovies[mockMovie1.id] = mockMovie1;
 mockMovieStateMovies[mockMovie2.id] = mockMovie2;
 mockMovieStateMovies[mockMovie3.id] = mockMovie3;
 
+console.log(mockMovieStateMovies);
+
 const mockMovieStateMovieIds: number[] = [1, 2, 3];
 
 const initialMovieState: MovieState = {
@@ -57,4 +59,6 @@ const initialMovieState: MovieState = {
 
 export const HomeWrapper: React.FC = () => {
   return <Home state={initialMovieState} />;
+  // TODO: Aqui pode ficar um componente de "Loading" enquanto acessa a API
+  // TODO: Pode ficar aqui tambem um componente de "Erro" se falhar o GET
 };

@@ -23,15 +23,17 @@ import MenuIcon from "@material-ui/icons/Menu";
 
 import useStyles from "./styles";
 import { Movie } from "../../../../types/movie";
+import { MovieStateLogic } from "../Home";
 
 interface HomeDisplayProps {
   movie: Movie;
+  logic: MovieStateLogic;
 }
 
 export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const classes = useStyles();
 
-  const { movie } = props;
+  const { movie, logic } = props;
 
   return (
     <div className={classes.root}>
@@ -73,7 +75,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
         <AppBar position="fixed" color="transparent" className={classes.appBar}>
           <div className={classes.bottomMenu}>
             <IconButton
-              onClick={() => alert("undo last action")}
+              onClick={logic.functions.handleClickUndoLastAction}
               aria-label="undo"
               color="primary"
             >
@@ -89,7 +91,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <IconButton
-              onClick={() => alert("already watched")}
+              onClick={logic.functions.handleClickWatchedAndLiked}
               aria-label="like"
               color="primary"
             >

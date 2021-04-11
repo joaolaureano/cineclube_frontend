@@ -35,4 +35,5 @@ export enum MovieUserStatus {
   ALREADY_WATCHED = "already_watched",
   WANT_TO_WATCH = "want_to_watch",
   DONT_WANT_TO_WATCH = "dont_want_to_watch",
+  NONE = "none",
 }
