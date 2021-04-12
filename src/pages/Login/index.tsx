@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 
 import { Typography, Container } from "@material-ui/core";
 import { useFirebase } from "../../services/auth";
 import { GoogleButton } from "../../components/GoogleButton";
+
+import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 
 import useStyles from "./styles";
 
@@ -11,6 +13,7 @@ const Login = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
   const auth = useFirebase();
+  const { openSnackbar } = useContext(SharedSnackbarContext);
 
   const setToken = (token: string) => {
     localStorage.setItem("token", token);
@@ -20,7 +23,10 @@ const Login = (): JSX.Element => {
     const token = await auth.login();
     if (token) {
       setToken(token);
+      openSnackbar("Login bem-sucedido", "success");
       history.push("/logintest");
+    } else {
+      openSnackbar("Login não foi realizado com sucesso", "error");
     }
   };
 
