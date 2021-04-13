@@ -25,21 +25,17 @@ const movies = {
 };
 
 const composeMovieState = (data: string): MovieState => {
-  const moviesDto: MoviesDto = JSON.parse(data);
+  const response = JSON.parse(data);
+  const moviesResponse = response.body.movies;
   const movies: MovieMap = {};
 
-  moviesDto.movieIds.forEach((id) => {
-    const movie: Movie | undefined = moviesDto.movies.find(
-      (movie: Movie) => movie.id === id
-    );
-    if (movie) {
-      movies[id] = movie;
-    }
+  const movieIds = moviesResponse.map((movie: Movie) => {
+    movies[movie.id] = movie as Movie;
+    return movie.id;
   });
 
   const selectedMovieIndex = 0;
-
-  return { movies, movieIds: moviesDto.movieIds, selectedMovieIndex };
+  return { movies, movieIds, selectedMovieIndex };
 };
 
 export default movies;

@@ -66,7 +66,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               {movie.year}
             </Typography>
             <Typography variant="body1" color="textPrimary" component="p">
-              {movie.synopsis + movie.synopsis + movie.synopsis}
+              {movie.synopsis}
             </Typography>
           </div>
         </Container>

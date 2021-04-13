@@ -24,7 +24,7 @@ const Login = (): JSX.Element => {
     if (token) {
       setToken(token);
       openSnackbar("Login bem-sucedido", "success");
-      history.push("/logintest");
+      history.push("/home");
     } else {
       openSnackbar("Login não foi realizado com sucesso", "error");
     }

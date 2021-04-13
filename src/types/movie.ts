@@ -1,5 +1,5 @@
+import { MoviesTags } from "./moviesTags";
 import { Platform } from "./platform";
-import { Tag } from "./tag";
 
 export interface Movie {
   id: number;
@@ -10,8 +10,8 @@ export interface Movie {
   curator: string;
   year: number;
   pathBanner: string;
-  // platforms: Platform[];
-  // tags: Tag[];
+  platforms: Platform[];
+  tags: MoviesTags[];
   // createdAt: Date;
   // updatedAt: Date;
 }
