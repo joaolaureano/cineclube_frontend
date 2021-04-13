@@ -5,8 +5,8 @@ import theme from "./assets/styles/theme";
 import "./utils/firebase";
 import Router from "./router";
 
-import "./assets/styles/reset.scss";
-import "./assets/styles/global.scss";
+import "./assets/styles/reset.css";
+import "./assets/styles/global.css";
 
 function App() {
   return (
