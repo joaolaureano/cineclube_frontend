@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Example from "./pages/Example";
 import LoginTest from "./pages/LoginTest";
 import { HomeWrapper } from "./pages/HomeWrapper/HomeWrapper";
 import Login from "./pages/Login";
@@ -11,9 +10,8 @@ const Router = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/login" exact component={Login} />
-        <Route path="/" exact component={Example} />
         <Route path="/home" exact component={HomeWrapper} />
+        <Route path="/" exact component={Login} />
         <ProtectedRoute path="/loginTest" exact component={LoginTest} />
       </Switch>
     </BrowserRouter>
