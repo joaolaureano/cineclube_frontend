@@ -21,8 +21,6 @@ export const SharedSnackbarProvider = (props: any) => {
   };
 
   const closeSnackbar = () => {
-    setMessage("");
-    setSeverity("success");
     setIsOpen(false);
   };
 

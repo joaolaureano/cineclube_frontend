@@ -14,11 +14,11 @@ const SharedSnackbar = () => (
     {({ isOpen, message, severity, closeSnackbar }) => (
       <Snackbar
         anchorOrigin={{
-          vertical: "bottom",
+          vertical: "top",
           horizontal: "center",
         }}
         open={isOpen}
-        autoHideDuration={6000}
+        autoHideDuration={3000}
         onClose={closeSnackbar}
         message={message}
         action={[

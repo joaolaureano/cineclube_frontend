@@ -3,6 +3,7 @@ import { makeStyles, createStyles } from "@material-ui/core";
 const useStyles = makeStyles((theme) => {
   return createStyles({
     root: {
+      maxWidth: "700px",
       height: "100%",
       background: theme.palette.background.default,
     },
@@ -11,6 +12,13 @@ const useStyles = makeStyles((theme) => {
     },
     hamburger: {
       float: "left",
+    },
+    tags: {
+      padding: "8px 0 0 0",
+    },
+    tag: {
+      marginBottom: "8px",
+      marginRight: "8px",
     },
     tinder: {
       position: "sticky",
@@ -39,7 +47,7 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       justifyContent: "space-around",
       alignItems: "center",
-
+      maxWidth: "700px",
       background: theme.palette.background.default,
     },
 

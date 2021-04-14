@@ -14,6 +14,7 @@ import {
 // import CardContent from "@material-ui/core/CardContent";
 // import CardMedia from "@material-ui/core/CardMedia";
 // import Button from "@material-ui/core/Button";
+import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import ReplayIcon from "@material-ui/icons/Replay";
 import ClearIcon from "@material-ui/icons/Clear";
@@ -68,6 +69,20 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             <Typography variant="body1" color="textPrimary" component="p">
               {movie.synopsis}
             </Typography>
+            <div className={classes.tags}>
+              {movie.moviesTags.map(({ tag }) => {
+                return (
+                  <Chip
+                    variant="outlined"
+                    size="small"
+                    label={tag.name}
+                    color="primary"
+                    key={tag.name}
+                    className={classes.tag}
+                  />
+                );
+              })}
+            </div>
           </div>
         </Container>
 
@@ -83,7 +98,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <IconButton
-              onClick={() => alert("doesn't want to watch")}
+              onClick={logic.functions.handleClickDidntLike}
               aria-label="dislike"
               color="primary"
             >
@@ -99,7 +114,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <IconButton
-              onClick={() => alert("wants to watch")}
+              onClick={logic.functions.handleClickWantoWatch}
               aria-label="star"
               color="primary"
             >

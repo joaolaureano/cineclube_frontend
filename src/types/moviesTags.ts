@@ -5,7 +5,7 @@ export interface MoviesTags {
   tagId: number;
   weight: number;
   super: boolean;
-  tag: Tag;
+  tag: Tag; //Objeto Tag
   createdAt: Date;
   updatedAt: Date;
 }

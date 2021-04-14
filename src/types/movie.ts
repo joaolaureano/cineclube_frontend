@@ -11,7 +11,7 @@ export interface Movie {
   year: number;
   pathBanner: string;
   platforms: Platform[];
-  tags: MoviesTags[];
+  moviesTags: MoviesTags[];
   // createdAt: Date;
   // updatedAt: Date;
 }

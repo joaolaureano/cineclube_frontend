@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Movie, MovieState } from "../../../types/movie";
 import { HomeDisplay } from "./HomeDisplay/HomeDisplay";
+import { SharedSnackbarContext } from "../../../components/SnackBar/SnackContext";
 
 interface HomeProps {
   state: MovieState;
@@ -13,9 +14,13 @@ export interface MovieStateLogic {
 interface MovieStateLogicFunctions {
   handleClickWatchedAndLiked: () => void;
   handleClickUndoLastAction: () => void;
+  handleClickDidntLike: () => void;
+  handleClickWantoWatch: () => void;
 }
 
 export const Home: React.FC<HomeProps> = (props) => {
+  const { openSnackbar } = useContext(SharedSnackbarContext);
+
   const { state } = props;
 
   const [selectedMovieIndex, setSelectedMovieIndex] = useState(
@@ -46,14 +51,24 @@ export const Home: React.FC<HomeProps> = (props) => {
 
   // TODO: Trocar Alert por Toast
   const handleClickWatchedAndLiked = () => {
-    alert("already watched");
+    openSnackbar("Já assiti e gostei", "success");
     incrementSelectedMovie();
   };
 
   // TODO: Trocar Alert por Toast
   const handleClickUndoLastAction = () => {
-    alert("undo last action");
+    openSnackbar("Desfeita a ultima ação", "success");
     decrementSelectedMovie();
+  };
+
+  const handleClickDidntLike = () => {
+    openSnackbar("Não gostei", "success");
+    incrementSelectedMovie();
+  };
+
+  const handleClickWantoWatch = () => {
+    openSnackbar("Quero assistir", "success");
+    incrementSelectedMovie();
   };
 
   // TODO: Passar os outros Handlers do HomeDisplay pra cá
@@ -61,6 +76,8 @@ export const Home: React.FC<HomeProps> = (props) => {
     functions: {
       handleClickWatchedAndLiked,
       handleClickUndoLastAction,
+      handleClickDidntLike,
+      handleClickWantoWatch,
     },
   };
 
