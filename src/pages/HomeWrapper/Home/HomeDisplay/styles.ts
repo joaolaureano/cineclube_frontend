@@ -13,8 +13,13 @@ const useStyles = makeStyles((theme) => {
     hamburger: {
       float: "left",
     },
+    platforms: { padding: "8px 0 0 0" },
+    platform: {
+      width: theme.spacing(7),
+      height: theme.spacing(7),
+    },
     tags: {
-      padding: "8px 0 0 0",
+      padding: "10px 0 0 0",
     },
     tag: {
       marginBottom: "8px",
