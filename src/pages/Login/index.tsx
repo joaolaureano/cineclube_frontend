@@ -47,7 +47,7 @@ const Login = (): JSX.Element => {
             variant="h5"
             color="textPrimary"
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
+            Faça seu login ou crie seu cadastro com sua conta do Google.
           </Typography>
           <GoogleButton onClick={handleLogin}>
             Continuar com Google
