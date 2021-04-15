@@ -4,12 +4,12 @@ import { User } from "../types/user";
 const user = {
   auth: () => {
     return api.post("/user/auth", {
-      transformResponse: pareseUser,
+      transformResponse: parseUser,
     });
   },
 };
 
-const pareseUser = (data: string): User => {
+const parseUser = (data: string): User => {
   const response = JSON.parse(data);
   const user: User = response.body?.user;
   return user;
