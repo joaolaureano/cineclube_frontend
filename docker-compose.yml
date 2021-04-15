@@ -1,0 +1,25 @@
+version: "3" # version of docker-composeservices: # defining service/s
+services:
+  web-app: # name of the service
+    build: . # directory what to build, here it is root directory
+    image: nodejs
+    container_name: web
+    restart: always
+    ports:
+      - 3000:3000 # defining port for our app
+    networks:
+      - app-network
+    command: sh -c "npx serve -l 3000 -s ./build"
+    env_file: ./.env
+    expose:
+      - 3000
+    environment:
+      REACT_APP_API_KEY: $REACT_APP_API_KEY
+      REACT_APP_AUTH_DOMAIN: $REACT_APP_AUTH_DOMAIN
+      REACT_APP_PROJECT_ID: $REACT_APP_PROJECT_ID
+      REACT_APP_STORAGE_BUCKET: $REACT_APP_STORAGE_BUCKET
+      REACT_APP_MESSAGING_SENDER_ID: $REACT_APP_MESSAGING_SENDER_ID
+      REACT_APP_APP_ID: $REACT_APP_APP_ID
+networks:
+  app-network:
+    driver: bridge
