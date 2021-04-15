@@ -9,7 +9,7 @@ services:
       - 3000:3000 # defining port for our app
     networks:
       - app-network
-    command: sh -c "npx serve -l 3000 -s build"
+    command: sh -c "npx serve -l 3000 -s ./build"
     env_file: ./.env
     expose:
       - 3000
