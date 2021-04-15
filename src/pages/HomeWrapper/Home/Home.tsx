@@ -43,19 +43,17 @@ export const Home: React.FC<HomeProps> = (props) => {
   const decrementSelectedMovie = (): void => {
     const numberOfMovies = state.movieIds.length;
     let newMovieIndex = selectedMovieIndex - 1;
-    if (newMovieIndex <= 0) {
+    if (newMovieIndex < 0) {
       newMovieIndex = numberOfMovies - 1;
     }
     setSelectedMovieIndex(newMovieIndex);
   };
 
-  // TODO: Trocar Alert por Toast
   const handleClickWatchedAndLiked = () => {
     openSnackbar("Já assiti e gostei", "success");
     incrementSelectedMovie();
   };
 
-  // TODO: Trocar Alert por Toast
   const handleClickUndoLastAction = () => {
     openSnackbar("Desfeita a ultima ação", "success");
     decrementSelectedMovie();
@@ -71,7 +69,6 @@ export const Home: React.FC<HomeProps> = (props) => {
     incrementSelectedMovie();
   };
 
-  // TODO: Passar os outros Handlers do HomeDisplay pra cá
   const useStateLogic: MovieStateLogic = {
     functions: {
       handleClickWatchedAndLiked,

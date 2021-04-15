@@ -41,9 +41,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const { movie, logic } = props;
 
   function getStreaming(s: string) {
-    if (s == "Netflix") {
+    if (s === "Netflix") {
       return netflix;
-    } else if (s == "Amazon-Prime-Video") {
+    } else if (s === "Amazon-Prime-Video") {
       return amazon;
     } else {
       return "not found";

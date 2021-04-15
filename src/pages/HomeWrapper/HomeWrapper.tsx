@@ -1,4 +1,4 @@
-import { Movie, MovieMap, MovieState } from "../../types/movie";
+import { MovieState } from "../../types/movie";
 import { Home } from "./Home/Home";
 import MovieService from "../../services/movies";
 import { useEffect, useState } from "react";
