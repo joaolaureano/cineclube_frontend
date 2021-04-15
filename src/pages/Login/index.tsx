@@ -6,6 +6,7 @@ import { useFirebase } from "../../services/auth";
 import { GoogleButton } from "../../components/GoogleButton";
 
 import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
+import UserService from "../../services/user";
 
 import useStyles from "./styles";
 
@@ -21,11 +22,21 @@ const Login = (): JSX.Element => {
 
   const handleLogin = async () => {
     const token = await auth.login();
-    if (token) {
-      setToken(token);
-      openSnackbar("Login bem-sucedido", "success");
-      history.push("/home");
-    } else {
+
+    try {
+      if (token) {
+        const loginResponse = await UserService.auth();
+        const { user } = loginResponse.data.body;
+
+        if (user) {
+          setToken(token);
+          openSnackbar("Login bem-sucedido", "success");
+          return history.push("/home");
+        }
+
+        throw new Error("Falha no login");
+      }
+    } catch (err) {
       openSnackbar("Login não foi realizado com sucesso", "error");
     }
   };
