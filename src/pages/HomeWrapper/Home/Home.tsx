@@ -16,6 +16,7 @@ interface MovieStateLogicFunctions {
   handleClickUndoLastAction: () => void;
   handleClickDidntLike: () => void;
   handleClickWantoWatch: () => void;
+  handleClickLikeOrNotMovie: () => void;
 }
 
 export const Home: React.FC<HomeProps> = (props) => {
@@ -26,7 +27,7 @@ export const Home: React.FC<HomeProps> = (props) => {
   const [selectedMovieIndex, setSelectedMovieIndex] = useState(
     state.selectedMovieIndex
   );
-
+  const [openModal, setOpenModal] = useState(false);
   const getSelectedMovie = (): Movie => {
     return state.movies[state.movieIds[selectedMovieIndex]];
   };
@@ -50,10 +51,14 @@ export const Home: React.FC<HomeProps> = (props) => {
   };
 
   const handleClickWatchedAndLiked = () => {
-    openSnackbar("Já assiti e gostei", "success");
-    incrementSelectedMovie();
-  };
+    openSnackbar("Já assiti", "success");
 
+    setOpenModal(!openModal);
+    // incrementSelectedMovie();
+    console.log("aia");
+    console.log(openModal);
+  };
+  const handleClickLikeOrNotMovie = () => {};
   const handleClickUndoLastAction = () => {
     openSnackbar("Desfeita a ultima ação", "success");
     decrementSelectedMovie();
@@ -75,8 +80,15 @@ export const Home: React.FC<HomeProps> = (props) => {
       handleClickUndoLastAction,
       handleClickDidntLike,
       handleClickWantoWatch,
+      handleClickLikeOrNotMovie,
     },
   };
 
-  return <HomeDisplay movie={getSelectedMovie()} logic={useStateLogic} />;
+  return (
+    <HomeDisplay
+      movie={getSelectedMovie()}
+      logic={useStateLogic}
+      modalLiked={openModal}
+    />
+  );
 };

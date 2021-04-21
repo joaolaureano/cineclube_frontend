@@ -1,19 +1,5 @@
 import React from "react";
-import {
-  AppBar,
-  Divider,
-  // Toolbar,
-  Container,
-  IconButton,
-  // Grid,
-  // ButtonGroup,
-} from "@material-ui/core";
-// import Card from "@material-ui/core/Card";
-// import CardActionArea from "@material-ui/core/CardActionArea";
-// import CardActions from "@material-ui/core/CardActions";
-// import CardContent from "@material-ui/core/CardContent";
-// import CardMedia from "@material-ui/core/CardMedia";
-// import Button from "@material-ui/core/Button";
+import { AppBar, Divider, Container, IconButton } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import ReplayIcon from "@material-ui/icons/Replay";
@@ -29,16 +15,26 @@ import { Movie } from "../../../../types/movie";
 import { MovieStateLogic } from "../Home";
 import netflix from "../../../../assets/images/platforms/Netflix.svg";
 import amazon from "../../../../assets/images/platforms/Amazon.svg";
+import { LikeModal } from "../../../../components/LikeModal";
 
 interface HomeDisplayProps {
   movie: Movie;
   logic: MovieStateLogic;
+  modalLiked: boolean;
 }
 
 export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const classes = useStyles();
 
-  const { movie, logic } = props;
+  const { movie, logic, modalLiked } = props;
+
+  const body = (
+    <div>
+      <h2 id="simple-modal-title">Text in a modal</h2>
+      <p id="simple-modal-description">TESTANDO O MEU MODAL</p>
+      <button>teste aff</button>
+    </div>
+  );
 
   function getStreaming(s: string) {
     if (s === "Netflix") {
@@ -138,6 +134,14 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               aria-label="like"
               color="primary"
             >
+              <LikeModal
+                open={modalLiked}
+                // like = {() => {console.log('a')}}
+                // dislike = {() => {}}
+                aria-labelledby="simple-modal-title"
+                aria-describedby="simple-modal-description"
+              />
+
               <CheckIcon fontSize="large" />
             </IconButton>
             <Divider orientation="vertical" flexItem />
