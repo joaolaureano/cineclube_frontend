@@ -2,6 +2,9 @@ import { useState, useContext } from "react";
 import { Movie, MovieState } from "../../../types/movie";
 import { HomeDisplay } from "./HomeDisplay/HomeDisplay";
 import { SharedSnackbarContext } from "../../../components/SnackBar/SnackContext";
+import { MovieUserStatus } from "../../../types/userMovieStatus";
+import UserService from "../../../services/user";
+import movies from "../../../services/movies";
 
 interface HomeProps {
   state: MovieState;
@@ -17,6 +20,8 @@ interface MovieStateLogicFunctions {
   handleClickDidntLike: () => void;
   handleClickWantoWatch: () => void;
   handleClickLikeOrNotMovie: () => void;
+  handleClickLikedMovie: () => void;
+  handleClickDislikedMovie: () => void;
 }
 
 export const Home: React.FC<HomeProps> = (props) => {
@@ -54,8 +59,6 @@ export const Home: React.FC<HomeProps> = (props) => {
     openSnackbar("Já assiti", "success");
 
     setOpenModal(!openModal);
-    // incrementSelectedMovie();
-    console.log("aia");
     console.log(openModal);
   };
   const handleClickLikeOrNotMovie = () => {};
@@ -74,6 +77,28 @@ export const Home: React.FC<HomeProps> = (props) => {
     incrementSelectedMovie();
   };
 
+  const handleClickDislikedMovie = async () => {
+    console.log("yay");
+    const movieID = getSelectedMovie().id;
+    setOpenModal(!openModal);
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.WATCHED_AND_LIKED,
+    });
+    // incrementSelectedMovie();
+  };
+
+  const handleClickLikedMovie = async () => {
+    console.log("yay");
+    const movieID = getSelectedMovie().id;
+    setOpenModal(!openModal);
+
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.WATCHED_AND_DISLIKED,
+    });
+  };
+
   const useStateLogic: MovieStateLogic = {
     functions: {
       handleClickWatchedAndLiked,
@@ -81,6 +106,8 @@ export const Home: React.FC<HomeProps> = (props) => {
       handleClickDidntLike,
       handleClickWantoWatch,
       handleClickLikeOrNotMovie,
+      handleClickLikedMovie,
+      handleClickDislikedMovie,
     },
   };
 

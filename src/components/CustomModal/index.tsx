@@ -17,7 +17,7 @@ export const CustomModal: React.FC<ModalProps> = (props: ModalProps) => {
 
   return (
     <div className={classes.modalParent}>
-      <Modal open={props.open} className={classes.modal}>
+      <Modal open={props.open} className={classes.modal} disableBackdropClick>
         <div className={classes.modalBorder}>{props.children}</div>
       </Modal>
     </div>

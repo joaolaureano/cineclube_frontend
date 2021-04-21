@@ -28,14 +28,6 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
 
   const { movie, logic, modalLiked } = props;
 
-  const body = (
-    <div>
-      <h2 id="simple-modal-title">Text in a modal</h2>
-      <p id="simple-modal-description">TESTANDO O MEU MODAL</p>
-      <button>teste aff</button>
-    </div>
-  );
-
   function getStreaming(s: string) {
     if (s === "Netflix") {
       return netflix;
@@ -45,6 +37,12 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
       return "not found";
     }
   }
+  const setLike = () => {
+    console.log(movie);
+  };
+  const setDislike = () => {
+    console.log(movie);
+  };
 
   return (
     <div className={classes.root}>
@@ -133,11 +131,12 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               onClick={logic.functions.handleClickWatchedAndLiked}
               aria-label="like"
               color="primary"
+              disabled={modalLiked}
             >
               <LikeModal
                 open={modalLiked}
-                // like = {() => {console.log('a')}}
-                // dislike = {() => {}}
+                like={logic.functions.handleClickLikedMovie}
+                dislike={logic.functions.handleClickDislikedMovie}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
               />

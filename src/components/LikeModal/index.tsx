@@ -8,8 +8,8 @@ import Typography from "@material-ui/core/Typography";
 
 interface ModalProps {
   open: boolean;
-  like?: () => {};
-  dislike?: () => {};
+  like: () => void;
+  dislike: () => void;
 }
 
 export const LikeModal: React.FC<ModalProps> = (props: ModalProps) => {
