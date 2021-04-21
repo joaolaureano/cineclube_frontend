@@ -21,14 +21,12 @@ import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
 import StarIcon from "@material-ui/icons/Star";
 import MenuIcon from "@material-ui/icons/Menu";
-import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 import useStyles from "./styles";
 import { Movie } from "../../../../types/movie";
 import { MovieStateLogic } from "../Home";
-import netflix from "../../../../assets/images/platforms/Netflix.svg";
-import amazon from "../../../../assets/images/platforms/Amazon.svg";
+import { PlatformIcon } from "../../../../components/PlatformIcon";
 
 interface HomeDisplayProps {
   movie: Movie;
@@ -39,16 +37,6 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const classes = useStyles();
 
   const { movie, logic } = props;
-
-  function getStreaming(s: string) {
-    if (s === "Netflix") {
-      return netflix;
-    } else if (s === "Amazon-Prime-Video") {
-      return amazon;
-    } else {
-      return "not found";
-    }
-  }
 
   return (
     <div className={classes.root}>
@@ -87,11 +75,10 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             <AvatarGroup className={classes.platforms}>
               {movie.platforms.map(({ name }) => {
                 return (
-                  <Avatar
+                  <PlatformIcon
                     className={classes.platform}
-                    alt={name}
                     variant="rounded"
-                    src={getStreaming(name)}
+                    platform={name}
                   />
                 );
               })}
