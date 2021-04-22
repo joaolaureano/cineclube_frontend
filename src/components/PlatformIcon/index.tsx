@@ -10,6 +10,7 @@ interface PlatformIconProps extends DefaultComponentProps<AvatarTypeMap> {
 }
 
 export const PlatformIcon: React.FC<PlatformIconProps> = (props) => {
+  const { platform, ...remainingProps } = props;
   const getPlatform = (platform: string) => {
     switch (platform) {
       case "Netflix":
@@ -23,10 +24,10 @@ export const PlatformIcon: React.FC<PlatformIconProps> = (props) => {
 
   return (
     <Avatar
-      className={props.className}
-      alt={props.platform}
+      alt={platform}
       variant="rounded"
-      src={getPlatform(props.platform)}
+      src={getPlatform(platform)}
+      {...remainingProps}
     />
   );
 };

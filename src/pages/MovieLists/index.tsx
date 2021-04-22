@@ -7,7 +7,10 @@ import {
   CardMedia,
   Container,
   IconButton,
+  Paper,
   Typography,
+  Tabs,
+  Tab,
 } from "@material-ui/core";
 
 import {
@@ -15,6 +18,7 @@ import {
   ThumbUpOutlined,
   ThumbDown,
   ThumbDownOutlined,
+  ArrowBack,
 } from "@material-ui/icons";
 
 import useStyles from "./styles";
@@ -35,13 +39,10 @@ const mockMovie = {
 
 export const MovieLists: React.FC = () => {
   const styles = useStyles();
-  const [view, setView] = React.useState("wantsToWatch");
+  const [currentTab, setCurrentTab] = React.useState(0);
 
-  const handleChange = (
-    event: React.MouseEvent<HTMLElement, MouseEvent>,
-    nextView: string
-  ) => {
-    setView(nextView);
+  const handleChange = (event: React.ChangeEvent<{}>, tab: number) => {
+    setCurrentTab(tab);
   };
 
   const renderCard = () => {
@@ -81,14 +82,14 @@ export const MovieLists: React.FC = () => {
                 color="primary"
                 className={styles.icon}
               >
-                <ThumbUpOutlined fontSize="large" />
+                <ThumbUp fontSize="large" />
               </IconButton>
               <IconButton
                 onClick={() => console.log("Dislike")}
                 color="primary"
                 className={styles.icon}
               >
-                <ThumbDown fontSize="large" />
+                <ThumbDownOutlined fontSize="large" />
               </IconButton>
             </span>
           </div>
@@ -99,28 +100,30 @@ export const MovieLists: React.FC = () => {
 
   return (
     <Container className={styles.container}>
-      <header>
-        <button type="button">back</button>
-        <h2>Minhas Listas</h2>
+      <header className={styles.header}>
+        <IconButton
+          className={styles.backIcon}
+          onClick={() => console.log("Back")}
+        >
+          <ArrowBack fontSize="large" />
+        </IconButton>
+        <Typography variant="h5">Minhas Listas</Typography>
       </header>
 
-      <ToggleButtonGroup
-        size="small"
-        value={view}
-        exclusive
-        onChange={handleChange}
-        className={styles.toggleButtonGroup}
-      >
-        <ToggleButton value="wantsToWatch" className={styles.toggleButton}>
-          Quero Assitir
-        </ToggleButton>
-        <ToggleButton value="watched" className={styles.toggleButton}>
-          Já vi
-        </ToggleButton>
-      </ToggleButtonGroup>
+      <Paper elevation={0} className={styles.tabsContainer}>
+        <Tabs
+          className={styles.tabs}
+          value={currentTab}
+          onChange={handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          centered
+        >
+          <Tab className={styles.tab} label="Quero Assistir" />
+          <Tab className={styles.tab} label="Já vi" />
+        </Tabs>
+      </Paper>
 
-      <br />
-      <br />
       <div className={styles.movieList}>
         {renderCard()}
         {renderCard()}

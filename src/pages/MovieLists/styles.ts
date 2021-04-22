@@ -5,26 +5,51 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       height: "100%",
       minHeight: "100vh",
+
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+
       background:
         "linear-gradient(45deg, rgba(206,124,44,1) 0%, rgba(224,131,20,1) 50%, rgba(206,124,44,1) 100%)",
     },
 
-    toggleButtonGroup: {
+    header: {
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
-      width: "clamp(200px, 80%, 600px)",
+
+      padding: "8px 0",
     },
 
-    toggleButton: {
-      width: "100%",
-      height: "32px",
+    backIcon: {
+      position: "absolute",
+      left: "0",
+    },
+
+    tabsContainer: {
+      margin: "8px 5%",
+    },
+
+    tabs: {
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      justifySelf: "center",
+      width: "clamp(200px, 100%, 600px)",
+    },
+
+    tab: {
+      color: theme.palette.text.primary,
+      width: "50%",
     },
 
     movieList: {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
+
+      marginTop: "24px",
     },
 
     movieItem: {
