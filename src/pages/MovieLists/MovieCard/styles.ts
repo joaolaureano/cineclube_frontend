@@ -29,6 +29,14 @@ const useStyles = makeStyles((theme: Theme) =>
     topContent: {
       display: "flex",
       justifyContent: "space-between",
+      alignItems: "flex-start",
+    },
+
+    movieTitle: {
+      fontStyle: "italic",
+      fontWeight: 600,
+      textTransform: "uppercase",
+      lineHeight: "1.25rem",
     },
 
     bottomContent: {
@@ -50,16 +58,14 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
 
-    bottomIcons: {},
-
-    icon: {
-      padding: "4px",
+    bottomIcons: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
     },
 
-    closeIcon: {
-      marginTop: "-5px",
-      marginRight: "-8px",
-      padding: 0,
+    icon: {
+      padding: "4px 2px",
     },
   })
 );

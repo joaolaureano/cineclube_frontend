@@ -66,19 +66,19 @@ export const MovieLists: React.FC = () => {
   };
 
   const handleLike = (id: number) => {
-    console.log(`Clicked LIKE on movie ${id}`);
+    alert(`Clicked LIKE on movie ${id}`);
   };
 
   const handleDislike = (id: number) => {
-    console.log(`Clicked DISLIKE on movie ${id}`);
+    alert(`Clicked DISLIKE on movie ${id}`);
   };
 
   const handleDelete = (id: number) => {
-    console.log(`Clicked DELETE on movie ${id}`);
+    alert(`Clicked DELETE on movie ${id}`);
   };
 
   const handleWatch = (id: number) => {
-    console.log(`Clicked WATCH on movie ${id}`);
+    alert(`Clicked WATCH on movie ${id}`);
   };
 
   const renderWatchedMovies = () => {
@@ -126,7 +126,9 @@ export const MovieLists: React.FC = () => {
           <IconButton className={styles.backIcon} onClick={handleClickBack}>
             <ArrowBack fontSize="large" />
           </IconButton>
-          <Typography variant="h5">Minhas Listas</Typography>
+          <Typography className={styles.pageTitle} variant="h5">
+            Minhas Listas
+          </Typography>
         </header>
 
         <Paper elevation={0} className={styles.tabsContainer}>
@@ -144,7 +146,7 @@ export const MovieLists: React.FC = () => {
         </Paper>
 
         <div className={styles.movieList}>
-          {currentTab === 0 ? renderWatchedMovies() : renderWantToWatchMovies()}
+          {currentTab === 0 ? renderWantToWatchMovies() : renderWatchedMovies()}
         </div>
       </Container>
     </div>

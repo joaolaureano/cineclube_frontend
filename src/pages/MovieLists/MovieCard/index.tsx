@@ -9,6 +9,8 @@ import {
   ThumbDownOutlined,
   Check,
   Close,
+  Cancel,
+  Delete,
 } from "@material-ui/icons";
 
 import useStyles from "./styles";
@@ -108,39 +110,47 @@ export const MovieCard: React.FC<MovieCardProps> = (props) => {
   };
 
   return (
-    <Card className={styles.movieItem}>
-      <CardMedia
-        className={styles.movieCover}
-        image={props.movie.pathBanner}
-        title="movie cover"
-        component="img"
-      />
+    <>
+      <Card className={styles.movieItem}>
+        <CardMedia
+          className={styles.movieCover}
+          image={props.movie.pathBanner}
+          title="movie cover"
+          component="img"
+        />
 
-      <div className={styles.content}>
-        <div className={styles.topContent}>
-          <Typography component="h6" variant="h6">
-            {props.movie.title}
-          </Typography>
-          <IconButton
-            onClick={handleDelete}
-            color="primary"
-            className={styles.closeIcon}
-          >
-            <Close fontSize="large" />
-          </IconButton>
-        </div>
+        <div className={styles.content}>
+          <div className={styles.topContent}>
+            <Typography
+              className={styles.movieTitle}
+              component="h6"
+              variant="subtitle1"
+            >
+              {props.movie.title}
+            </Typography>
+          </div>
 
-        <div className={styles.bottomContent}>
-          <span className={styles.platforms}>
-            <Typography variant="body2">Disponível em:</Typography>
-            <span className={styles.platformIcons}>
-              {parsePlatforms(props.movie.platforms)}
+          <div className={styles.bottomContent}>
+            <span className={styles.platforms}>
+              <Typography variant="body2">Disponível em:</Typography>
+              <span className={styles.platformIcons}>
+                {parsePlatforms(props.movie.platforms)}
+              </span>
             </span>
-          </span>
 
-          <span className={styles.bottomIcons}>{getBottomIcons()}</span>
+            <span className={styles.bottomIcons}>
+              {getBottomIcons()}
+              <IconButton
+                onClick={handleDelete}
+                color="primary"
+                className={styles.icon}
+              >
+                <Close fontSize="large" />
+              </IconButton>
+            </span>
+          </div>
         </div>
-      </div>
-    </Card>
+      </Card>
+    </>
   );
 };

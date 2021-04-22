@@ -6,8 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100%",
       minHeight: "100vh",
 
-      background:
-        "linear-gradient(45deg, rgba(206,124,44,1) 0%, rgba(224,131,20,1) 50%, rgba(206,124,44,1) 100%)",
+      background: `linear-gradient(45deg, rgba(206,124,44,1) 20%, ${theme.palette.primary.main} 50%, rgba(206,124,44,1) 80%)`,
     },
 
     container: {
@@ -27,6 +26,11 @@ const useStyles = makeStyles((theme: Theme) =>
     backIcon: {
       position: "absolute",
       left: "0",
+    },
+
+    pageTitle: {
+      textTransform: "uppercase",
+      color: theme.palette.text.primary,
     },
 
     tabsContainer: {
