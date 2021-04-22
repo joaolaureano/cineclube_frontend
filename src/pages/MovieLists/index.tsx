@@ -85,6 +85,7 @@ export const MovieLists: React.FC = () => {
     return watchedMovies.map((movie) => {
       return (
         <MovieCard
+          key={movie.id}
           type="watched"
           liked={movie.liked}
           onDelete={handleDelete}
@@ -105,6 +106,7 @@ export const MovieLists: React.FC = () => {
     return wantToWatchMovies.map((movie) => {
       return (
         <MovieCard
+          key={movie.id}
           type="wantsToWatch"
           onDelete={handleDelete}
           onWatch={handleWatch}
