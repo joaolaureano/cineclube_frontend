@@ -1,10 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 
-import { ToggleButton, ToggleButtonGroup } from "@material-ui/lab";
 import {
-  Card,
-  CardContent,
-  CardMedia,
   Container,
   IconButton,
   Paper,
@@ -13,16 +9,10 @@ import {
   Tab,
 } from "@material-ui/core";
 
-import {
-  ThumbUp,
-  ThumbUpOutlined,
-  ThumbDown,
-  ThumbDownOutlined,
-  ArrowBack,
-} from "@material-ui/icons";
+import { ArrowBack } from "@material-ui/icons";
 
 import useStyles from "./styles";
-import { PlatformIcon } from "../../components/PlatformIcon";
+import { MovieCard } from "./MovieCard";
 
 const mockMovie = {
   id: 15,
@@ -35,105 +25,125 @@ const mockMovie = {
   year: "2001",
   pathBanner:
     "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@.jpg",
+  platforms: ["Netflix", "Amazon-Prime-Video"],
 };
+
+const watchedMoviesMock = [1, 2, 3, 4, 5, 6].map((fakeId) => {
+  return {
+    id: fakeId,
+    title: mockMovie.title,
+    pathBanner: mockMovie.pathBanner,
+    platforms: mockMovie.platforms,
+    liked: fakeId % 2 === 0,
+  };
+});
+
+const wantToWatchMoviesMock = [1, 2, 3, 4, 5, 6].map((fakeId) => {
+  return {
+    id: fakeId + 6,
+    title: mockMovie.title,
+    pathBanner: mockMovie.pathBanner,
+    platforms: mockMovie.platforms,
+  };
+});
 
 export const MovieLists: React.FC = () => {
   const styles = useStyles();
-  const [currentTab, setCurrentTab] = React.useState(0);
+  const [currentTab, setCurrentTab] = useState(0);
+  const [watchedMovies, setWatchedMovies] = useState(watchedMoviesMock);
+  const [wantToWatchMovies, setWantToWatchMovies] = useState(
+    wantToWatchMoviesMock
+  );
 
   const handleChange = (event: React.ChangeEvent<{}>, tab: number) => {
     setCurrentTab(tab);
   };
 
-  const renderCard = () => {
-    return (
-      <Card className={styles.movieItem}>
-        <CardMedia
-          className={styles.movieCover}
-          image={mockMovie.pathBanner}
-          title="movie cover"
-          component="img"
+  const handleLike = (id: number) => {
+    console.log(`Clicked LIKE on movie ${id}`);
+  };
+
+  const handleDislike = (id: number) => {
+    console.log(`Clicked DISLIKE on movie ${id}`);
+  };
+
+  const handleDelete = (id: number) => {
+    console.log(`Clicked DELETE on movie ${id}`);
+  };
+
+  const handleWatch = (id: number) => {
+    console.log(`Clicked WATCH on movie ${id}`);
+  };
+
+  const renderWatchedMovies = () => {
+    return watchedMovies.map((movie) => {
+      return (
+        <MovieCard
+          type="watched"
+          liked={movie.liked}
+          onDelete={handleDelete}
+          onLike={handleLike}
+          onDislike={handleDislike}
+          movie={{
+            id: movie.id,
+            title: movie.title,
+            pathBanner: movie.pathBanner,
+            platforms: movie.platforms,
+          }}
         />
+      );
+    });
+  };
 
-        <div className={styles.content}>
-          <Typography component="h6" variant="h6">
-            {mockMovie.title}
-          </Typography>
-
-          <div className={styles.bottomContent}>
-            <span className={styles.platforms}>
-              <Typography variant="body2">Disponível em:</Typography>
-              <span className={styles.platformIcons}>
-                <PlatformIcon
-                  className={styles.platformIcon}
-                  platform="Netflix"
-                />
-
-                <PlatformIcon
-                  className={styles.platformIcon}
-                  platform="Amazon-Prime-Video"
-                />
-              </span>
-            </span>
-
-            <span className={styles.bottomIcons}>
-              <IconButton
-                onClick={() => console.log("Like")}
-                color="primary"
-                className={styles.icon}
-              >
-                <ThumbUp fontSize="large" />
-              </IconButton>
-              <IconButton
-                onClick={() => console.log("Dislike")}
-                color="primary"
-                className={styles.icon}
-              >
-                <ThumbDownOutlined fontSize="large" />
-              </IconButton>
-            </span>
-          </div>
-        </div>
-      </Card>
-    );
+  const renderWantToWatchMovies = () => {
+    return wantToWatchMovies.map((movie) => {
+      return (
+        <MovieCard
+          type="wantsToWatch"
+          onDelete={handleDelete}
+          onWatch={handleWatch}
+          movie={{
+            id: movie.id,
+            title: movie.title,
+            pathBanner: movie.pathBanner,
+            platforms: movie.platforms,
+          }}
+        />
+      );
+    });
   };
 
   return (
-    <Container className={styles.container}>
-      <header className={styles.header}>
-        <IconButton
-          className={styles.backIcon}
-          onClick={() => console.log("Back")}
-        >
-          <ArrowBack fontSize="large" />
-        </IconButton>
-        <Typography variant="h5">Minhas Listas</Typography>
-      </header>
+    <div className={styles.root}>
+      <Container className={styles.container}>
+        <header className={styles.header}>
+          <IconButton
+            className={styles.backIcon}
+            onClick={() => console.log("Back")}
+          >
+            <ArrowBack fontSize="large" />
+          </IconButton>
+          <Typography variant="h5">Minhas Listas</Typography>
+        </header>
 
-      <Paper elevation={0} className={styles.tabsContainer}>
-        <Tabs
-          className={styles.tabs}
-          value={currentTab}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-        >
-          <Tab className={styles.tab} label="Quero Assistir" />
-          <Tab className={styles.tab} label="Já vi" />
-        </Tabs>
-      </Paper>
+        <Paper elevation={0} className={styles.tabsContainer}>
+          <Tabs
+            className={styles.tabs}
+            value={currentTab}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab className={styles.tab} tabIndex={0} label="Quero Assistir" />
+            <Tab className={styles.tab} tabIndex={1} label="Já vi" />
+          </Tabs>
+        </Paper>
 
-      <div className={styles.movieList}>
-        {renderCard()}
-        {renderCard()}
-        {renderCard()}
-        {renderCard()}
-        {renderCard()}
-        {renderCard()}
-        {renderCard()}
-        {renderCard()}
-      </div>
-    </Container>
+        <div className={styles.movieList}>
+          {currentTab === 0 ? renderWatchedMovies() : renderWantToWatchMovies()}
+        </div>
+      </Container>
+    </div>
   );
 };

@@ -2,16 +2,18 @@ import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    container: {
+    root: {
       height: "100%",
       minHeight: "100vh",
 
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "center",
-
       background:
         "linear-gradient(45deg, rgba(206,124,44,1) 0%, rgba(224,131,20,1) 50%, rgba(206,124,44,1) 100%)",
+    },
+
+    container: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-start",
     },
 
     header: {
@@ -36,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
       justifyContent: "center",
       alignItems: "center",
       justifySelf: "center",
-      width: "clamp(200px, 100%, 600px)",
+      width: "100%",
     },
 
     tab: {
@@ -49,56 +51,7 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       alignItems: "center",
 
-      marginTop: "24px",
-    },
-
-    movieItem: {
-      display: "flex",
-      width: "100%",
-      minHeight: "120px",
-      border: "none",
-
-      "&:not(:first-child)": {
-        marginTop: "8px",
-      },
-    },
-
-    movieCover: {
-      height: "auto",
-      width: "84px",
-    },
-
-    content: {
-      display: "flex",
-      flexDirection: "column",
-      justifyContent: "space-between",
-      width: "100%",
-      padding: "4px 8px",
-    },
-
-    bottomContent: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "flex-end",
-    },
-
-    platforms: {},
-
-    platformIcons: {
-      display: "flex",
-    },
-    platformIcon: {
-      width: "32px",
-      height: "32px",
-      "&:not(:first-child)": {
-        marginLeft: "4px",
-      },
-    },
-
-    bottomIcons: {},
-
-    icon: {
-      padding: "4px",
+      margin: "24px 0",
     },
   })
 );
