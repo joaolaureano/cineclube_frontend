@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 
 import {
   Container,
@@ -48,6 +49,7 @@ const wantToWatchMoviesMock = [1, 2, 3, 4, 5, 6].map((fakeId) => {
 });
 
 export const MovieLists: React.FC = () => {
+  const history = useHistory();
   const styles = useStyles();
   const [currentTab, setCurrentTab] = useState(0);
   const [watchedMovies, setWatchedMovies] = useState(watchedMoviesMock);
@@ -55,7 +57,11 @@ export const MovieLists: React.FC = () => {
     wantToWatchMoviesMock
   );
 
-  const handleChange = (event: React.ChangeEvent<{}>, tab: number) => {
+  const handleClickBack = () => {
+    history.goBack();
+  };
+
+  const handleListChange = (event: React.ChangeEvent<{}>, tab: number) => {
     setCurrentTab(tab);
   };
 
@@ -117,10 +123,7 @@ export const MovieLists: React.FC = () => {
     <div className={styles.root}>
       <Container className={styles.container}>
         <header className={styles.header}>
-          <IconButton
-            className={styles.backIcon}
-            onClick={() => console.log("Back")}
-          >
+          <IconButton className={styles.backIcon} onClick={handleClickBack}>
             <ArrowBack fontSize="large" />
           </IconButton>
           <Typography variant="h5">Minhas Listas</Typography>
@@ -130,7 +133,7 @@ export const MovieLists: React.FC = () => {
           <Tabs
             className={styles.tabs}
             value={currentTab}
-            onChange={handleChange}
+            onChange={handleListChange}
             indicatorColor="primary"
             textColor="primary"
             centered
