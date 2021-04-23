@@ -20,7 +20,6 @@ import ReplayIcon from "@material-ui/icons/Replay";
 import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
 import StarIcon from "@material-ui/icons/Star";
-import MenuIcon from "@material-ui/icons/Menu";
 import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
@@ -29,6 +28,7 @@ import { Movie } from "../../../../types/movie";
 import { MovieStateLogic } from "../Home";
 import netflix from "../../../../assets/images/platforms/Netflix.svg";
 import amazon from "../../../../assets/images/platforms/Amazon.svg";
+import TemporaryDrawer from "../../../../components/Menu";
 
 interface HomeDisplayProps {
   movie: Movie;
@@ -53,11 +53,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   return (
     <div className={classes.root}>
       <Container className={classes.container}>
-        {/* Botão Hamburger */}
+        {/* Botão Menu */}
         <div className={classes.topMenu}>
-          <IconButton color="primary" onClick={() => alert("menu")}>
-            <MenuIcon fontSize="large" />
-          </IconButton>
+          <TemporaryDrawer />
         </div>
 
         {/* Conteudo do Filme */}
