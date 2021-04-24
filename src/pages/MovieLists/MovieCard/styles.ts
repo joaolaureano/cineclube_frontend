@@ -23,20 +23,22 @@ const useStyles = makeStyles((theme: Theme) =>
       flexDirection: "column",
       justifyContent: "space-between",
       width: "100%",
-      padding: "4px 8px",
+      padding: "4px 8px 4px 8px",
     },
 
     topContent: {
       display: "flex",
       justifyContent: "space-between",
-      alignItems: "flex-start",
+      alignItems: "center",
+      minHeight: "36px",
     },
 
     movieTitle: {
+      fontSize: "1.35rem",
       fontStyle: "italic",
       fontWeight: 600,
       textTransform: "uppercase",
-      lineHeight: "1.25rem",
+      lineHeight: "1.5rem",
     },
 
     bottomContent: {
