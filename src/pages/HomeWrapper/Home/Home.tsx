@@ -57,8 +57,7 @@ export const Home: React.FC<HomeProps> = (props) => {
 
   const handleClickWatchedAndLiked = () => {
     openSnackbar("Já assiti", "success");
-
-    setOpenModal(!openModal);
+    incrementSelectedMovie();
   };
   const handleClickLikeOrNotMovie = () => {};
   const handleClickUndoLastAction = () => {
@@ -73,29 +72,30 @@ export const Home: React.FC<HomeProps> = (props) => {
 
   const handleClickWantoWatch = () => {
     openSnackbar("Quero assistir", "success");
-    incrementSelectedMovie();
+
+    setOpenModal(!openModal);
   };
 
   const handleClickDislikedMovie = async () => {
     console.log("Disliked");
-    const movieID = getSelectedMovie().id;
+    const movieID = String(getSelectedMovie().id);
     setOpenModal(!openModal);
-    // await UserService.setMovieStatus({
-    //   id: movieID,
-    //   status: MovieUserStatus.WATCHED_AND_DISLIKED,
-    // });
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.WATCHED_AND_DISLIKED,
+    });
     incrementSelectedMovie();
   };
 
   const handleClickLikedMovie = async () => {
     console.log("Liked");
-    const movieID = getSelectedMovie().id;
+    const movieID = String(getSelectedMovie().id);
     setOpenModal(!openModal);
 
-    // await UserService.setMovieStatus({
-    //   id: movieID,
-    //   status: MovieUserStatus.WATCHED_AND_LIKED,
-    // });
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.WATCHED_AND_LIKED,
+    });
     incrementSelectedMovie();
   };
 

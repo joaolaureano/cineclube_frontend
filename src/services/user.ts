@@ -3,7 +3,7 @@ import { User } from "../types/user";
 import { MovieUserStatus } from "../types/userMovieStatus";
 
 interface PutMoviePayload {
-  id: number;
+  id: string;
   status: MovieUserStatus;
 }
 
