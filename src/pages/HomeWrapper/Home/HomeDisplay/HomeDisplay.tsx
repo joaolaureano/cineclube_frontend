@@ -2,6 +2,7 @@ import React from "react";
 import {
   AppBar,
   Divider,
+  Box,
   // Toolbar,
   Container,
   IconButton,
@@ -27,6 +28,7 @@ import useStyles from "./styles";
 import { Movie } from "../../../../types/movie";
 import { MovieStateLogic } from "../Home";
 import { PlatformIcon } from "../../../../components/PlatformIcon";
+import { join } from "node:path";
 
 interface HomeDisplayProps {
   movie: Movie;
@@ -68,6 +70,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               {`(${movie.originalTitle})`} <br />
               {movie.year}
             </Typography>
+            <Typography variant="caption" display="block" gutterBottom>
+              {movie.duration}min
+            </Typography>
             <Typography variant="body1" color="textPrimary" component="p">
               {movie.synopsis}
             </Typography>
@@ -83,6 +88,38 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
                 );
               })}
             </AvatarGroup>
+
+            <div>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                className={classes.director}
+              >
+                Direção:&nbsp;
+              </Typography>
+            </div>
+            <div>
+              <Typography className={classes.director}>
+                {movie.director}
+              </Typography>
+            </div>
+
+            <div>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                className={classes.cast}
+              >
+                Elenco principal:&nbsp;
+              </Typography>
+            </div>
+            <div>
+              {movie.cast && (
+                <Typography className={classes.cast}>
+                  {movie.cast.join(", ")}
+                </Typography>
+              )}
+            </div>
 
             <div className={classes.tags}>
               {movie.moviesTags.map(({ tag }) => {

@@ -12,8 +12,9 @@ export interface Movie {
   pathBanner: string;
   platforms: Platform[];
   moviesTags: MoviesTags[];
-  // createdAt: Date;
-  // updatedAt: Date;
+  director: string;
+  duration: number;
+  cast: string[];
 }
 
 export interface MoviesDto {
