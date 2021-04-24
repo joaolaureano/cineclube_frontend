@@ -71,8 +71,6 @@ export const Home: React.FC<HomeProps> = (props) => {
   };
 
   const handleClickWantoWatch = () => {
-    openSnackbar("Quero assistir", "success");
-
     setOpenModal(!openModal);
   };
 
@@ -85,6 +83,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       status: MovieUserStatus.WATCHED_AND_DISLIKED,
     });
     incrementSelectedMovie();
+    openSnackbar("Não quero assistir", "info");
   };
 
   const handleClickLikedMovie = async () => {
@@ -97,6 +96,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       status: MovieUserStatus.WATCHED_AND_LIKED,
     });
     incrementSelectedMovie();
+    openSnackbar("Quero assistir", "info");
   };
 
   const useStateLogic: MovieStateLogic = {
