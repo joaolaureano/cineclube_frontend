@@ -13,6 +13,7 @@ const user = {
       transformResponse: parseUser,
     });
   },
+
   setMovieStatus: (data: PutMoviePayload) => {
     const { id, status } = data;
     return api.post("/user/movie", {
