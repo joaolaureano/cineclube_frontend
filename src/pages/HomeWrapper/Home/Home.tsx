@@ -83,7 +83,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       status: MovieUserStatus.WATCHED_AND_DISLIKED,
     });
     incrementSelectedMovie();
-    openSnackbar("Não quero assistir", "info");
+    openSnackbar("Não gostei do filme", "info");
   };
 
   const handleClickLikedMovie = async () => {
@@ -96,7 +96,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       status: MovieUserStatus.WATCHED_AND_LIKED,
     });
     incrementSelectedMovie();
-    openSnackbar("Quero assistir", "info");
+    openSnackbar("Gostei do filme", "info");
   };
 
   const useStateLogic: MovieStateLogic = {
