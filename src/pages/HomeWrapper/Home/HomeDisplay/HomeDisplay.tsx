@@ -114,11 +114,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               </Typography>
             </div>
             <div>
-              {movie.cast && (
-                <Typography className={classes.cast}>
-                  {movie.cast.join(", ")}
-                </Typography>
-              )}
+              <Typography className={classes.cast}>
+                {movie.actors.join(", ")}
+              </Typography>
             </div>
 
             <div className={classes.tags}>

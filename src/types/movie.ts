@@ -14,11 +14,38 @@ export interface Movie {
   moviesTags: MoviesTags[];
   director: string;
   duration: number;
-  cast: string[];
+  actors: string[];
+}
+
+export interface ActorDto {
+  id: number;
+  name: string;
+}
+
+export interface CastDto {
+  actorId: number;
+  movieId: number;
+  director: boolean;
+  actor: ActorDto;
+}
+
+export interface MovieDto {
+  id: number;
+  title: string;
+  originalTitle: string;
+  synopsis: string;
+  critic: string;
+  curator: string;
+  year: number;
+  pathBanner: string;
+  platforms: Platform[];
+  moviesTags: MoviesTags[];
+  duration: number;
+  cast: CastDto[];
 }
 
 export interface MoviesDto {
-  movies: Movie[];
+  movies: MovieDto[];
   movieIds: number[];
 }
 
