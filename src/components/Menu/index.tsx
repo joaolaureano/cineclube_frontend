@@ -8,7 +8,7 @@ import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import ListIcon from "@material-ui/icons/List";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { Container, IconButton } from "@material-ui/core";
+import { Container, IconButton, Grid } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./styles";
 
@@ -38,7 +38,7 @@ export default function TemporaryDrawer() {
 
   const list = (anchor: Anchor) => (
     <div
-      className={classes.list}
+      className={classes.test}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -50,39 +50,55 @@ export default function TemporaryDrawer() {
         <MoreVertIcon fontSize="large" />
       </IconButton>
       <List>
-        <ListItem button key="Perfil" onClick={() => alert("Perfil")}>
+        <ListItem
+          className={classes.textIcon}
+          button
+          key="Perfil"
+          onClick={() => alert("Perfil")}
+        >
           <ListItemText primary="Perfil" className={classes.text} />
           <ListItemIcon>
-            <Container>
+            <Container className={classes.borderIcon}>
               <PermIdentityIcon className={classes.icon} />
             </Container>
           </ListItemIcon>
         </ListItem>
-        <ListItem button key="Listas" onClick={() => alert("Listas")}>
+        <ListItem
+          className={classes.textIcon}
+          button
+          key="Listas"
+          onClick={() => alert("Listas")}
+        >
           <ListItemText primary="Listas" className={classes.text} />
           <ListItemIcon>
-            <Container>
+            <Container className={classes.borderIcon}>
               <ListIcon className={classes.icon} />
             </Container>
           </ListItemIcon>
         </ListItem>
-        <ListItem button key="Conquistas" onClick={() => alert("Conquistas")}>
+        <ListItem
+          className={classes.textIcon}
+          button
+          key="Conquistas"
+          onClick={() => alert("Conquistas")}
+        >
           <ListItemText primary="Conquistas" className={classes.text} />
           <ListItemIcon>
-            <Container>
+            <Container className={classes.borderIcon}>
               <EmojiEventsIcon className={classes.icon} />
             </Container>
           </ListItemIcon>
         </ListItem>
         <ListItem
+          className={classes.textIcon}
           button
           key="Configuração"
           onClick={() => alert("Configuração")}
         >
           <ListItemText primary="Configuração" className={classes.text} />
-          <ListItemIcon>
-            <Container>
-              <SettingsIcon className={classes.icon} />
+          <ListItemIcon className={classes.icon}>
+            <Container className={classes.borderIcon}>
+              <SettingsIcon />
             </Container>
           </ListItemIcon>
         </ListItem>
@@ -93,7 +109,10 @@ export default function TemporaryDrawer() {
   return (
     <div>
       <React.Fragment key="drawer">
-        <IconButton color="default" onClick={toggleDrawer("right", true)}>
+        <IconButton
+          className={classes.icon2}
+          onClick={toggleDrawer("right", true)}
+        >
           <MoreVertIcon fontSize="large" />
         </IconButton>
         <Drawer

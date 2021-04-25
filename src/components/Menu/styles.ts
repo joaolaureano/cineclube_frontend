@@ -2,22 +2,42 @@ import { createStyles, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) =>
   createStyles({
-    list: {
-      width: 200,
-    },
     paper: {
-      height: 400,
+      margin: 0,
+      padding: 0,
+      height: 280,
+      maxWidth: "900px",
+      maxHeight: "900px",
+      overflow: "hidden",
       background: theme.palette.primary.main,
     },
     icon: {
-      color: theme.palette.background.default,
+      color: theme.palette.primary.main,
     },
     icon2: {
-      color: "default",
+      width: 180,
+      justifyContent: "flex-end",
     },
     text: {
-      fontFamily: theme.typography.fontFamily,
+      textAlign: "right",
       color: theme.palette.text.primary,
+      fontWeightBold: 400,
+    },
+    borderIcon: {
+      padding: 0,
+      justifyContent: "center",
+      alignItems: "center",
+      width: 25,
+      height: 35,
+      display: "flex",
+      background: theme.palette.background.default,
+      borderRadius: "15px 15px 15px 15px",
+    },
+    textIcon: {
+      width: 190,
+    },
+    test: {
+      margin: 0,
     },
   })
 );
