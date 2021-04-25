@@ -8,7 +8,7 @@ import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import ListIcon from "@material-ui/icons/List";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import SettingsIcon from "@material-ui/icons/Settings";
-import { Container, IconButton, Grid } from "@material-ui/core";
+import { Container, IconButton, Typography } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./styles";
 
@@ -55,7 +55,9 @@ export default function TemporaryDrawer() {
           key="Perfil"
           onClick={() => alert("Perfil")}
         >
-          <ListItemText primary="Perfil" className={classes.text} />
+          <ListItemText
+            primary={<Typography className={classes.text}>Perfil</Typography>}
+          />
           <ListItemIcon>
             <Container className={classes.borderIcon}>
               <PermIdentityIcon className={classes.icon} />
@@ -68,7 +70,9 @@ export default function TemporaryDrawer() {
           key="Listas"
           onClick={() => alert("Listas")}
         >
-          <ListItemText primary="Listas" className={classes.text} />
+          <ListItemText
+            primary={<Typography className={classes.text}>Listas</Typography>}
+          />
           <ListItemIcon>
             <Container className={classes.borderIcon}>
               <ListIcon className={classes.icon} />
@@ -81,7 +85,11 @@ export default function TemporaryDrawer() {
           key="Conquistas"
           onClick={() => alert("Conquistas")}
         >
-          <ListItemText primary="Conquistas" className={classes.text} />
+          <ListItemText
+            primary={
+              <Typography className={classes.text}>Conquistas</Typography>
+            }
+          />
           <ListItemIcon>
             <Container className={classes.borderIcon}>
               <EmojiEventsIcon className={classes.icon} />
@@ -94,7 +102,11 @@ export default function TemporaryDrawer() {
           key="Configuração"
           onClick={() => alert("Configuração")}
         >
-          <ListItemText primary="Configuração" className={classes.text} />
+          <ListItemText
+            primary={
+              <Typography className={classes.text}>Configuração</Typography>
+            }
+          />
           <ListItemIcon className={classes.icon}>
             <Container className={classes.borderIcon}>
               <SettingsIcon />

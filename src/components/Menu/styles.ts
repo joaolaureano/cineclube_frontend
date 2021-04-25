@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) =>
     text: {
       textAlign: "right",
       color: theme.palette.text.primary,
-      fontWeightBold: 600,
+      fontWeight: "bold",
     },
     borderIcon: {
       padding: 0,
