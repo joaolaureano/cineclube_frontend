@@ -6,6 +6,7 @@ const useStyles = makeStyles((theme) =>
       margin: 0,
       padding: 0,
       height: 280,
+      width: 170,
       maxWidth: "900px",
       maxHeight: "900px",
       overflow: "hidden",
@@ -15,13 +16,13 @@ const useStyles = makeStyles((theme) =>
       color: theme.palette.primary.main,
     },
     icon2: {
-      width: 180,
+      width: 170,
       justifyContent: "flex-end",
     },
     text: {
       textAlign: "right",
       color: theme.palette.text.primary,
-      fontWeightBold: 400,
+      fontWeightBold: 600,
     },
     borderIcon: {
       padding: 0,
@@ -34,11 +35,11 @@ const useStyles = makeStyles((theme) =>
       borderRadius: "15px 15px 15px 15px",
     },
     textIcon: {
-      width: 190,
+      width: 170,
+      paddingLeft: 0,
+      paddingRight: 0,
     },
-    test: {
-      margin: 0,
-    },
+    test: {},
   })
 );
 

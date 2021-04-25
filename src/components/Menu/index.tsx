@@ -38,7 +38,6 @@ export default function TemporaryDrawer() {
 
   const list = (anchor: Anchor) => (
     <div
-      className={classes.test}
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
@@ -49,7 +48,7 @@ export default function TemporaryDrawer() {
       >
         <MoreVertIcon fontSize="large" />
       </IconButton>
-      <List>
+      <List className={classes.test}>
         <ListItem
           className={classes.textIcon}
           button
