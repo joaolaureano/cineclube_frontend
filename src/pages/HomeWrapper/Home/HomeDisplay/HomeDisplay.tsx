@@ -1,54 +1,32 @@
 import React from "react";
-import {
-  AppBar,
-  Divider,
-  // Toolbar,
-  Container,
-  IconButton,
-  // Grid,
-  // ButtonGroup,
-} from "@material-ui/core";
-// import Card from "@material-ui/core/Card";
-// import CardActionArea from "@material-ui/core/CardActionArea";
-// import CardActions from "@material-ui/core/CardActions";
-// import CardContent from "@material-ui/core/CardContent";
-// import CardMedia from "@material-ui/core/CardMedia";
-// import Button from "@material-ui/core/Button";
+import { AppBar, Divider, Container, IconButton } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import ReplayIcon from "@material-ui/icons/Replay";
 import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
 import StarIcon from "@material-ui/icons/Star";
+import MenuIcon from "@material-ui/icons/Menu";
 import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 import useStyles from "./styles";
 import { Movie } from "../../../../types/movie";
 import { MovieStateLogic } from "../Home";
-import netflix from "../../../../assets/images/platforms/Netflix.svg";
-import amazon from "../../../../assets/images/platforms/Amazon.svg";
+import { LikeModal } from "../../../../components/LikeModal";
+import { PlatformIcon } from "../../../../components/PlatformIcon";
 import TemporaryDrawer from "../../../../components/Menu";
 
 interface HomeDisplayProps {
   movie: Movie;
   logic: MovieStateLogic;
+  modalLiked: boolean;
 }
 
 export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const classes = useStyles();
 
-  const { movie, logic } = props;
-
-  function getStreaming(s: string) {
-    if (s === "Netflix") {
-      return netflix;
-    } else if (s === "Amazon-Prime-Video") {
-      return amazon;
-    } else {
-      return "not found";
-    }
-  }
+  const { movie, logic, modalLiked } = props;
 
   return (
     <div className={classes.root}>
@@ -85,11 +63,10 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             <AvatarGroup className={classes.platforms}>
               {movie.platforms.map(({ name }) => {
                 return (
-                  <Avatar
+                  <PlatformIcon
                     className={classes.platform}
-                    alt={name}
                     variant="rounded"
-                    src={getStreaming(name)}
+                    platform={name}
                   />
                 );
               })}
@@ -146,6 +123,13 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             >
               <StarIcon fontSize="large" />
             </IconButton>
+            <LikeModal
+              open={modalLiked}
+              like={logic.functions.handleClickLikedMovie}
+              dislike={logic.functions.handleClickDislikedMovie}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            />
           </div>
         </AppBar>
       </Container>
