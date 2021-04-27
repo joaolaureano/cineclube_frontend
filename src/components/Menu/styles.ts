@@ -5,19 +5,37 @@ const useStyles = makeStyles((theme) =>
     paper: {
       margin: 0,
       padding: 0,
-      height: 280,
+      height: 300,
       width: 170,
       maxWidth: "900px",
       maxHeight: "900px",
       overflow: "hidden",
-      background: theme.palette.primary.main,
+      borderRadius: "0 0 0 2rem",
+      background: `linear-gradient(45deg, rgba(206,124,44,1) 0%, rgba(247, 155, 51, 1) 50%, rgba(206,124,44,1) 100%)`,
     },
+    menuContainer: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "flex-end",
+      alignItems: "flex-end",
+    },
+
     icon: {
       color: theme.palette.primary.main,
     },
     icon2: {
-      width: 170,
       justifyContent: "flex-end",
+      padding: 0,
+    },
+    iconButtonMenu: {
+      padding: "0.5rem",
+    },
+    iconImg: {
+      fontSize: "3rem",
+      marginRight: "-1rem",
+    },
+    iconMenuImg: {
+      fontSize: "3rem",
     },
     text: {
       textAlign: "right",

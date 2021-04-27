@@ -42,12 +42,13 @@ export default function TemporaryDrawer() {
       role="presentation"
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
+      className={classes.menuContainer}
     >
       <IconButton
-        className={classes.icon2}
+        className={[classes.icon2, classes.iconButtonMenu].join(" ")}
         onClick={toggleDrawer("right", false)}
       >
-        <MoreVertIcon fontSize="large" />
+        <MoreVertIcon fontSize="large" className={classes.iconMenuImg} />
       </IconButton>
       <List className={classes.test}>
         <ListItem
@@ -125,7 +126,7 @@ export default function TemporaryDrawer() {
           className={classes.icon2}
           onClick={toggleDrawer("right", true)}
         >
-          <MoreVertIcon fontSize="large" />
+          <MoreVertIcon fontSize="large" className={classes.iconImg} />
         </IconButton>
         <Drawer
           anchor="right"

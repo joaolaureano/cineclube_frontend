@@ -6,8 +6,6 @@ import ReplayIcon from "@material-ui/icons/Replay";
 import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
 import StarIcon from "@material-ui/icons/Star";
-import MenuIcon from "@material-ui/icons/Menu";
-import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 import useStyles from "./styles";
@@ -16,6 +14,7 @@ import { MovieStateLogic } from "../Home";
 import { LikeModal } from "../../../../components/LikeModal";
 import { PlatformIcon } from "../../../../components/PlatformIcon";
 import TemporaryDrawer from "../../../../components/Menu";
+import logoImg from "../../../../assets/images/logos/home-logo.png";
 
 interface HomeDisplayProps {
   movie: Movie;
@@ -33,11 +32,12 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
       <Container className={classes.container}>
         {/* Botão Menu */}
         <div className={classes.topMenu}>
+          <img src={logoImg} alt="Cinehal logo" className={classes.logo} />
           <TemporaryDrawer />
         </div>
 
         {/* Conteudo do Filme */}
-        <Container>
+        <Container className={classes.content}>
           <img
             src={movie.pathBanner}
             alt="movie cover"
@@ -52,11 +52,28 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             >
               {movie.title}
             </Typography>
-            <Typography gutterBottom variant="body1" component="p">
-              {`(${movie.originalTitle})`} <br />
+            <Typography
+              className={classes.originalTitle}
+              gutterBottom
+              variant="body1"
+              component="p"
+            >
+              {`(${movie.originalTitle})`}
+            </Typography>
+            <Typography
+              className={classes.year}
+              gutterBottom
+              variant="body1"
+              component="p"
+            >
               {movie.year}
             </Typography>
-            <Typography variant="body1" color="textPrimary" component="p">
+            <Typography
+              className={classes.synopsis}
+              variant="body1"
+              color="textPrimary"
+              component="p"
+            >
               {movie.synopsis}
             </Typography>
 
