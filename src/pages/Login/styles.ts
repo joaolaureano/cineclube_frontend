@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: "900px",
 
       background: theme.palette.background.default,
-      borderRadius: "25px 25px 0 0",
+      borderRadius: "50px 50px 0 0",
 
       marginTop: "-50px",
     },
