@@ -6,10 +6,11 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       width: "100%",
+      height: "3.2rem",
 
       marginTop: "38px",
       padding: "8px 16px",
-      borderRadius: "4px",
+      borderRadius: "32px",
 
       boxShadow: "0px 1px 4px rgb(0 0 0 / 5%), 0px 4px 16px rgb(0 0 0 / 6%)",
       background: "#fff",
@@ -24,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     text: {
+      fontSize: "1.2rem",
       color: theme.palette.text.primary,
       textAlign: "center",
       width: "100%",
