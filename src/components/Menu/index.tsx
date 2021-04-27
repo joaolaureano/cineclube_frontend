@@ -8,14 +8,15 @@ import PermIdentityIcon from "@material-ui/icons/PermIdentity";
 import ListIcon from "@material-ui/icons/List";
 import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
 import SettingsIcon from "@material-ui/icons/Settings";
+import { useHistory } from "react-router-dom";
 import { Container, IconButton, Typography } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./styles";
-
 type Anchor = "right";
 
 export default function TemporaryDrawer() {
   const classes = useStyles();
+  const history = useHistory();
   const [state, setState] = React.useState({
     right: false,
   });
@@ -68,7 +69,7 @@ export default function TemporaryDrawer() {
           className={classes.textIcon}
           button
           key="Listas"
-          onClick={() => alert("Listas")}
+          onClick={() => history.push("/user/movies")}
         >
           <ListItemText
             primary={<Typography className={classes.text}>Listas</Typography>}
