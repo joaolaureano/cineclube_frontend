@@ -2,10 +2,7 @@ import React from "react";
 import { AppBar, Divider, Container, IconButton } from "@material-ui/core";
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
-import ReplayIcon from "@material-ui/icons/Replay";
-import ClearIcon from "@material-ui/icons/Clear";
-import CheckIcon from "@material-ui/icons/Check";
-import StarIcon from "@material-ui/icons/Star";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 import useStyles from "./styles";
@@ -97,9 +94,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
                     variant="outlined"
                     size="small"
                     label={tag.name}
-                    color="primary"
                     key={tag.name}
                     className={classes.tag}
+                    icon={<FiberManualRecordIcon />}
                   />
                 );
               })}
