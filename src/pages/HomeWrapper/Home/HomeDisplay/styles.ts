@@ -52,17 +52,19 @@ const useStyles = makeStyles((theme) => {
 
     movieTitle: {
       fontSize: "1.8rem",
-      marginBottom: "-0.125rem",
-      textTransform: "uppercase",
       fontWeight: 700,
       fontStyle: "italic",
+      fontFamily: "Barlow Condensed, sans-serif",
+      textTransform: "uppercase",
+      marginBottom: "-0.1rem",
     },
 
     originalTitle: {
       fontSize: "0.93rem",
       fontWeight: 400,
+      fontFamily: "Barlow Condensed, sans-serif",
       textTransform: "uppercase",
-      marginBottom: "-0.125rem",
+      marginBottom: "-0.1rem",
     },
 
     year: {
@@ -70,6 +72,7 @@ const useStyles = makeStyles((theme) => {
       color: theme.palette.primary.main,
       fontWeight: 600,
       fontStyle: "italic",
+      marginBottom: "1rem",
     },
     synopsis: {
       lineHeight: "1.4rem",

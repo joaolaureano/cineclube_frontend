@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
     },
 
     movieTitle: {
-      fontSize: "1.35rem",
+      fontFamily: "Barlow Condensed, sans-serif",
+      fontSize: "1.8rem",
       fontStyle: "italic",
       fontWeight: 600,
       textTransform: "uppercase",
