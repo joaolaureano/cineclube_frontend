@@ -1,5 +1,7 @@
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 
+import background from "../../assets/images/backgrounds/background.png";
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -25,7 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
       marginTop: "-50px",
 
-      background: theme.palette.primary.main,
+      background: `linear-gradient(45deg, rgba(206,124,44,1) 0%, rgba(247, 155, 51, 1) 50%, rgba(206,124,44,1) 100%)`,
+    },
+
+    logo: {
+      width: "300px",
     },
 
     container: {
@@ -48,12 +54,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
     subTitle: {
       margin: "0 28px 16px 28px",
-    },
-
-    placeholderLogo: {
-      background: theme.palette.primary.dark,
-      width: "160px",
-      height: "90px",
     },
   })
 );
