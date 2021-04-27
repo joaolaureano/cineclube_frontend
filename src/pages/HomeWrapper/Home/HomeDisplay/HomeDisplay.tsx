@@ -15,6 +15,7 @@ import { LikeModal } from "../../../../components/LikeModal";
 import { PlatformIcon } from "../../../../components/PlatformIcon";
 import TemporaryDrawer from "../../../../components/Menu";
 import logoImg from "../../../../assets/images/logos/home-logo.png";
+import { CustomIcon } from "../../../../components/CustomIcon";
 
 interface HomeDisplayProps {
   movie: Movie;
@@ -114,7 +115,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               aria-label="undo"
               color="primary"
             >
-              <ReplayIcon fontSize="large" />
+              <CustomIcon type="undo" />
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <IconButton
@@ -122,7 +123,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               aria-label="dislike"
               color="primary"
             >
-              <ClearIcon fontSize="large" />
+              <CustomIcon type="dontWantToWatch" />
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <IconButton
@@ -130,7 +131,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               aria-label="like"
               color="primary"
             >
-              <CheckIcon fontSize="large" />
+              <CustomIcon type="wantToWatch" />
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <IconButton
@@ -138,7 +139,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               aria-label="star"
               color="primary"
             >
-              <StarIcon fontSize="large" />
+              <CustomIcon type="watched" />
             </IconButton>
             <LikeModal
               open={modalLiked}

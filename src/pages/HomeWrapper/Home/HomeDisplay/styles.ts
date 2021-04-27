@@ -14,7 +14,7 @@ const useStyles = makeStyles((theme) => {
       alignItems: "center",
 
       height: "100%",
-      paddingBottom: "65px",
+      paddingBottom: "4.7rem",
 
       background: theme.palette.background.default,
     },
