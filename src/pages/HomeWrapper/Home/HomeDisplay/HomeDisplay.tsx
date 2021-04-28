@@ -67,8 +67,13 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             >
               {movie.year}
             </Typography>
-            <Typography variant="caption" display="block" gutterBottom>
-              {movie.duration}min
+            <Typography
+              className={classes.duration}
+              variant="caption"
+              display="block"
+              gutterBottom
+            >
+              {`${movie.duration} MIN`}
             </Typography>
             <Typography
               className={classes.synopsis}

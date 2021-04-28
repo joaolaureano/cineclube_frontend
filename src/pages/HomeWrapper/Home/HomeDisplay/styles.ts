@@ -72,8 +72,13 @@ const useStyles = makeStyles((theme) => {
       color: theme.palette.primary.main,
       fontWeight: 600,
       fontStyle: "italic",
+      marginBottom: "-0.05rem",
+    },
+
+    duration: {
       marginBottom: "1rem",
     },
+
     synopsis: {
       lineHeight: "1.4rem",
     },
