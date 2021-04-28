@@ -78,12 +78,15 @@ const useStyles = makeStyles((theme) => {
       lineHeight: "1.4rem",
     },
 
-    platforms: { padding: "1rem 0 0.75rem 0" },
-    director: {
-      display: "inline-block",
-    },
+    platforms: { padding: "1rem 0" },
+
     cast: {
-      display: "inline-block",
+      display: "inline",
+    },
+
+    castNames: {
+      fontWeight: 700,
+      textTransform: "uppercase",
     },
 
     platform: {
@@ -92,7 +95,7 @@ const useStyles = makeStyles((theme) => {
     },
 
     tags: {
-      padding: "10px 0 0 0",
+      padding: "1rem 0 0 0",
     },
 
     tag: {

@@ -95,13 +95,13 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               <Typography
                 variant="body1"
                 color="textPrimary"
-                className={classes.director}
+                className={classes.cast}
               >
                 Direção:&nbsp;
               </Typography>
-            </div>
-            <div>
-              <Typography className={classes.director}>
+              <Typography
+                className={[classes.cast, classes.castNames].join(" ")}
+              >
                 {movie.director}
               </Typography>
             </div>
@@ -114,9 +114,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               >
                 Elenco principal:&nbsp;
               </Typography>
-            </div>
-            <div>
-              <Typography className={classes.cast}>
+              <Typography
+                className={[classes.cast, classes.castNames].join(" ")}
+              >
                 {movie.actors.join(", ")}
               </Typography>
             </div>
