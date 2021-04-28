@@ -15,7 +15,7 @@ export interface MovieStateLogic {
 }
 
 interface MovieStateLogicFunctions {
-  handleClickWatchedAndLiked: () => void;
+  handleClickWatched: () => void;
   handleClickUndoLastAction: () => void;
   handleClickDidntLike: () => void;
   handleClickWantoWatch: () => void;
@@ -56,8 +56,14 @@ export const Home: React.FC<HomeProps> = (props) => {
     setSelectedMovieIndex(newMovieIndex);
   };
 
-  const handleClickWatchedAndLiked = () => {
-    openSnackbar("Já assiti", "success");
+  const handleClickWantoWatch = async () => {
+    openSnackbar("Quero assistir", "info");
+
+    const movieID = String(getSelectedMovie().id);
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.WANT_TO_WATCH,
+    });
     incrementSelectedMovie();
   };
   const handleClickLikeOrNotMovie = () => {};
@@ -71,7 +77,7 @@ export const Home: React.FC<HomeProps> = (props) => {
     incrementSelectedMovie();
   };
 
-  const handleClickWantoWatch = () => {
+  const handleClickWatched = () => {
     setOpenModal(!openModal);
   };
 
@@ -106,7 +112,7 @@ export const Home: React.FC<HomeProps> = (props) => {
 
   const useStateLogic: MovieStateLogic = {
     functions: {
-      handleClickWatchedAndLiked,
+      handleClickWatched,
       handleClickUndoLastAction,
       handleClickDidntLike,
       handleClickWantoWatch,
