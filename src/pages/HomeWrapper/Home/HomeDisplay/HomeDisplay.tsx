@@ -127,6 +127,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               open={modalLiked}
               like={logic.functions.handleClickLikedMovie}
               dislike={logic.functions.handleClickDislikedMovie}
+              onClose={logic.functions.handleCloseModal}
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
             />

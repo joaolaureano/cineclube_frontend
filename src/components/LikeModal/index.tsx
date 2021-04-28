@@ -10,13 +10,14 @@ interface ModalProps {
   open: boolean;
   like: () => void;
   dislike: () => void;
+  onClose: () => void;
 }
 
 export const LikeModal: React.FC<ModalProps> = (props: ModalProps) => {
   const classes = useStyles();
 
   return (
-    <CustomModal open={props.open}>
+    <CustomModal open={props.open} onClose={props.onClose}>
       <div className={classes.modalParent}>
         <Typography variant="h5" color="textPrimary">
           Você gostou do filme ?

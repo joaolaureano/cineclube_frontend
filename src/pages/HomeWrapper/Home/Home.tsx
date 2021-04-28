@@ -22,6 +22,7 @@ interface MovieStateLogicFunctions {
   handleClickLikeOrNotMovie: () => void;
   handleClickLikedMovie: () => void;
   handleClickDislikedMovie: () => void;
+  handleCloseModal: () => void;
 }
 
 export const Home: React.FC<HomeProps> = (props) => {
@@ -99,6 +100,10 @@ export const Home: React.FC<HomeProps> = (props) => {
     openSnackbar("Gostei do filme", "info");
   };
 
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   const useStateLogic: MovieStateLogic = {
     functions: {
       handleClickWatchedAndLiked,
@@ -108,6 +113,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       handleClickLikeOrNotMovie,
       handleClickLikedMovie,
       handleClickDislikedMovie,
+      handleCloseModal,
     },
   };
 
