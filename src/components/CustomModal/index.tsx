@@ -10,6 +10,7 @@ interface ModalProps {
     | (new (props: any) => Component<any, any, any>)
   >;
   open: boolean;
+  onClose: () => void;
 }
 
 export const CustomModal: React.FC<ModalProps> = (props: ModalProps) => {
@@ -17,7 +18,11 @@ export const CustomModal: React.FC<ModalProps> = (props: ModalProps) => {
 
   return (
     <div className={classes.modalParent}>
-      <Modal open={props.open} className={classes.modal} disableBackdropClick>
+      <Modal
+        open={props.open}
+        className={classes.modal}
+        onClose={props.onClose}
+      >
         <div className={classes.modalBorder}>{props.children}</div>
       </Modal>
     </div>
