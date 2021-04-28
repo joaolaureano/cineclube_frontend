@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams, RouteComponentProps } from "react-router-dom";
 
 import {
   Container,
@@ -14,6 +14,10 @@ import { ArrowBack } from "@material-ui/icons";
 
 import useStyles from "./styles";
 import { MovieCard } from "./MovieCard";
+
+interface Params {
+  list: "watched" | "wantToWatch";
+}
 
 const mockMovie = {
   id: 15,
@@ -48,10 +52,14 @@ const wantToWatchMoviesMock = [1, 2, 3, 4, 5, 6].map((fakeId) => {
   };
 });
 
-export const MovieLists: React.FC = () => {
+export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
   const history = useHistory();
   const styles = useStyles();
-  const [currentTab, setCurrentTab] = useState(0);
+
+  const { list } = match.params;
+  const defaultList = list === "watched" ? 1 : 0;
+  const [currentTab, setCurrentTab] = useState(defaultList);
+
   const [watchedMovies, setWatchedMovies] = useState(watchedMoviesMock);
   const [wantToWatchMovies, setWantToWatchMovies] = useState(
     wantToWatchMoviesMock
