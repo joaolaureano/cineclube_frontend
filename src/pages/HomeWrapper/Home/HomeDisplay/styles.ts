@@ -13,6 +13,12 @@ const useStyles = makeStyles((theme) => {
     hamburger: {
       float: "left",
     },
+    director: {
+      display: "inline-block",
+    },
+    cast: {
+      display: "inline-block",
+    },
     platforms: { padding: "8px 0 0 0" },
     platform: {
       width: theme.spacing(7),
