@@ -1,53 +1,38 @@
 import React from "react";
-import {
-  AppBar,
-  Divider,
-  Box,
-  // Toolbar,
-  Container,
-  IconButton,
-  // Grid,
-  // ButtonGroup,
-} from "@material-ui/core";
-// import Card from "@material-ui/core/Card";
-// import CardActionArea from "@material-ui/core/CardActionArea";
-// import CardActions from "@material-ui/core/CardActions";
-// import CardContent from "@material-ui/core/CardContent";
-// import CardMedia from "@material-ui/core/CardMedia";
-// import Button from "@material-ui/core/Button";
+import { AppBar, Divider, Container, IconButton } from "@material-ui/core";
+
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import ReplayIcon from "@material-ui/icons/Replay";
 import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
 import StarIcon from "@material-ui/icons/Star";
-import MenuIcon from "@material-ui/icons/Menu";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 import useStyles from "./styles";
 import { Movie } from "../../../../types/movie";
 import { MovieStateLogic } from "../Home";
+import { LikeModal } from "../../../../components/LikeModal";
 import { PlatformIcon } from "../../../../components/PlatformIcon";
-import { join } from "node:path";
+import TemporaryDrawer from "../../../../components/Menu";
 
 interface HomeDisplayProps {
   movie: Movie;
   logic: MovieStateLogic;
+  modalLiked: boolean;
 }
 
 export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const classes = useStyles();
 
-  const { movie, logic } = props;
+  const { movie, logic, modalLiked } = props;
 
   return (
     <div className={classes.root}>
       <Container className={classes.container}>
-        {/* Botão Hamburger */}
+        {/* Botão Menu */}
         <div className={classes.topMenu}>
-          <IconButton color="primary" onClick={() => alert("menu")}>
-            <MenuIcon fontSize="large" />
-          </IconButton>
+          <TemporaryDrawer />
         </div>
 
         {/* Conteudo do Filme */}
@@ -170,6 +155,13 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             >
               <StarIcon fontSize="large" />
             </IconButton>
+            <LikeModal
+              open={modalLiked}
+              like={logic.functions.handleClickLikedMovie}
+              dislike={logic.functions.handleClickDislikedMovie}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            />
           </div>
         </AppBar>
       </Container>
