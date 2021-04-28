@@ -5,8 +5,8 @@ const useStyles = makeStyles((theme) =>
     paper: {
       margin: 0,
       padding: 0,
-      height: 300,
-      width: 170,
+      height: "24rem",
+      width: "10rem",
       maxWidth: "900px",
       maxHeight: "900px",
       overflow: "hidden",
@@ -22,26 +22,41 @@ const useStyles = makeStyles((theme) =>
 
     icon: {
       color: theme.palette.primary.main,
+      width: "2.5rem",
     },
+
+    profileIcon: {
+      width: "3rem",
+    },
+
     icon2: {
       justifyContent: "flex-end",
       padding: 0,
     },
+
     iconButtonMenu: {
       padding: "0.5rem",
     },
+
     iconImg: {
       fontSize: "3rem",
       marginRight: "-1rem",
     },
+
     iconMenuImg: {
       fontSize: "3rem",
     },
+
     text: {
+      fontFamily: "Barlow Condensed, sans-serif",
+      fontSize: "1rem",
+      fontWeight: 600,
       textAlign: "right",
+      fontStyle: "italic",
+      textTransform: "uppercase",
       color: theme.palette.text.primary,
-      fontWeight: "bold",
     },
+
     borderIcon: {
       padding: 0,
       justifyContent: "center",
@@ -49,14 +64,16 @@ const useStyles = makeStyles((theme) =>
       width: 25,
       height: 35,
       display: "flex",
-      background: theme.palette.background.default,
       borderRadius: "15px 15px 15px 15px",
     },
+
     textIcon: {
       width: 170,
       paddingLeft: 0,
       paddingRight: 0,
+      marginTop: "0.5rem",
     },
+
     test: {},
   })
 );

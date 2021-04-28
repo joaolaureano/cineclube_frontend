@@ -12,6 +12,7 @@ import { useHistory } from "react-router-dom";
 import { Container, IconButton, Typography } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import useStyles from "./styles";
+import { CustomIcon } from "../CustomIcon";
 type Anchor = "right";
 
 export default function TemporaryDrawer() {
@@ -35,6 +36,10 @@ export default function TemporaryDrawer() {
     }
 
     setState({ ...state, [anchor]: open });
+  };
+
+  const handleOpenList = (listName: string) => {
+    history.push(`user/movies/${listName}`);
   };
 
   const list = (anchor: Anchor) => (
@@ -62,7 +67,10 @@ export default function TemporaryDrawer() {
           />
           <ListItemIcon>
             <Container className={classes.borderIcon}>
-              <PermIdentityIcon className={classes.icon} />
+              <CustomIcon
+                type="menuProfile"
+                className={[classes.icon, classes.profileIcon].join(" ")}
+              />
             </Container>
           </ListItemIcon>
         </ListItem>
@@ -70,14 +78,31 @@ export default function TemporaryDrawer() {
           className={classes.textIcon}
           button
           key="Listas"
-          onClick={() => history.push("/user/movies")}
+          onClick={() => handleOpenList("wantToWatch")}
         >
           <ListItemText
-            primary={<Typography className={classes.text}>Listas</Typography>}
+            primary={
+              <Typography className={classes.text}>Quero Ver!</Typography>
+            }
           />
           <ListItemIcon>
             <Container className={classes.borderIcon}>
-              <ListIcon className={classes.icon} />
+              <CustomIcon type="menuWantToWatch" className={classes.icon} />
+            </Container>
+          </ListItemIcon>
+        </ListItem>
+        <ListItem
+          className={classes.textIcon}
+          button
+          key="Listas"
+          onClick={() => handleOpenList("watched")}
+        >
+          <ListItemText
+            primary={<Typography className={classes.text}>Já vi!</Typography>}
+          />
+          <ListItemIcon>
+            <Container className={classes.borderIcon}>
+              <CustomIcon type="menuWatched" className={classes.icon} />
             </Container>
           </ListItemIcon>
         </ListItem>
@@ -89,12 +114,12 @@ export default function TemporaryDrawer() {
         >
           <ListItemText
             primary={
-              <Typography className={classes.text}>Conquistas</Typography>
+              <Typography className={classes.text}>Conquistas!</Typography>
             }
           />
           <ListItemIcon>
             <Container className={classes.borderIcon}>
-              <EmojiEventsIcon className={classes.icon} />
+              <CustomIcon type="menuAchievements" className={classes.icon} />
             </Container>
           </ListItemIcon>
         </ListItem>
@@ -111,7 +136,7 @@ export default function TemporaryDrawer() {
           />
           <ListItemIcon className={classes.icon}>
             <Container className={classes.borderIcon}>
-              <SettingsIcon />
+              <CustomIcon type="menusettings" className={classes.icon} />
             </Container>
           </ListItemIcon>
         </ListItem>
