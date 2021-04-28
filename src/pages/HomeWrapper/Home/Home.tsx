@@ -56,9 +56,15 @@ export const Home: React.FC<HomeProps> = (props) => {
     setSelectedMovieIndex(newMovieIndex);
   };
 
-  const handleClickWantoWatch = () => {
+  const handleClickWantoWatch = async () => {
     openSnackbar("Quero assistir", "info");
-    // incrementSelectedMovie();
+
+    const movieID = String(getSelectedMovie().id);
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.WANT_TO_WATCH,
+    });
+    incrementSelectedMovie();
   };
   const handleClickLikeOrNotMovie = () => {};
   const handleClickUndoLastAction = () => {
