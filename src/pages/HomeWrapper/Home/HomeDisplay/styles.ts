@@ -79,6 +79,12 @@ const useStyles = makeStyles((theme) => {
     },
 
     platforms: { padding: "1rem 0 0.75rem 0" },
+    director: {
+      display: "inline-block",
+    },
+    cast: {
+      display: "inline-block",
+    },
 
     platform: {
       width: theme.spacing(7),

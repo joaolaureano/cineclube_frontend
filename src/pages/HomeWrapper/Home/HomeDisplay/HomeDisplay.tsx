@@ -1,5 +1,6 @@
 import React from "react";
 import { AppBar, Divider, Container, IconButton } from "@material-ui/core";
+
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
@@ -66,6 +67,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             >
               {movie.year}
             </Typography>
+            <Typography variant="caption" display="block" gutterBottom>
+              {movie.duration}min
+            </Typography>
             <Typography
               className={classes.synopsis}
               variant="body1"
@@ -86,6 +90,36 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
                 );
               })}
             </AvatarGroup>
+
+            <div>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                className={classes.director}
+              >
+                Direção:&nbsp;
+              </Typography>
+            </div>
+            <div>
+              <Typography className={classes.director}>
+                {movie.director}
+              </Typography>
+            </div>
+
+            <div>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                className={classes.cast}
+              >
+                Elenco principal:&nbsp;
+              </Typography>
+            </div>
+            <div>
+              <Typography className={classes.cast}>
+                {movie.actors.join(", ")}
+              </Typography>
+            </div>
 
             <div className={classes.tags}>
               {movie.moviesTags.map(({ tag }) => {
