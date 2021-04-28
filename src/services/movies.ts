@@ -60,12 +60,9 @@ const mapMovieDtoToMovie = (movieDto: MovieDto): Movie => {
 };
 
 const composeMovieState = (data: string): MovieState => {
-  console.log(data);
   const response = JSON.parse(data);
   const moviesResponse = response.body.movies;
   const movies: MovieMap = {};
-
-  console.log(moviesResponse);
 
   const movieIds: number[] = [];
   moviesResponse.forEach((movieDto: MovieDto) => {
