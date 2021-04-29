@@ -15,6 +15,7 @@ import {
 
 import useStyles from "./styles";
 import { PlatformIcon } from "../../../components/PlatformIcon";
+import { Platform } from "../../../types/platform";
 
 interface MovieDetails {
   id: number;
@@ -58,7 +59,7 @@ export const MovieCard: React.FC<MovieCardProps> = (props) => {
     }
   };
 
-  const parsePlatforms = (platforms: string[]) => {
+  const parsePlatforms = (platforms: Platform[]) => {
     return platforms.map((platform: any) => {
       return (
         <PlatformIcon

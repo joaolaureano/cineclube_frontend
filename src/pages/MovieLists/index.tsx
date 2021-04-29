@@ -10,7 +10,7 @@ import {
   Tab,
 } from "@material-ui/core";
 
-import { ArrowBack } from "@material-ui/icons";
+import { ArrowBack, Movie } from "@material-ui/icons";
 
 import useStyles from "./styles";
 import { MovieCard } from "./MovieCard";
@@ -61,20 +61,20 @@ export const MovieLists: React.FC = () => {
       const listWantToWatch = await User.getMovieByStatus(
         MovieUserStatus.WANT_TO_WATCH
       );
-
       const listWatched: any[] = [];
-
-      if (listLiked.data.body.userMovies) {
-        for (let i = 0; i < listLiked.data.body.userMovies.length; i++) {
-          listWatched.push(listLiked.data.body.userMovies[i]);
+      if (listLiked.data.length > 0) {
+        console.log(listLiked.data);
+        for (let i = 0; i < listLiked.data.length; i++) {
+          listWatched.push(listLiked.data[i]);
         }
       }
-
-      if (listDesliked.data.body.userMovies) {
-        for (let i = 0; i < listDesliked.data.body.userMovies.length; i++) {
-          listWatched.push(listDesliked.data.body.userMovies[i]);
+      if (listDesliked.data.length > 0) {
+        console.log(listDesliked.data);
+        for (let i = 0; i < listDesliked.data.length; i++) {
+          listWatched.push(listDesliked.data[i]);
         }
       }
+      // console.log(listLiked.data.movies)
       setWatchedMovies(listWatched);
       // setWantToWatchMovies(listWantToWatch);
     }
@@ -107,8 +107,7 @@ export const MovieLists: React.FC = () => {
   };
 
   const renderWatchedMovies = () => {
-    // console.log(watchedMovies[0]['movie']);
-    return watchedMovies.map((movie) => {
+    return watchedMovies.map((movie: any) => {
       return (
         <MovieCard
           key={movie.movie.id}

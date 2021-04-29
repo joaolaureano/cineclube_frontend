@@ -1,4 +1,6 @@
+import { AxiosResponse } from "axios";
 import api from "../api/api";
+import { Movie, MovieMap, MovieStatus } from "../types/movie";
 import { User } from "../types/user";
 import { MovieUserStatus } from "../types/userMovieStatus";
 
@@ -22,9 +24,24 @@ const user = {
     });
   },
 
-  getMovieByStatus: (data: MovieUserStatus) => {
-    return api.get("/user/movie/" + data);
+  getMovieByStatus: (
+    data: MovieUserStatus
+  ): Promise<AxiosResponse<Movie[]>> => {
+    return api.get("/user/movie/" + data, {
+      transformResponse: parseMovieCardInfo,
+    });
   },
+};
+
+const parseMovieCardInfo = (data: string): Movie[] => {
+  const response = JSON.parse(data);
+  const moviesResponse = response.body.userMovies;
+  const movies: Movie[] = [];
+  moviesResponse.map((movie: any) => {
+    movies.push(movie as Movie);
+  });
+
+  return movies;
 };
 
 const parseUser = (data: string): User => {
