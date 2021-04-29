@@ -53,7 +53,7 @@ export default function TemporaryDrawer() {
         <ListItem
           className={classes.textIcon}
           button
-          key="Perfil"
+          key="profile"
           onClick={() => alert("Perfil")}
         >
           <ListItemText
@@ -71,7 +71,7 @@ export default function TemporaryDrawer() {
         <ListItem
           className={classes.textIcon}
           button
-          key="Listas"
+          key="wantToWatchList"
           onClick={() => handleOpenList("wantToWatch")}
         >
           <ListItemText
@@ -88,7 +88,7 @@ export default function TemporaryDrawer() {
         <ListItem
           className={classes.textIcon}
           button
-          key="Listas"
+          key="watchedList"
           onClick={() => handleOpenList("watched")}
         >
           <ListItemText
@@ -103,7 +103,7 @@ export default function TemporaryDrawer() {
         <ListItem
           className={classes.textIcon}
           button
-          key="Conquistas"
+          key="achievements"
           onClick={() => alert("Conquistas")}
         >
           <ListItemText
@@ -120,7 +120,7 @@ export default function TemporaryDrawer() {
         <ListItem
           className={classes.textIcon}
           button
-          key="Configuração"
+          key="settings"
           onClick={() => alert("Configuração")}
         >
           <ListItemText
