@@ -1,13 +1,12 @@
 import React from "react";
 import { AppBar, Divider, Container, IconButton } from "@material-ui/core";
+
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
 import ReplayIcon from "@material-ui/icons/Replay";
 import ClearIcon from "@material-ui/icons/Clear";
 import CheckIcon from "@material-ui/icons/Check";
 import StarIcon from "@material-ui/icons/Star";
-import MenuIcon from "@material-ui/icons/Menu";
-import Avatar from "@material-ui/core/Avatar";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 import useStyles from "./styles";
@@ -56,6 +55,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               {`(${movie.originalTitle})`} <br />
               {movie.year}
             </Typography>
+            <Typography variant="caption" display="block" gutterBottom>
+              {movie.duration}min
+            </Typography>
             <Typography variant="body1" color="textPrimary" component="p">
               {movie.synopsis}
             </Typography>
@@ -71,6 +73,36 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
                 );
               })}
             </AvatarGroup>
+
+            <div>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                className={classes.director}
+              >
+                Direção:&nbsp;
+              </Typography>
+            </div>
+            <div>
+              <Typography className={classes.director}>
+                {movie.director}
+              </Typography>
+            </div>
+
+            <div>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                className={classes.cast}
+              >
+                Elenco principal:&nbsp;
+              </Typography>
+            </div>
+            <div>
+              <Typography className={classes.cast}>
+                {movie.actors.join(", ")}
+              </Typography>
+            </div>
 
             <div className={classes.tags}>
               {movie.moviesTags.map(({ tag }) => {
@@ -109,7 +141,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <IconButton
-              onClick={logic.functions.handleClickWatchedAndLiked}
+              onClick={logic.functions.handleClickWantoWatch}
               aria-label="like"
               color="primary"
             >
@@ -117,7 +149,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <IconButton
-              onClick={logic.functions.handleClickWantoWatch}
+              onClick={logic.functions.handleClickWatched}
               aria-label="star"
               color="primary"
             >
@@ -127,6 +159,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               open={modalLiked}
               like={logic.functions.handleClickLikedMovie}
               dislike={logic.functions.handleClickDislikedMovie}
+              onClose={logic.functions.handleCloseModal}
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
             />

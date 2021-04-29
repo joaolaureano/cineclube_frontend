@@ -15,13 +15,14 @@ export interface MovieStateLogic {
 }
 
 interface MovieStateLogicFunctions {
-  handleClickWatchedAndLiked: () => void;
+  handleClickWatched: () => void;
   handleClickUndoLastAction: () => void;
   handleClickDidntLike: () => void;
   handleClickWantoWatch: () => void;
   handleClickLikeOrNotMovie: () => void;
   handleClickLikedMovie: () => void;
   handleClickDislikedMovie: () => void;
+  handleCloseModal: () => void;
 }
 
 export const Home: React.FC<HomeProps> = (props) => {
@@ -35,6 +36,10 @@ export const Home: React.FC<HomeProps> = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const getSelectedMovie = (): Movie => {
     return state.movies[state.movieIds[selectedMovieIndex]];
+  };
+
+  const getPreviousMovie = (): Movie => {
+    return state.movies[state.movieIds[selectedMovieIndex - 1]];
   };
 
   const incrementSelectedMovie = (): void => {
@@ -55,12 +60,28 @@ export const Home: React.FC<HomeProps> = (props) => {
     setSelectedMovieIndex(newMovieIndex);
   };
 
-  const handleClickWatchedAndLiked = () => {
-    openSnackbar("Já assiti", "success");
+  const handleClickWantoWatch = async () => {
+    openSnackbar("Quero assistir", "info");
+
+    const movieID = String(getSelectedMovie().id);
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.WANT_TO_WATCH,
+    });
     incrementSelectedMovie();
   };
   const handleClickLikeOrNotMovie = () => {};
-  const handleClickUndoLastAction = () => {
+
+  const handleClickUndoLastAction = async () => {
+    const previousMovieId = selectedMovieIndex - 1;
+    if (previousMovieId < 0) return;
+
+    const movieId = String(getPreviousMovie().id);
+    await UserService.setMovieStatus({
+      id: movieId,
+      status: MovieUserStatus.NONE,
+    });
+
     openSnackbar("Desfeita a ultima ação", "success");
     decrementSelectedMovie();
   };
@@ -70,7 +91,7 @@ export const Home: React.FC<HomeProps> = (props) => {
     incrementSelectedMovie();
   };
 
-  const handleClickWantoWatch = () => {
+  const handleClickWatched = () => {
     setOpenModal(!openModal);
   };
 
@@ -99,15 +120,20 @@ export const Home: React.FC<HomeProps> = (props) => {
     openSnackbar("Gostei do filme", "info");
   };
 
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
   const useStateLogic: MovieStateLogic = {
     functions: {
-      handleClickWatchedAndLiked,
+      handleClickWatched,
       handleClickUndoLastAction,
       handleClickDidntLike,
       handleClickWantoWatch,
       handleClickLikeOrNotMovie,
       handleClickLikedMovie,
       handleClickDislikedMovie,
+      handleCloseModal,
     },
   };
 
