@@ -123,6 +123,11 @@ const useStyles = makeStyles((theme) => {
       marginBottom: "0.5rem",
       borderRadius: "0 0 2rem 2rem",
     },
+
+    menuDivider: {
+      height: "3rem",
+      alignSelf: "center",
+    },
   });
 });
 

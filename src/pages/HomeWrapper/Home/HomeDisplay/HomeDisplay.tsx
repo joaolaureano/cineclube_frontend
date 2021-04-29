@@ -154,7 +154,11 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             >
               <CustomIcon type="undo" />
             </IconButton>
-            <Divider orientation="vertical" flexItem />
+            <Divider
+              className={classes.menuDivider}
+              orientation="vertical"
+              flexItem
+            />
             <IconButton
               onClick={logic.functions.handleClickDidntLike}
               aria-label="dislike"
@@ -162,7 +166,11 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             >
               <CustomIcon type="dontWantToWatch" />
             </IconButton>
-            <Divider orientation="vertical" flexItem />
+            <Divider
+              className={classes.menuDivider}
+              orientation="vertical"
+              flexItem
+            />
             <IconButton
               onClick={logic.functions.handleClickWantoWatch}
               aria-label="like"
@@ -170,7 +178,11 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             >
               <CustomIcon type="wantToWatch" />
             </IconButton>
-            <Divider orientation="vertical" flexItem />
+            <Divider
+              className={classes.menuDivider}
+              orientation="vertical"
+              flexItem
+            />
             <IconButton
               onClick={logic.functions.handleClickWatched}
               aria-label="star"
