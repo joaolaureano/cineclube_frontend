@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, RouteComponentProps } from "react-router-dom";
 
 import {
   Container,
@@ -11,40 +11,47 @@ import {
 } from "@material-ui/core";
 
 import { ArrowBack } from "@material-ui/icons";
+import { MovieCard } from "./MovieCard";
+import { MovieUserStatus } from "../../types/userMovieStatus";
+import { UserMovie } from "../../types/UserMovie";
+import UserService from "../../services/user";
 
 import useStyles from "./styles";
-import { MovieCard } from "./MovieCard";
-import User from "../../services/user";
-import { MovieUserStatus } from "../../types/userMovieStatus";
-import { Movie as MovieType } from "../../types/movie";
 
-export const MovieLists: React.FC = () => {
+interface Params {
+  list: "watched" | "wantToWatch";
+}
+
+export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
   const history = useHistory();
   const styles = useStyles();
-  const [currentTab, setCurrentTab] = useState(0);
+
+  const { list } = match.params;
+  const defaultList = list === "watched" ? 1 : 0;
+  const [currentTab, setCurrentTab] = useState(defaultList);
   const [watchedMovies, setWatchedMovies] = useState<Object[]>([]);
   const [wantToWatchMovies, setWantToWatchMovies] = useState<Object[]>([]);
 
   //Testando
   useEffect(() => {
     async function getMovies() {
-      const listDislikedResponse = await User.getMovieByStatus(
+      const listDislikedResponse = await UserService.getMovieByStatus(
         MovieUserStatus.WATCHED_AND_DISLIKED
       );
       const listDisliked = listDislikedResponse.data;
 
-      const listLikedResponse = await User.getMovieByStatus(
+      const listLikedResponse = await UserService.getMovieByStatus(
         MovieUserStatus.WATCHED_AND_LIKED
       );
       const listLiked = listLikedResponse.data;
 
-      const listWantToWatchResponse = await User.getMovieByStatus(
+      const listWantToWatchResponse = await UserService.getMovieByStatus(
         MovieUserStatus.WANT_TO_WATCH
       );
       const listWantToWatch = listWantToWatchResponse.data;
 
-      const listWatched: MovieType[] = [...listLiked, ...listDisliked];
-      const listWantToWatchAux: MovieType[] = [...listWantToWatch];
+      const listWatched: UserMovie[] = [...listLiked, ...listDisliked];
+      const listWantToWatchAux: UserMovie[] = [...listWantToWatch];
 
       setWantToWatchMovies(listWantToWatchAux);
       setWatchedMovies(listWatched);
@@ -82,7 +89,7 @@ export const MovieLists: React.FC = () => {
       ? watchedMovies.map((movie: any) => {
           return (
             <MovieCard
-              key={movie.movie.id}
+              key={`watched-${movie.movie.id}`}
               type="watched"
               liked={movie.status === MovieUserStatus.WATCHED_AND_LIKED}
               onDelete={handleDelete}
@@ -105,7 +112,7 @@ export const MovieLists: React.FC = () => {
       ? wantToWatchMovies.map((movie: any) => {
           return (
             <MovieCard
-              key={movie.movie.id}
+              key={`wanted-${movie.movie.id}`}
               type="wantsToWatch"
               onDelete={handleDelete}
               onWatch={handleWatch}

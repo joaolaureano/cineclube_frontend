@@ -1,13 +1,6 @@
 import { AxiosResponse } from "axios";
 import api from "../api/api";
-import {
-  Movie,
-  MovieDto,
-  MovieMap,
-  MoviesDto,
-  MovieState,
-  CastDto,
-} from "../types/movie";
+import { Movie, MovieDto, MovieMap, MovieState, CastDto } from "../types/movie";
 
 interface PutMoviePayload {
   id: number;

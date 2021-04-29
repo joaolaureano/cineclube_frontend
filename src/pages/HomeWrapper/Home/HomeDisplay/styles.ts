@@ -7,69 +7,126 @@ const useStyles = makeStyles((theme) => {
       height: "100%",
       background: theme.palette.background.default,
     },
-    media: {
-      height: 280,
-    },
-    hamburger: {
-      float: "left",
-    },
-    director: {
-      display: "inline-block",
-    },
-    cast: {
-      display: "inline-block",
-    },
-    platforms: { padding: "8px 0 0 0" },
-    platform: {
-      width: theme.spacing(7),
-      height: theme.spacing(7),
-    },
-    tags: {
-      padding: "10px 0 0 0",
-    },
-    tag: {
-      marginBottom: "8px",
-      marginRight: "8px",
-    },
-    tinder: {
-      position: "sticky",
-    },
-    appBar: {
-      top: "auto",
-      bottom: 0,
-    },
+
     container: {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
 
       height: "100%",
-      paddingBottom: "65px",
+      paddingBottom: "5.2rem",
 
       background: theme.palette.background.default,
     },
+
     topMenu: {
+      position: "fixed",
+      top: 0,
+
       width: "100%",
+      padding: "1.7rem 2rem 1.5rem 2rem",
+
       display: "flex",
-      justifyContent: "flex-end",
-      alignItems: "flex-end",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+      background: "inherit",
+      boxShadow: "none",
     },
+
+    logo: {
+      height: "2.75rem",
+    },
+
+    content: {
+      marginTop: "6.25rem",
+    },
+
+    cover: {
+      width: "100%",
+    },
+
+    movieInfo: {
+      marginTop: "1rem",
+    },
+
+    movieTitle: {
+      fontSize: "1.8rem",
+      fontWeight: 700,
+      fontStyle: "italic",
+      fontFamily: "Barlow Condensed, sans-serif",
+      textTransform: "uppercase",
+      marginBottom: "-0.1rem",
+    },
+
+    originalTitle: {
+      fontSize: "0.93rem",
+      fontWeight: 400,
+      fontFamily: "Barlow Condensed, sans-serif",
+      textTransform: "uppercase",
+      marginBottom: "-0.1rem",
+    },
+
+    year: {
+      fontSize: "0.93rem",
+      color: theme.palette.primary.main,
+      fontWeight: 600,
+      fontStyle: "italic",
+      marginBottom: "-0.05rem",
+    },
+
+    duration: {
+      marginBottom: "1rem",
+    },
+
+    synopsis: {
+      lineHeight: "1.4rem",
+    },
+
+    platforms: { padding: "1rem 0" },
+
+    cast: {
+      display: "inline",
+    },
+
+    castNames: {
+      fontWeight: 700,
+      textTransform: "uppercase",
+    },
+
+    platform: {
+      width: theme.spacing(7),
+      height: theme.spacing(7),
+    },
+
+    tags: {
+      padding: "1rem 0 0 0",
+    },
+
+    tag: {
+      marginBottom: "8px",
+      marginRight: "8px",
+    },
+
+    appBar: {
+      top: "auto",
+      bottom: 0,
+      background: theme.palette.primary.main,
+    },
+
     bottomMenu: {
       display: "flex",
       justifyContent: "space-around",
       alignItems: "center",
       maxWidth: "700px",
       background: theme.palette.background.default,
+      marginBottom: "0.5rem",
+      borderRadius: "0 0 2rem 2rem",
     },
 
-    cover: {
-      width: "100%",
-    },
-    movieInfo: {
-      marginTop: "24px",
-    },
-    movieTitle: {
-      marginBottom: "-4px",
+    menuDivider: {
+      height: "3rem",
+      alignSelf: "center",
     },
   });
 });

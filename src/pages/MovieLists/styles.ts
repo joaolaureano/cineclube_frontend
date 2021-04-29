@@ -6,7 +6,7 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "100%",
       minHeight: "100vh",
 
-      background: `linear-gradient(45deg, rgba(206,124,44,1) 20%, ${theme.palette.primary.main} 50%, rgba(206,124,44,1) 80%)`,
+      background: `linear-gradient(45deg, rgba(206,124,44,1) 0%, rgba(247, 155, 51, 1) 50%, rgba(206,124,44,1) 100%)`,
     },
 
     container: {

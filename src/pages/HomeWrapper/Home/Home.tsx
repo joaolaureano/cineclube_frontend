@@ -4,7 +4,6 @@ import { HomeDisplay } from "./HomeDisplay/HomeDisplay";
 import { SharedSnackbarContext } from "../../../components/SnackBar/SnackContext";
 import { MovieUserStatus } from "../../../types/userMovieStatus";
 import UserService from "../../../services/user";
-import movies from "../../../services/movies";
 
 interface HomeProps {
   state: MovieState;

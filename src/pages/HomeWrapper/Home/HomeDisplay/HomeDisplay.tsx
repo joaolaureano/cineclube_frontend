@@ -3,10 +3,7 @@ import { AppBar, Divider, Container, IconButton } from "@material-ui/core";
 
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
-import ReplayIcon from "@material-ui/icons/Replay";
-import ClearIcon from "@material-ui/icons/Clear";
-import CheckIcon from "@material-ui/icons/Check";
-import StarIcon from "@material-ui/icons/Star";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 import useStyles from "./styles";
@@ -15,6 +12,8 @@ import { MovieStateLogic } from "../Home";
 import { LikeModal } from "../../../../components/LikeModal";
 import { PlatformIcon } from "../../../../components/PlatformIcon";
 import TemporaryDrawer from "../../../../components/Menu";
+import logoImg from "../../../../assets/images/logos/home-logo.png";
+import { CustomIcon } from "../../../../components/CustomIcon";
 
 interface HomeDisplayProps {
   movie: Movie;
@@ -32,11 +31,12 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
       <Container className={classes.container}>
         {/* Botão Menu */}
         <div className={classes.topMenu}>
+          <img src={logoImg} alt="Cinehal logo" className={classes.logo} />
           <TemporaryDrawer />
         </div>
 
         {/* Conteudo do Filme */}
-        <Container>
+        <Container className={classes.content}>
           <img
             src={movie.pathBanner}
             alt="movie cover"
@@ -51,14 +51,36 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             >
               {movie.title}
             </Typography>
-            <Typography gutterBottom variant="body1" component="p">
-              {`(${movie.originalTitle})`} <br />
+            <Typography
+              className={classes.originalTitle}
+              gutterBottom
+              variant="body1"
+              component="p"
+            >
+              {`(${movie.originalTitle})`}
+            </Typography>
+            <Typography
+              className={classes.year}
+              gutterBottom
+              variant="body1"
+              component="p"
+            >
               {movie.year}
             </Typography>
-            <Typography variant="caption" display="block" gutterBottom>
-              {movie.duration}min
+            <Typography
+              className={classes.duration}
+              variant="caption"
+              display="block"
+              gutterBottom
+            >
+              {`${movie.duration} MIN`}
             </Typography>
-            <Typography variant="body1" color="textPrimary" component="p">
+            <Typography
+              className={classes.synopsis}
+              variant="body1"
+              color="textPrimary"
+              component="p"
+            >
               {movie.synopsis}
             </Typography>
 
@@ -66,6 +88,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               {movie.platforms.map(({ name }) => {
                 return (
                   <PlatformIcon
+                    key={name}
                     className={classes.platform}
                     variant="rounded"
                     platform={name}
@@ -78,13 +101,13 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               <Typography
                 variant="body1"
                 color="textPrimary"
-                className={classes.director}
+                className={classes.cast}
               >
                 Direção:&nbsp;
               </Typography>
-            </div>
-            <div>
-              <Typography className={classes.director}>
+              <Typography
+                className={[classes.cast, classes.castNames].join(" ")}
+              >
                 {movie.director}
               </Typography>
             </div>
@@ -97,9 +120,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               >
                 Elenco principal:&nbsp;
               </Typography>
-            </div>
-            <div>
-              <Typography className={classes.cast}>
+              <Typography
+                className={[classes.cast, classes.castNames].join(" ")}
+              >
                 {movie.actors.join(", ")}
               </Typography>
             </div>
@@ -111,9 +134,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
                     variant="outlined"
                     size="small"
                     label={tag.name}
-                    color="primary"
                     key={tag.name}
                     className={classes.tag}
+                    icon={<FiberManualRecordIcon />}
                   />
                 );
               })}
@@ -129,31 +152,43 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               aria-label="undo"
               color="primary"
             >
-              <ReplayIcon fontSize="large" />
+              <CustomIcon type="undo" />
             </IconButton>
-            <Divider orientation="vertical" flexItem />
+            <Divider
+              className={classes.menuDivider}
+              orientation="vertical"
+              flexItem
+            />
             <IconButton
               onClick={logic.functions.handleClickDidntLike}
               aria-label="dislike"
               color="primary"
             >
-              <ClearIcon fontSize="large" />
+              <CustomIcon type="dontWantToWatch" />
             </IconButton>
-            <Divider orientation="vertical" flexItem />
+            <Divider
+              className={classes.menuDivider}
+              orientation="vertical"
+              flexItem
+            />
             <IconButton
               onClick={logic.functions.handleClickWantoWatch}
               aria-label="like"
               color="primary"
             >
-              <CheckIcon fontSize="large" />
+              <CustomIcon type="wantToWatch" />
             </IconButton>
-            <Divider orientation="vertical" flexItem />
+            <Divider
+              className={classes.menuDivider}
+              orientation="vertical"
+              flexItem
+            />
             <IconButton
               onClick={logic.functions.handleClickWatched}
               aria-label="star"
               color="primary"
             >
-              <StarIcon fontSize="large" />
+              <CustomIcon type="watched" />
             </IconButton>
             <LikeModal
               open={modalLiked}

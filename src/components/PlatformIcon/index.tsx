@@ -1,8 +1,8 @@
 import React from "react";
 import { Avatar, AvatarTypeMap } from "@material-ui/core";
 
-import netflix from "../../assets/images/platforms/Netflix.svg";
-import amazon from "../../assets/images/platforms/Amazon.svg";
+import netflix from "../../assets/images/platforms/netflix-icon.svg";
+import amazon from "../../assets/images/platforms/amazon-prime-icon.svg";
 import { DefaultComponentProps } from "@material-ui/core/OverridableComponent";
 
 interface PlatformIconProps extends DefaultComponentProps<AvatarTypeMap> {
