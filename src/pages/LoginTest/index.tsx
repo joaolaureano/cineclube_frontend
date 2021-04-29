@@ -7,7 +7,6 @@ import useStyles from "./styles";
 
 const Example = (): JSX.Element => {
   const history = useHistory();
-  const styles = useStyles();
 
   const { logout } = useFirebase();
 

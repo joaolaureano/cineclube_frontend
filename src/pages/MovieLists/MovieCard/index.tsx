@@ -9,8 +9,6 @@ import {
   ThumbDownOutlined,
   Check,
   Close,
-  Cancel,
-  Delete,
 } from "@material-ui/icons";
 
 import useStyles from "./styles";

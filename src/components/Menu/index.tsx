@@ -4,10 +4,6 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import PermIdentityIcon from "@material-ui/icons/PermIdentity";
-import ListIcon from "@material-ui/icons/List";
-import EmojiEventsIcon from "@material-ui/icons/EmojiEvents";
-import SettingsIcon from "@material-ui/icons/Settings";
 import { useHistory } from "react-router-dom";
 import { Container, IconButton, Typography } from "@material-ui/core";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
@@ -21,8 +17,6 @@ export default function TemporaryDrawer() {
   const [state, setState] = React.useState({
     right: false,
   });
-
-  //todo:ADICIONAR O ICONE COM OUTRA COR PARA DISTINGUIR
 
   const toggleDrawer = (anchor: Anchor, open: boolean) => (
     event: React.KeyboardEvent | React.MouseEvent
