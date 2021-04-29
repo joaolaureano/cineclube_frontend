@@ -16,6 +16,7 @@ import useStyles from "./styles";
 import { MovieCard } from "./MovieCard";
 import User from "../../services/user";
 import { MovieUserStatus } from "../../types/userMovieStatus";
+import { Movie as MovieType } from "../../types/movie";
 
 const mockMovie = {
   id: 15,
@@ -45,9 +46,7 @@ export const MovieLists: React.FC = () => {
   const styles = useStyles();
   const [currentTab, setCurrentTab] = useState(0);
   const [watchedMovies, setWatchedMovies] = useState<Object[]>([{}]);
-  const [wantToWatchMovies, setWantToWatchMovies] = useState(
-    wantToWatchMoviesMock
-  );
+  const [wantToWatchMovies, setWantToWatchMovies] = useState<Object[]>([{}]);
 
   //Testando
   useEffect(() => {
@@ -61,7 +60,9 @@ export const MovieLists: React.FC = () => {
       const listWantToWatch = await User.getMovieByStatus(
         MovieUserStatus.WANT_TO_WATCH
       );
-      const listWatched: any[] = [];
+
+      const listWatched: MovieType[] = [];
+
       if (listLiked.data.length > 0) {
         console.log(listLiked.data);
         for (let i = 0; i < listLiked.data.length; i++) {
@@ -74,9 +75,9 @@ export const MovieLists: React.FC = () => {
           listWatched.push(listDesliked.data[i]);
         }
       }
-      // console.log(listLiked.data.movies)
+
       setWatchedMovies(listWatched);
-      // setWantToWatchMovies(listWantToWatch);
+      setWantToWatchMovies(listWantToWatch.data);
     }
 
     getMovies();
@@ -128,18 +129,19 @@ export const MovieLists: React.FC = () => {
   };
 
   const renderWantToWatchMovies = () => {
+    console.log(wantToWatchMovies);
     return wantToWatchMovies.map((movie: any) => {
       return (
         <MovieCard
-          key={movie.id}
+          key={movie.movie.id}
           type="wantsToWatch"
           onDelete={handleDelete}
           onWatch={handleWatch}
           movie={{
-            id: movie.id,
-            title: movie.title,
-            pathBanner: movie.pathBanner,
-            platforms: movie.platforms,
+            id: movie.movie.id,
+            title: movie.movie.title,
+            pathBanner: movie.movie.pathBanner,
+            platforms: movie.movie.platforms,
           }}
         />
       );

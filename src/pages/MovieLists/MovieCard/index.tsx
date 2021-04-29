@@ -21,7 +21,7 @@ interface MovieDetails {
   id: number;
   title: string;
   pathBanner: string;
-  platforms: string[];
+  platforms: Platform[];
 }
 
 interface MovieCardProps {
