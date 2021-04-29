@@ -163,7 +163,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <IconButton
-              onClick={logic.functions.handleClickWatchedAndLiked}
+              onClick={logic.functions.handleClickWantoWatch}
               aria-label="like"
               color="primary"
             >
@@ -171,7 +171,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             </IconButton>
             <Divider orientation="vertical" flexItem />
             <IconButton
-              onClick={logic.functions.handleClickWantoWatch}
+              onClick={logic.functions.handleClickWatched}
               aria-label="star"
               color="primary"
             >
@@ -181,6 +181,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               open={modalLiked}
               like={logic.functions.handleClickLikedMovie}
               dislike={logic.functions.handleClickDislikedMovie}
+              onClose={logic.functions.handleCloseModal}
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
             />

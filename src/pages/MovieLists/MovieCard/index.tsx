@@ -15,12 +15,13 @@ import {
 
 import useStyles from "./styles";
 import { PlatformIcon } from "../../../components/PlatformIcon";
+import { Platform } from "../../../types/platform";
 
 interface MovieDetails {
   id: number;
   title: string;
   pathBanner: string;
-  platforms: string[];
+  platforms: Platform[];
 }
 
 interface MovieCardProps {
@@ -58,13 +59,13 @@ export const MovieCard: React.FC<MovieCardProps> = (props) => {
     }
   };
 
-  const parsePlatforms = (platforms: string[]) => {
-    return platforms.map((platform) => {
+  const parsePlatforms = (platforms: Platform[]) => {
+    return platforms.map((platform: any) => {
       return (
         <PlatformIcon
           key={platform}
           className={styles.platformIcon}
-          platform={platform}
+          platform={platform.name}
         />
       );
     });
