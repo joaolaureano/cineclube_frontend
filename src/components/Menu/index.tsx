@@ -139,7 +139,7 @@ export default function TemporaryDrawer() {
   );
 
   return (
-    <div>
+    <div className={classes.menuOpenIconContainer}>
       <React.Fragment key="drawer">
         <IconButton
           className={classes.icon2}

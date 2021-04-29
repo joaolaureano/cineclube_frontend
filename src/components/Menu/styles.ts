@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) =>
     paper: {
       margin: 0,
       padding: 0,
-      height: "24rem",
+      height: "26.5rem",
       width: "10rem",
       maxWidth: "900px",
       maxHeight: "900px",
@@ -35,16 +35,19 @@ const useStyles = makeStyles((theme) =>
     },
 
     iconButtonMenu: {
-      padding: "0.5rem",
+      margin: "1.6875rem 1rem 0.5rem 0.5rem",
     },
 
     iconImg: {
       fontSize: "3rem",
-      marginRight: "-1rem",
     },
 
     iconMenuImg: {
       fontSize: "3rem",
+    },
+
+    menuOpenIconContainer: {
+      marginRight: "-1rem",
     },
 
     text: {
