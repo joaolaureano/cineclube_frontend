@@ -44,7 +44,7 @@ export const MovieLists: React.FC = () => {
   const history = useHistory();
   const styles = useStyles();
   const [currentTab, setCurrentTab] = useState(0);
-  const [watchedMovies, setWatchedMovies] = useState<any>(null);
+  const [watchedMovies, setWatchedMovies] = useState<Object[]>([{}]);
   const [wantToWatchMovies, setWantToWatchMovies] = useState(
     wantToWatchMoviesMock
   );
@@ -75,8 +75,8 @@ export const MovieLists: React.FC = () => {
           listWatched.push(listDesliked.data.body.userMovies[i]);
         }
       }
-
-      await setWatchedMovies(listWatched);
+      setWatchedMovies(listWatched);
+      // setWantToWatchMovies(listWantToWatch);
     }
 
     getMovies();
@@ -107,12 +107,13 @@ export const MovieLists: React.FC = () => {
   };
 
   const renderWatchedMovies = () => {
-    return watchedMovies.map((movie: any) => {
+    // console.log(watchedMovies[0]['movie']);
+    return watchedMovies.map((movie) => {
       return (
         <MovieCard
           key={movie.movie.id}
           type="watched"
-          liked={movie.movie.liked}
+          liked={true}
           onDelete={handleDelete}
           onLike={handleLike}
           onDislike={handleDislike}

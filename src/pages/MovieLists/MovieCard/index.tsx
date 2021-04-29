@@ -59,12 +59,12 @@ export const MovieCard: React.FC<MovieCardProps> = (props) => {
   };
 
   const parsePlatforms = (platforms: string[]) => {
-    return platforms.map((platform) => {
+    return platforms.map((platform: any) => {
       return (
         <PlatformIcon
           key={platform}
           className={styles.platformIcon}
-          platform={platform}
+          platform={platform.name}
         />
       );
     });
