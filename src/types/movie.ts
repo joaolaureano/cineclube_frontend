@@ -58,6 +58,9 @@ export interface MovieState {
 export interface MovieMap {
   [movieId: number]: Movie;
 }
+export interface MovieStatus {
+  movies: Movie[];
+}
 
 export enum MovieUserStatus {
   ALREADY_WATCHED = "already_watched",
