@@ -111,6 +111,7 @@ const useStyles = makeStyles((theme) => {
     appBar: {
       top: "auto",
       bottom: 0,
+      background: theme.palette.primary.main,
     },
 
     bottomMenu: {
@@ -119,6 +120,8 @@ const useStyles = makeStyles((theme) => {
       alignItems: "center",
       maxWidth: "700px",
       background: theme.palette.background.default,
+      marginBottom: "0.5rem",
+      borderRadius: "0 0 2rem 2rem",
     },
   });
 });
