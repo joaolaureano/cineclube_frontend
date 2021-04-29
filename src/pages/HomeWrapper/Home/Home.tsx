@@ -38,6 +38,10 @@ export const Home: React.FC<HomeProps> = (props) => {
     return state.movies[state.movieIds[selectedMovieIndex]];
   };
 
+  const getPreviousMovie = (): Movie => {
+    return state.movies[state.movieIds[selectedMovieIndex - 1]];
+  };
+
   const incrementSelectedMovie = (): void => {
     const numberOfMovies = state.movieIds.length;
     let newMovieIndex = selectedMovieIndex + 1;
@@ -67,7 +71,17 @@ export const Home: React.FC<HomeProps> = (props) => {
     incrementSelectedMovie();
   };
   const handleClickLikeOrNotMovie = () => {};
-  const handleClickUndoLastAction = () => {
+
+  const handleClickUndoLastAction = async () => {
+    const previousMovieId = selectedMovieIndex - 1;
+    if (previousMovieId < 0) return;
+
+    const movieId = String(getPreviousMovie().id);
+    await UserService.setMovieStatus({
+      id: movieId,
+      status: MovieUserStatus.NONE,
+    });
+
     openSnackbar("Desfeita a ultima ação", "success");
     decrementSelectedMovie();
   };
