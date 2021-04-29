@@ -88,6 +88,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               {movie.platforms.map(({ name }) => {
                 return (
                   <PlatformIcon
+                    key={name}
                     className={classes.platform}
                     variant="rounded"
                     platform={name}
