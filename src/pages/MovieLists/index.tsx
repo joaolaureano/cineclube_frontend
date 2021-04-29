@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import {
@@ -14,6 +14,8 @@ import { ArrowBack } from "@material-ui/icons";
 
 import useStyles from "./styles";
 import { MovieCard } from "./MovieCard";
+import User from "../../services/user";
+import { MovieUserStatus } from "../../types/userMovieStatus";
 
 const mockMovie = {
   id: 15,
@@ -29,16 +31,6 @@ const mockMovie = {
   platforms: ["Netflix", "Amazon-Prime-Video"],
 };
 
-const watchedMoviesMock = [1, 2, 3, 4, 5, 6].map((fakeId) => {
-  return {
-    id: fakeId,
-    title: mockMovie.title,
-    pathBanner: mockMovie.pathBanner,
-    platforms: mockMovie.platforms,
-    liked: fakeId % 2 === 0,
-  };
-});
-
 const wantToWatchMoviesMock = [1, 2, 3, 4, 5, 6].map((fakeId) => {
   return {
     id: fakeId + 6,
@@ -52,10 +44,43 @@ export const MovieLists: React.FC = () => {
   const history = useHistory();
   const styles = useStyles();
   const [currentTab, setCurrentTab] = useState(0);
-  const [watchedMovies, setWatchedMovies] = useState(watchedMoviesMock);
+  const [watchedMovies, setWatchedMovies] = useState<any>(null);
   const [wantToWatchMovies, setWantToWatchMovies] = useState(
     wantToWatchMoviesMock
   );
+
+  //Testando
+  useEffect(() => {
+    async function getMovies() {
+      const listDesliked = await User.getMovieByStatus(
+        MovieUserStatus.WATCHED_AND_DISLIKED
+      );
+      const listLiked = await User.getMovieByStatus(
+        MovieUserStatus.WATCHED_AND_LIKED
+      );
+      const listWantToWatch = await User.getMovieByStatus(
+        MovieUserStatus.WANT_TO_WATCH
+      );
+
+      const listWatched: any[] = [];
+
+      if (listLiked.data.body.userMovies) {
+        for (let i = 0; i < listLiked.data.body.userMovies.length; i++) {
+          listWatched.push(listLiked.data.body.userMovies[i]);
+        }
+      }
+
+      if (listDesliked.data.body.userMovies) {
+        for (let i = 0; i < listDesliked.data.body.userMovies.length; i++) {
+          listWatched.push(listDesliked.data.body.userMovies[i]);
+        }
+      }
+
+      await setWatchedMovies(listWatched);
+    }
+
+    getMovies();
+  }, []);
 
   const handleClickBack = () => {
     history.goBack();
@@ -82,20 +107,20 @@ export const MovieLists: React.FC = () => {
   };
 
   const renderWatchedMovies = () => {
-    return watchedMovies.map((movie) => {
+    return watchedMovies.map((movie: any) => {
       return (
         <MovieCard
-          key={movie.id}
+          key={movie.movie.id}
           type="watched"
-          liked={movie.liked}
+          liked={movie.movie.liked}
           onDelete={handleDelete}
           onLike={handleLike}
           onDislike={handleDislike}
           movie={{
-            id: movie.id,
-            title: movie.title,
-            pathBanner: movie.pathBanner,
-            platforms: movie.platforms,
+            id: movie.movie.id,
+            title: movie.movie.title,
+            pathBanner: movie.movie.pathBanner,
+            platforms: movie.movie.platforms,
           }}
         />
       );
@@ -103,7 +128,7 @@ export const MovieLists: React.FC = () => {
   };
 
   const renderWantToWatchMovies = () => {
-    return wantToWatchMovies.map((movie) => {
+    return wantToWatchMovies.map((movie: any) => {
       return (
         <MovieCard
           key={movie.id}

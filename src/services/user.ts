@@ -21,6 +21,10 @@ const user = {
       status,
     });
   },
+
+  getMovieByStatus: (data: MovieUserStatus) => {
+    return api.get("/user/movie/" + data);
+  },
 };
 
 const parseUser = (data: string): User => {
