@@ -110,7 +110,7 @@ export const MovieLists: React.FC = () => {
             />
           );
         })
-      : "Loading...";
+      : null;
   };
 
   const renderWantToWatchMovies = () => {
@@ -131,7 +131,7 @@ export const MovieLists: React.FC = () => {
             />
           );
         })
-      : "Loading...";
+      : null;
   };
 
   return (
