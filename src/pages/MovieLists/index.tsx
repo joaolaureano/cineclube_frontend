@@ -28,37 +28,24 @@ export const MovieLists: React.FC = () => {
   //Testando
   useEffect(() => {
     async function getMovies() {
-      const listDesliked = await User.getMovieByStatus(
+      const listDislikedResponse = await User.getMovieByStatus(
         MovieUserStatus.WATCHED_AND_DISLIKED
       );
-      const listLiked = await User.getMovieByStatus(
+      const listDisliked = listDislikedResponse.data;
+
+      const listLikedResponse = await User.getMovieByStatus(
         MovieUserStatus.WATCHED_AND_LIKED
       );
-      const listWantToWatch = await User.getMovieByStatus(
+      const listLiked = listLikedResponse.data;
+
+      const listWantToWatchResponse = await User.getMovieByStatus(
         MovieUserStatus.WANT_TO_WATCH
       );
+      const listWantToWatch = listWantToWatchResponse.data;
 
-      const listWatched: MovieType[] = [];
-      const listWantToWatchAux: MovieType[] = [];
+      const listWatched: MovieType[] = [...listLiked, ...listDisliked];
+      const listWantToWatchAux: MovieType[] = [...listWantToWatch];
 
-      if (listLiked.data.length > 0) {
-        console.log(listLiked.data);
-        for (let i = 0; i < listLiked.data.length; i++) {
-          listWatched.push(listLiked.data[i]);
-        }
-      }
-      if (listDesliked.data.length > 0) {
-        console.log(listDesliked.data);
-        for (let i = 0; i < listDesliked.data.length; i++) {
-          listWatched.push(listDesliked.data[i]);
-        }
-      }
-      if (listWantToWatch.data.length > 0) {
-        console.log(listWantToWatch.data);
-        for (let i = 0; i < listWantToWatch.data.length; i++) {
-          listWantToWatchAux.push(listWantToWatch.data[i]);
-        }
-      }
       setWantToWatchMovies(listWantToWatchAux);
       setWatchedMovies(listWatched);
     }

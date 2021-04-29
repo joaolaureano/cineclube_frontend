@@ -2,6 +2,7 @@ import { AxiosResponse } from "axios";
 import api from "../api/api";
 import { Movie, MovieMap, MovieStatus } from "../types/movie";
 import { User } from "../types/user";
+import { UserMovie } from "../types/UserMovie";
 import { MovieUserStatus } from "../types/userMovieStatus";
 
 interface PutMoviePayload {
@@ -33,12 +34,12 @@ const user = {
   },
 };
 
-const parseMovieCardInfo = (data: string): Movie[] => {
+const parseMovieCardInfo = (data: string): UserMovie[] => {
   const response = JSON.parse(data);
   const moviesResponse = response.body.userMovies;
-  const movies: Movie[] = [];
+  const movies: UserMovie[] = [];
   moviesResponse.map((movie: any) => {
-    movies.push(movie as Movie);
+    movies.push(movie as UserMovie);
   });
 
   return movies;
