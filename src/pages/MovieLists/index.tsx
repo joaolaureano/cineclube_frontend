@@ -10,7 +10,7 @@ import {
   Tab,
 } from "@material-ui/core";
 
-import { ArrowBack, Movie } from "@material-ui/icons";
+import { ArrowBack } from "@material-ui/icons";
 
 import useStyles from "./styles";
 import { MovieCard } from "./MovieCard";
@@ -18,35 +18,12 @@ import User from "../../services/user";
 import { MovieUserStatus } from "../../types/userMovieStatus";
 import { Movie as MovieType } from "../../types/movie";
 
-const mockMovie = {
-  id: 15,
-  title: "A Viagem de Chihiro",
-  originalTitle: "Spirited Away",
-  synopsis:
-    "Uma menina de 10 anos se perde em um mundo de bruxas e espíritos, embarcando em uma jornada repleta de simbolismo e sensibilidade.",
-  critic: "Nada é esquecido. Mesmo que você não se lembre.",
-  curator: "Renato Weber",
-  year: "2001",
-  pathBanner:
-    "https://m.media-amazon.com/images/M/MV5BMjlmZmI5MDctNDE2YS00YWE0LWE5ZWItZDBhYWQ0NTcxNWRhXkEyXkFqcGdeQXVyMTMxODk2OTU@.jpg",
-  platforms: ["Netflix", "Amazon-Prime-Video"],
-};
-
-const wantToWatchMoviesMock = [1, 2, 3, 4, 5, 6].map((fakeId) => {
-  return {
-    id: fakeId + 6,
-    title: mockMovie.title,
-    pathBanner: mockMovie.pathBanner,
-    platforms: mockMovie.platforms,
-  };
-});
-
 export const MovieLists: React.FC = () => {
   const history = useHistory();
   const styles = useStyles();
   const [currentTab, setCurrentTab] = useState(0);
-  const [watchedMovies, setWatchedMovies] = useState<Object[]>([{}]);
-  const [wantToWatchMovies, setWantToWatchMovies] = useState<Object[]>([{}]);
+  const [watchedMovies, setWatchedMovies] = useState<Object[]>([]);
+  const [wantToWatchMovies, setWantToWatchMovies] = useState<Object[]>([]);
 
   //Testando
   useEffect(() => {
@@ -62,6 +39,7 @@ export const MovieLists: React.FC = () => {
       );
 
       const listWatched: MovieType[] = [];
+      const listWantToWatchAux: MovieType[] = [];
 
       if (listLiked.data.length > 0) {
         console.log(listLiked.data);
@@ -75,9 +53,14 @@ export const MovieLists: React.FC = () => {
           listWatched.push(listDesliked.data[i]);
         }
       }
-
+      if (listWantToWatch.data.length > 0) {
+        console.log(listWantToWatch.data);
+        for (let i = 0; i < listWantToWatch.data.length; i++) {
+          listWantToWatchAux.push(listWantToWatch.data[i]);
+        }
+      }
+      setWantToWatchMovies(listWantToWatchAux);
       setWatchedMovies(listWatched);
-      setWantToWatchMovies(listWantToWatch.data);
     }
 
     getMovies();
@@ -108,44 +91,47 @@ export const MovieLists: React.FC = () => {
   };
 
   const renderWatchedMovies = () => {
-    return watchedMovies.map((movie: any) => {
-      return (
-        <MovieCard
-          key={movie.movie.id}
-          type="watched"
-          liked={true}
-          onDelete={handleDelete}
-          onLike={handleLike}
-          onDislike={handleDislike}
-          movie={{
-            id: movie.movie.id,
-            title: movie.movie.title,
-            pathBanner: movie.movie.pathBanner,
-            platforms: movie.movie.platforms,
-          }}
-        />
-      );
-    });
+    return watchedMovies.length > 0
+      ? watchedMovies.map((movie: any) => {
+          return (
+            <MovieCard
+              key={movie.movie.id}
+              type="watched"
+              liked={movie.status === MovieUserStatus.WATCHED_AND_LIKED}
+              onDelete={handleDelete}
+              onLike={handleLike}
+              onDislike={handleDislike}
+              movie={{
+                id: movie.movie.id,
+                title: movie.movie.title,
+                pathBanner: movie.movie.pathBanner,
+                platforms: movie.movie.platforms,
+              }}
+            />
+          );
+        })
+      : "Loading...";
   };
 
   const renderWantToWatchMovies = () => {
-    console.log(wantToWatchMovies);
-    return wantToWatchMovies.map((movie: any) => {
-      return (
-        <MovieCard
-          key={movie.movie.id}
-          type="wantsToWatch"
-          onDelete={handleDelete}
-          onWatch={handleWatch}
-          movie={{
-            id: movie.movie.id,
-            title: movie.movie.title,
-            pathBanner: movie.movie.pathBanner,
-            platforms: movie.movie.platforms,
-          }}
-        />
-      );
-    });
+    return wantToWatchMovies.length > 0
+      ? wantToWatchMovies.map((movie: any) => {
+          return (
+            <MovieCard
+              key={movie.movie.id}
+              type="wantsToWatch"
+              onDelete={handleDelete}
+              onWatch={handleWatch}
+              movie={{
+                id: movie.movie.id,
+                title: movie.movie.title,
+                pathBanner: movie.movie.pathBanner,
+                platforms: movie.movie.platforms,
+              }}
+            />
+          );
+        })
+      : "Loading...";
   };
 
   return (
