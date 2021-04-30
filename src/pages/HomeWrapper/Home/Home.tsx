@@ -16,7 +16,7 @@ export interface MovieStateLogic {
 interface MovieStateLogicFunctions {
   handleClickWatched: () => void;
   handleClickUndoLastAction: () => void;
-  handleClickDidntLike: () => void;
+  handleClickDontWantToWatch: () => void;
   handleClickWantoWatch: () => void;
   handleClickLikeOrNotMovie: () => void;
   handleClickLikedMovie: () => void;
@@ -85,8 +85,14 @@ export const Home: React.FC<HomeProps> = (props) => {
     decrementSelectedMovie();
   };
 
-  const handleClickDidntLike = () => {
-    openSnackbar("Não gostei", "success");
+  const handleClickDontWantToWatch = async () => {
+    openSnackbar("Não quero assistir", "info");
+
+    const movieID = String(getSelectedMovie().id);
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.DONT_WANT_TO_WATCH,
+    });
     incrementSelectedMovie();
   };
 
@@ -127,7 +133,7 @@ export const Home: React.FC<HomeProps> = (props) => {
     functions: {
       handleClickWatched,
       handleClickUndoLastAction,
-      handleClickDidntLike,
+      handleClickDontWantToWatch,
       handleClickWantoWatch,
       handleClickLikeOrNotMovie,
       handleClickLikedMovie,
