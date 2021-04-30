@@ -160,7 +160,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               flexItem
             />
             <IconButton
-              onClick={logic.functions.handleClickDidntLike}
+              onClick={logic.functions.handleClickDontWantToWatch}
               aria-label="dislike"
               color="primary"
             >
