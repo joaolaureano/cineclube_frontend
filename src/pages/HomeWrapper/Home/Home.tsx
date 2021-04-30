@@ -2,6 +2,8 @@ import { useState, useContext } from "react";
 import { Movie, MovieState } from "../../../types/movie";
 import { HomeDisplay } from "./HomeDisplay/HomeDisplay";
 import { SharedSnackbarContext } from "../../../components/SnackBar/SnackContext";
+import { MovieUserStatus } from "../../../types/userMovieStatus";
+import UserService from "../../../services/user";
 
 interface HomeProps {
   state: MovieState;
@@ -12,10 +14,14 @@ export interface MovieStateLogic {
 }
 
 interface MovieStateLogicFunctions {
-  handleClickWatchedAndLiked: () => void;
+  handleClickWatched: () => void;
   handleClickUndoLastAction: () => void;
-  handleClickDidntLike: () => void;
+  handleClickDontWantToWatch: () => void;
   handleClickWantoWatch: () => void;
+  handleClickLikeOrNotMovie: () => void;
+  handleClickLikedMovie: () => void;
+  handleClickDislikedMovie: () => void;
+  handleCloseModal: () => void;
 }
 
 export const Home: React.FC<HomeProps> = (props) => {
@@ -26,9 +32,13 @@ export const Home: React.FC<HomeProps> = (props) => {
   const [selectedMovieIndex, setSelectedMovieIndex] = useState(
     state.selectedMovieIndex
   );
-
+  const [openModal, setOpenModal] = useState(false);
   const getSelectedMovie = (): Movie => {
     return state.movies[state.movieIds[selectedMovieIndex]];
+  };
+
+  const getPreviousMovie = (): Movie => {
+    return state.movies[state.movieIds[selectedMovieIndex - 1]];
   };
 
   const incrementSelectedMovie = (): void => {
@@ -49,34 +59,94 @@ export const Home: React.FC<HomeProps> = (props) => {
     setSelectedMovieIndex(newMovieIndex);
   };
 
-  const handleClickWatchedAndLiked = () => {
-    openSnackbar("Já assiti e gostei", "success");
+  const handleClickWantoWatch = async () => {
+    openSnackbar("Quero assistir", "info");
+
+    const movieID = String(getSelectedMovie().id);
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.WANT_TO_WATCH,
+    });
     incrementSelectedMovie();
   };
+  const handleClickLikeOrNotMovie = () => {};
 
-  const handleClickUndoLastAction = () => {
+  const handleClickUndoLastAction = async () => {
+    const previousMovieId = selectedMovieIndex - 1;
+    if (previousMovieId < 0) return;
+
+    const movieId = String(getPreviousMovie().id);
+    await UserService.setMovieStatus({
+      id: movieId,
+      status: MovieUserStatus.NONE,
+    });
+
     openSnackbar("Desfeita a ultima ação", "success");
     decrementSelectedMovie();
   };
 
-  const handleClickDidntLike = () => {
-    openSnackbar("Não gostei", "success");
+  const handleClickDontWantToWatch = async () => {
+    openSnackbar("Não quero assistir", "info");
+
+    const movieID = String(getSelectedMovie().id);
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.DONT_WANT_TO_WATCH,
+    });
     incrementSelectedMovie();
   };
 
-  const handleClickWantoWatch = () => {
-    openSnackbar("Quero assistir", "success");
+  const handleClickWatched = () => {
+    setOpenModal(!openModal);
+  };
+
+  const handleClickDislikedMovie = async () => {
+    console.log("Disliked");
+    const movieID = String(getSelectedMovie().id);
+    setOpenModal(!openModal);
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.WATCHED_AND_DISLIKED,
+    });
     incrementSelectedMovie();
+    openSnackbar("Não gostei do filme", "info");
+  };
+
+  const handleClickLikedMovie = async () => {
+    console.log("Liked");
+    const movieID = String(getSelectedMovie().id);
+    setOpenModal(!openModal);
+
+    await UserService.setMovieStatus({
+      id: movieID,
+      status: MovieUserStatus.WATCHED_AND_LIKED,
+    });
+    incrementSelectedMovie();
+    openSnackbar("Gostei do filme", "info");
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
   };
 
   const useStateLogic: MovieStateLogic = {
     functions: {
-      handleClickWatchedAndLiked,
+      handleClickWatched,
       handleClickUndoLastAction,
-      handleClickDidntLike,
+      handleClickDontWantToWatch,
       handleClickWantoWatch,
+      handleClickLikeOrNotMovie,
+      handleClickLikedMovie,
+      handleClickDislikedMovie,
+      handleCloseModal,
     },
   };
 
-  return <HomeDisplay movie={getSelectedMovie()} logic={useStateLogic} />;
+  return (
+    <HomeDisplay
+      movie={getSelectedMovie()}
+      logic={useStateLogic}
+      modalLiked={openModal}
+    />
+  );
 };

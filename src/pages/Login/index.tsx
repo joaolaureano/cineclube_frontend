@@ -7,6 +7,7 @@ import { GoogleButton } from "../../components/GoogleButton";
 
 import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 import UserService from "../../services/user";
+import logoImg from "../../assets/images/logos/login-logo.png";
 
 import useStyles from "./styles";
 
@@ -44,10 +45,7 @@ const Login = (): JSX.Element => {
   return (
     <div className={styles.container}>
       <header className={styles.header}>
-        <div className={styles.placeholderLogo}></div>
-        <Typography className={styles.text} variant="h1" align="center">
-          CineClube
-        </Typography>
+        <img src={logoImg} alt="Cinehal logo" className={styles.logo} />
       </header>
 
       <Container className={styles.root}>

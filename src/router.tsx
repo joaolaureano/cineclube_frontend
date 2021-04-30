@@ -1,10 +1,11 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import LoginTest from "./pages/LoginTest";
-import { HomeWrapper } from "./pages/HomeWrapper/HomeWrapper";
-import Login from "./pages/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
+import { HomeWrapper } from "./pages/HomeWrapper/HomeWrapper";
+import { MovieLists } from "./pages/MovieLists";
+import Login from "./pages/Login";
+import LoginTest from "./pages/LoginTest";
 
 const Router = (): JSX.Element => {
   return (
@@ -12,6 +13,11 @@ const Router = (): JSX.Element => {
       <Switch>
         <Route path="/home" exact component={HomeWrapper} />
         <Route path="/" exact component={Login} />
+        <ProtectedRoute
+          path="/user/movies/:list"
+          exact
+          component={MovieLists}
+        />
         <ProtectedRoute path="/loginTest" exact component={LoginTest} />
       </Switch>
     </BrowserRouter>

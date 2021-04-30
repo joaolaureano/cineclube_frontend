@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import api from "../api/api";
-import { Movie, MovieMap, MoviesDto, MovieState } from "../types/movie";
+import { Movie, MovieDto, MovieMap, MovieState, CastDto } from "../types/movie";
 
 interface PutMoviePayload {
   id: number;
@@ -14,7 +14,7 @@ enum MovieUserStatus {
 }
 
 const movies = {
-  get: (): Promise<AxiosResponse<MoviesDto>> => {
+  get: (): Promise<AxiosResponse<MovieState>> => {
     return api.get("/movies", {
       transformResponse: composeMovieState,
     });
@@ -24,14 +24,44 @@ const movies = {
   },
 };
 
+const mapMovieDtoToMovie = (movieDto: MovieDto): Movie => {
+  let movie: Movie = {
+    id: movieDto.id,
+    title: movieDto.title,
+    originalTitle: movieDto.originalTitle,
+    synopsis: movieDto.synopsis,
+    critic: movieDto.critic,
+    curator: movieDto.curator,
+    year: movieDto.year,
+    pathBanner: movieDto.pathBanner,
+    platforms: movieDto.platforms,
+    moviesTags: movieDto.moviesTags,
+    duration: movieDto.duration,
+    director: "",
+    actors: [],
+  };
+
+  movieDto.cast.forEach((cast: CastDto) => {
+    if (cast.director) {
+      movie.director = cast.actor.name;
+    } else {
+      movie.actors.push(cast.actor.name);
+    }
+  });
+
+  return movie;
+};
+
 const composeMovieState = (data: string): MovieState => {
   const response = JSON.parse(data);
   const moviesResponse = response.body.movies;
   const movies: MovieMap = {};
 
-  const movieIds = moviesResponse.map((movie: Movie) => {
-    movies[movie.id] = movie as Movie;
-    return movie.id;
+  const movieIds: number[] = [];
+  moviesResponse.forEach((movieDto: MovieDto) => {
+    const movie: Movie = mapMovieDtoToMovie(movieDto);
+    movies[movie.id] = movie;
+    movieIds.push(movie.id);
   });
 
   const selectedMovieIndex = 0;

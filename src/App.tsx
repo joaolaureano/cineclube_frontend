@@ -10,11 +10,13 @@ import "./assets/styles/global.css";
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <SharedSnackbarProvider>
-        <Router />
-      </SharedSnackbarProvider>
-    </ThemeProvider>
+    <>
+      <ThemeProvider theme={theme}>
+        <SharedSnackbarProvider>
+          <Router />
+        </SharedSnackbarProvider>
+      </ThemeProvider>
+    </>
   );
 }
 

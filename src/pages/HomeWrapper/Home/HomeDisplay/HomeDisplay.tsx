@@ -1,67 +1,42 @@
 import React from "react";
-import {
-  AppBar,
-  Divider,
-  // Toolbar,
-  Container,
-  IconButton,
-  // Grid,
-  // ButtonGroup,
-} from "@material-ui/core";
-// import Card from "@material-ui/core/Card";
-// import CardActionArea from "@material-ui/core/CardActionArea";
-// import CardActions from "@material-ui/core/CardActions";
-// import CardContent from "@material-ui/core/CardContent";
-// import CardMedia from "@material-ui/core/CardMedia";
-// import Button from "@material-ui/core/Button";
+import { AppBar, Divider, Container, IconButton } from "@material-ui/core";
+
 import Chip from "@material-ui/core/Chip";
 import Typography from "@material-ui/core/Typography";
-import ReplayIcon from "@material-ui/icons/Replay";
-import ClearIcon from "@material-ui/icons/Clear";
-import CheckIcon from "@material-ui/icons/Check";
-import StarIcon from "@material-ui/icons/Star";
-import MenuIcon from "@material-ui/icons/Menu";
-import Avatar from "@material-ui/core/Avatar";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 import useStyles from "./styles";
 import { Movie } from "../../../../types/movie";
 import { MovieStateLogic } from "../Home";
-import netflix from "../../../../assets/images/platforms/Netflix.svg";
-import amazon from "../../../../assets/images/platforms/Amazon.svg";
+import { LikeModal } from "../../../../components/LikeModal";
+import { PlatformIcon } from "../../../../components/PlatformIcon";
+import TemporaryDrawer from "../../../../components/Menu";
+import logoImg from "../../../../assets/images/logos/home-logo.png";
+import { CustomIcon } from "../../../../components/CustomIcon";
 
 interface HomeDisplayProps {
   movie: Movie;
   logic: MovieStateLogic;
+  modalLiked: boolean;
 }
 
 export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const classes = useStyles();
 
-  const { movie, logic } = props;
-
-  function getStreaming(s: string) {
-    if (s === "Netflix") {
-      return netflix;
-    } else if (s === "Amazon-Prime-Video") {
-      return amazon;
-    } else {
-      return "not found";
-    }
-  }
+  const { movie, logic, modalLiked } = props;
 
   return (
     <div className={classes.root}>
       <Container className={classes.container}>
-        {/* Botão Hamburger */}
+        {/* Botão Menu */}
         <div className={classes.topMenu}>
-          <IconButton color="primary" onClick={() => alert("menu")}>
-            <MenuIcon fontSize="large" />
-          </IconButton>
+          <img src={logoImg} alt="Cinehal logo" className={classes.logo} />
+          <TemporaryDrawer />
         </div>
 
         {/* Conteudo do Filme */}
-        <Container>
+        <Container className={classes.content}>
           <img
             src={movie.pathBanner}
             alt="movie cover"
@@ -76,26 +51,81 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             >
               {movie.title}
             </Typography>
-            <Typography gutterBottom variant="body1" component="p">
-              {`(${movie.originalTitle})`} <br />
+            <Typography
+              className={classes.originalTitle}
+              gutterBottom
+              variant="body1"
+              component="p"
+            >
+              {`(${movie.originalTitle})`}
+            </Typography>
+            <Typography
+              className={classes.year}
+              gutterBottom
+              variant="body1"
+              component="p"
+            >
               {movie.year}
             </Typography>
-            <Typography variant="body1" color="textPrimary" component="p">
+            <Typography
+              className={classes.duration}
+              variant="caption"
+              display="block"
+              gutterBottom
+            >
+              {`${movie.duration} MIN`}
+            </Typography>
+            <Typography
+              className={classes.synopsis}
+              variant="body1"
+              color="textPrimary"
+              component="p"
+            >
               {movie.synopsis}
             </Typography>
 
             <AvatarGroup className={classes.platforms}>
               {movie.platforms.map(({ name }) => {
                 return (
-                  <Avatar
+                  <PlatformIcon
+                    key={name}
                     className={classes.platform}
-                    alt={name}
                     variant="rounded"
-                    src={getStreaming(name)}
+                    platform={name}
                   />
                 );
               })}
             </AvatarGroup>
+
+            <div>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                className={classes.cast}
+              >
+                Direção:&nbsp;
+              </Typography>
+              <Typography
+                className={[classes.cast, classes.castNames].join(" ")}
+              >
+                {movie.director}
+              </Typography>
+            </div>
+
+            <div>
+              <Typography
+                variant="body1"
+                color="textPrimary"
+                className={classes.cast}
+              >
+                Elenco principal:&nbsp;
+              </Typography>
+              <Typography
+                className={[classes.cast, classes.castNames].join(" ")}
+              >
+                {movie.actors.join(", ")}
+              </Typography>
+            </div>
 
             <div className={classes.tags}>
               {movie.moviesTags.map(({ tag }) => {
@@ -104,9 +134,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
                     variant="outlined"
                     size="small"
                     label={tag.name}
-                    color="primary"
                     key={tag.name}
                     className={classes.tag}
+                    icon={<FiberManualRecordIcon />}
                   />
                 );
               })}
@@ -122,32 +152,52 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               aria-label="undo"
               color="primary"
             >
-              <ReplayIcon fontSize="large" />
+              <CustomIcon type="undo" />
             </IconButton>
-            <Divider orientation="vertical" flexItem />
+            <Divider
+              className={classes.menuDivider}
+              orientation="vertical"
+              flexItem
+            />
             <IconButton
-              onClick={logic.functions.handleClickDidntLike}
+              onClick={logic.functions.handleClickDontWantToWatch}
               aria-label="dislike"
               color="primary"
             >
-              <ClearIcon fontSize="large" />
+              <CustomIcon type="dontWantToWatch" />
             </IconButton>
-            <Divider orientation="vertical" flexItem />
+            <Divider
+              className={classes.menuDivider}
+              orientation="vertical"
+              flexItem
+            />
             <IconButton
-              onClick={logic.functions.handleClickWatchedAndLiked}
+              onClick={logic.functions.handleClickWantoWatch}
               aria-label="like"
               color="primary"
             >
-              <CheckIcon fontSize="large" />
+              <CustomIcon type="wantToWatch" />
             </IconButton>
-            <Divider orientation="vertical" flexItem />
+            <Divider
+              className={classes.menuDivider}
+              orientation="vertical"
+              flexItem
+            />
             <IconButton
-              onClick={logic.functions.handleClickWantoWatch}
+              onClick={logic.functions.handleClickWatched}
               aria-label="star"
               color="primary"
             >
-              <StarIcon fontSize="large" />
+              <CustomIcon type="watched" />
             </IconButton>
+            <LikeModal
+              open={modalLiked}
+              like={logic.functions.handleClickLikedMovie}
+              dislike={logic.functions.handleClickDislikedMovie}
+              onClose={logic.functions.handleCloseModal}
+              aria-labelledby="simple-modal-title"
+              aria-describedby="simple-modal-description"
+            />
           </div>
         </AppBar>
       </Container>

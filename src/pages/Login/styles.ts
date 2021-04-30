@@ -11,7 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
       maxWidth: "900px",
 
       background: theme.palette.background.default,
-      borderRadius: "25px 25px 0 0",
+      borderRadius: "50px 50px 0 0",
 
       marginTop: "-50px",
     },
@@ -25,7 +25,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
       marginTop: "-50px",
 
-      background: theme.palette.primary.main,
+      background: `linear-gradient(45deg, rgba(206,124,44,1) 0%, rgba(247, 155, 51, 1) 50%, rgba(206,124,44,1) 100%)`,
+    },
+
+    logo: {
+      width: "300px",
     },
 
     container: {
@@ -48,12 +52,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
     subTitle: {
       margin: "0 28px 16px 28px",
-    },
-
-    placeholderLogo: {
-      background: theme.palette.primary.dark,
-      width: "160px",
-      height: "90px",
     },
   })
 );
