@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => {
     topMenu: {
       position: "fixed",
       top: 0,
+      zIndex: 5,
 
       width: "100%",
       padding: "1.7rem 2rem 1.5rem 2rem",
