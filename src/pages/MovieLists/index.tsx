@@ -29,8 +29,8 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
   const { list } = match.params;
   const defaultList = list === "watched" ? 1 : 0;
   const [currentTab, setCurrentTab] = useState(defaultList);
-  const [watchedMovies, setWatchedMovies] = useState<Object[]>([]);
-  const [wantToWatchMovies, setWantToWatchMovies] = useState<Object[]>([]);
+  const [watchedMovies, setWatchedMovies] = useState<UserMovie[]>([]);
+  const [wantToWatchMovies, setWantToWatchMovies] = useState<UserMovie[]>([]);
 
   //Testando
   useEffect(() => {
@@ -76,8 +76,18 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
     alert(`Clicked DISLIKE on movie ${id}`);
   };
 
-  const handleDelete = (id: number) => {
-    alert(`Clicked DELETE on movie ${id}`);
+  const handleDelete = async (id: number) => {
+    const response = await UserService.setMovieStatus({
+      id: String(id),
+      status: MovieUserStatus.NONE,
+    });
+    if (response.data.success) {
+      if (currentTab === 0) {
+        setWantToWatchMovies(
+          wantToWatchMovies.filter((movie) => movie.movieId != id)
+        );
+      }
+    }
   };
 
   const handleWatch = (id: number) => {
