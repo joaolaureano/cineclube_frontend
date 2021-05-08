@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Card, CardMedia, IconButton, Typography } from "@material-ui/core";
 
@@ -12,6 +12,7 @@ import {
 } from "@material-ui/icons";
 
 import useStyles from "./styles";
+import { ConfirmDeleteModal } from "../../../components/ConfirmDeleteModal";
 import { PlatformIcon } from "../../../components/PlatformIcon";
 import { Platform } from "../../../types/platform";
 
@@ -34,6 +35,8 @@ interface MovieCardProps {
 
 export const MovieCard: React.FC<MovieCardProps> = (props) => {
   const styles = useStyles();
+
+  const [openConfirmDeleteModal, setOpenConfirmDeleteModal] = useState(false);
 
   const handleLike = () => {
     if (props.onLike) {
@@ -140,7 +143,9 @@ export const MovieCard: React.FC<MovieCardProps> = (props) => {
             <span className={styles.bottomIcons}>
               {getBottomIcons()}
               <IconButton
-                onClick={handleDelete}
+                onClick={() => {
+                  setOpenConfirmDeleteModal(true);
+                }}
                 color="primary"
                 className={styles.icon}
               >
@@ -150,6 +155,16 @@ export const MovieCard: React.FC<MovieCardProps> = (props) => {
           </div>
         </div>
       </Card>
+      <ConfirmDeleteModal
+        open={openConfirmDeleteModal}
+        confirm={handleDelete}
+        deny={() => {
+          setOpenConfirmDeleteModal(false);
+        }}
+        onClose={() => setOpenConfirmDeleteModal(false)}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      />
     </>
   );
 };
