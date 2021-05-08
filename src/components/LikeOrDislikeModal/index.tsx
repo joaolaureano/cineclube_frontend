@@ -13,14 +13,14 @@ interface ModalProps {
   onClose: () => void;
 }
 
-export const ConfirmDeleteModal: React.FC<ModalProps> = (props: ModalProps) => {
+export const LikeOrDislikeModal: React.FC<ModalProps> = (props: ModalProps) => {
   const classes = useStyles();
 
   return (
     <CustomModal open={props.open} onClose={props.onClose}>
       <div className={classes.modalParent}>
         <Typography variant="h5" color="textPrimary">
-          Você quer mesmo remover da lista ?
+          O que você achou do filme?
         </Typography>
 
         <div className={classes.buttons}>

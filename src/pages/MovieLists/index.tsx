@@ -68,8 +68,15 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
     setCurrentTab(tab);
   };
 
-  const handleLike = (id: number) => {
-    alert(`Clicked LIKE on movie ${id}`);
+  const handleLike = async (id: number) => {
+    const response = await UserService.setMovieStatus({
+      id: String(id),
+      status: MovieUserStatus.WATCHED_AND_LIKED,
+    });
+    if (response.data.success) {
+      if (currentTab === 0) {
+      }
+    }
   };
 
   const handleDislike = (id: number) => {
