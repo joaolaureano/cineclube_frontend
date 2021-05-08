@@ -7,6 +7,7 @@ import UserService from "../../../services/user";
 
 interface HomeProps {
   state: MovieState;
+  updateMovieList: (selectedMovieIndex?: number) => void;
 }
 
 export interface MovieStateLogic {
@@ -27,12 +28,13 @@ interface MovieStateLogicFunctions {
 export const Home: React.FC<HomeProps> = (props) => {
   const { openSnackbar } = useContext(SharedSnackbarContext);
 
-  const { state } = props;
+  const { state, updateMovieList } = props;
 
   const [selectedMovieIndex, setSelectedMovieIndex] = useState(
     state.selectedMovieIndex
   );
   const [openModal, setOpenModal] = useState(false);
+
   const getSelectedMovie = (): Movie => {
     return state.movies[state.movieIds[selectedMovieIndex]];
   };
@@ -117,12 +119,18 @@ export const Home: React.FC<HomeProps> = (props) => {
     const movieID = String(getSelectedMovie().id);
     setOpenModal(!openModal);
 
-    await UserService.setMovieStatus({
+    const response = await UserService.setMovieStatus({
       id: movieID,
       status: MovieUserStatus.WATCHED_AND_LIKED,
     });
-    incrementSelectedMovie();
-    openSnackbar("Gostei do filme", "info");
+
+    if (response.data.success) {
+      await updateMovieList(selectedMovieIndex + 1);
+      incrementSelectedMovie();
+      return openSnackbar("Gostei do filme", "info");
+    }
+
+    openSnackbar("Erro ao adicionar filme", "error");
   };
 
   const handleCloseModal = () => {
