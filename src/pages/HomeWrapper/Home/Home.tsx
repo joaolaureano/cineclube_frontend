@@ -1,9 +1,10 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useImperativeHandle } from "react";
 import { Movie, MovieState } from "../../../types/movie";
 import { HomeDisplay } from "./HomeDisplay/HomeDisplay";
 import { SharedSnackbarContext } from "../../../components/SnackBar/SnackContext";
 import { MovieUserStatus } from "../../../types/userMovieStatus";
 import UserService from "../../../services/user";
+import { useHistory } from "react-router-dom";
 
 interface HomeProps {
   state: MovieState;
@@ -22,12 +23,15 @@ interface MovieStateLogicFunctions {
   handleClickLikedMovie: () => void;
   handleClickDislikedMovie: () => void;
   handleCloseModal: () => void;
+  handleClickGoToFilterPage: () => void;
 }
 
 export const Home: React.FC<HomeProps> = (props) => {
   const { openSnackbar } = useContext(SharedSnackbarContext);
 
   const { state } = props;
+
+  const history = useHistory();
 
   const [selectedMovieIndex, setSelectedMovieIndex] = useState(
     state.selectedMovieIndex
@@ -100,6 +104,11 @@ export const Home: React.FC<HomeProps> = (props) => {
     setOpenModal(!openModal);
   };
 
+  const handleClickGoToFilterPage = () => {
+    // history.push("/user/filter"); TODO
+    history.push("/home");
+  };
+
   const handleClickDislikedMovie = async () => {
     console.log("Disliked");
     const movieID = String(getSelectedMovie().id);
@@ -139,6 +148,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       handleClickLikedMovie,
       handleClickDislikedMovie,
       handleCloseModal,
+      handleClickGoToFilterPage,
     },
   };
 

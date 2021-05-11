@@ -14,7 +14,6 @@ import { PlatformIcon } from "../../../../components/PlatformIcon";
 import TemporaryDrawer from "../../../../components/Menu";
 import logoImg from "../../../../assets/images/logos/home-logo.png";
 import { CustomIcon } from "../../../../components/CustomIcon";
-import MenuFiltro from "../../../../components/MenuFiltro";
 
 interface HomeDisplayProps {
   movie: Movie;
@@ -34,7 +33,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
         <div className={classes.topMenu}>
           <img src={logoImg} alt="Cinehal logo" className={classes.logo} />
           <div className={classes.sideIcon}>
-            <MenuFiltro />
+            <span onClick={logic.functions.handleClickGoToFilterPage}>
+              <CustomIcon type="menuFilters" />
+            </span>
             <TemporaryDrawer />
           </div>
         </div>
