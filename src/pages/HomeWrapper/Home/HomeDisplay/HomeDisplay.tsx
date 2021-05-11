@@ -32,7 +32,12 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
         {/* Botão Menu */}
         <div className={classes.topMenu}>
           <img src={logoImg} alt="Cinehal logo" className={classes.logo} />
-          <TemporaryDrawer />
+          <div className={classes.sideIcon}>
+            <span onClick={logic.functions.handleClickGoToFilterPage}>
+              <CustomIcon type="menuFilters" />
+            </span>
+            <TemporaryDrawer />
+          </div>
         </div>
 
         {/* Conteudo do Filme */}
