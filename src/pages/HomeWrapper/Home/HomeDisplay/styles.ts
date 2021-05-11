@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-
       height: "100%",
       paddingBottom: "5.2rem",
 
@@ -29,7 +28,6 @@ const useStyles = makeStyles((theme) => {
 
       display: "flex",
       flexDirection: "row",
-      justifyContent: "space-between",
       alignItems: "center",
       background: "inherit",
       boxShadow: "none",
@@ -37,8 +35,15 @@ const useStyles = makeStyles((theme) => {
 
     logo: {
       height: "2.75rem",
+      alignSelf: "flex-start",
     },
-
+    sideIcon: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      marginLeft: "auto",
+      gap: "10px",
+    },
     content: {
       marginTop: "6.25rem",
     },
