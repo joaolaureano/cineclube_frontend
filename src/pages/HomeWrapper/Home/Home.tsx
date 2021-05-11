@@ -1,4 +1,4 @@
-import { useState, useContext, useImperativeHandle } from "react";
+import { useState, useContext } from "react";
 import { Movie, MovieState } from "../../../types/movie";
 import { HomeDisplay } from "./HomeDisplay/HomeDisplay";
 import { SharedSnackbarContext } from "../../../components/SnackBar/SnackContext";
