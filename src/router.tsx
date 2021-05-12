@@ -6,13 +6,15 @@ import { HomeWrapper } from "./pages/HomeWrapper/HomeWrapper";
 import { MovieLists } from "./pages/MovieLists";
 import Login from "./pages/Login";
 import LoginTest from "./pages/LoginTest";
+import Filter from "./pages/Filter";
 
 const Router = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/home" exact component={HomeWrapper} />
-        <Route path="/" exact component={Login} />
+        <Route path="/" exact component={Filter} />
+        <Route path="/filter" exact component={Filter} />
         <ProtectedRoute
           path="/user/movies/:list"
           exact
