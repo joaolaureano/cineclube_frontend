@@ -9,6 +9,7 @@ import { PlatformIcon } from "../../components/PlatformIcon";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import { Platform } from "../../types/platform";
 import { Divider } from "@material-ui/core";
+import { TagButton } from "../../components/TagButton";
 
 const Filter = (): JSX.Element => {
   const history = useHistory();
@@ -62,10 +63,13 @@ const Filter = (): JSX.Element => {
             <div className={styles.expandIconContainer}>
               <ExpandMoreRoundedIcon />
             </div>
-            <Container></Container>
           </Container>
-
-          <Container className={styles.listTag}></Container>
+          <Container className={styles.listTag}>
+            <TagButton title="teste" />
+            <TagButton title="teste" />
+            <TagButton title="teste" />
+            <TagButton title="teste" />
+          </Container>
         </Container>
       </Container>
     </div>

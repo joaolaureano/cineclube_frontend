@@ -49,6 +49,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     listTag: {
       display: "flex",
+      justifyContent: "space-between",
+      flexWrap: "wrap",
+      "& *": {
+        marginBottom: "10px",
+      },
     },
     expandIconContainer: {
       marginLeft: "auto",
