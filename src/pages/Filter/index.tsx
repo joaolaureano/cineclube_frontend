@@ -6,6 +6,7 @@ import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounde
 import useStyles from "./styles";
 import { Container, Typography } from "@material-ui/core";
 import { PlatformIcon } from "../../components/PlatformIcon";
+import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import { Platform } from "../../types/platform";
 import { Divider } from "@material-ui/core";
 
@@ -40,7 +41,7 @@ const Filter = (): JSX.Element => {
         </div>
       </Container>
       <Container className={styles.contentWrapper}>
-        <Container className={styles.platformWrapper}>
+        <Container>
           <Typography variant="h6" component="h2" className={styles.paragraph}>
             Serviços selecionados:
           </Typography>
@@ -49,6 +50,23 @@ const Filter = (): JSX.Element => {
           </Container>
         </Container>
         <Divider variant="middle" className={styles.divider} />
+        <Container>
+          <Container className={styles.tagListHeader}>
+            <Typography
+              variant="h6"
+              component="h2"
+              className={styles.paragraph}
+            >
+              Tags:
+            </Typography>
+            <div className={styles.expandIconContainer}>
+              <ExpandMoreRoundedIcon />
+            </div>
+            <Container></Container>
+          </Container>
+
+          <Container className={styles.listTag}></Container>
+        </Container>
       </Container>
     </div>
   );

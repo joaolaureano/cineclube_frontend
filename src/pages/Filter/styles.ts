@@ -23,7 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     textContainer: {
       display: "flex",
-      justifySelf: "center",
       alignSelf: "center",
       margin: "auto",
     },
@@ -43,11 +42,20 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingLeft: "20px",
       paddingRight: "20px",
     },
-    platformWrapper: {
-      marginBottom: "25px",
-    },
     divider: {
+      marginBottom: "20px",
+      marginTop: "25px",
       height: "2px",
+    },
+    listTag: {
+      display: "flex",
+    },
+    expandIconContainer: {
+      marginLeft: "auto",
+    },
+    tagListHeader: {
+      display: "flex",
+      alignItems: "center",
     },
   })
 );
