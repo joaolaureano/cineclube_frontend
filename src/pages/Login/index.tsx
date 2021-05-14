@@ -28,7 +28,6 @@ const Login = (): JSX.Element => {
       if (token) {
         const loginResponse = await UserService.auth();
         const { user } = loginResponse.data.body;
-        console.log(token);
         if (user) {
           setToken(token);
           openSnackbar("Login bem-sucedido", "success");

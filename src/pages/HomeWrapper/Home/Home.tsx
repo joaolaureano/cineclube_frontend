@@ -105,8 +105,7 @@ export const Home: React.FC<HomeProps> = (props) => {
   };
 
   const handleClickGoToFilterPage = () => {
-    // history.push("/user/filter"); TODO
-    history.push("/home");
+    history.push("/filter");
   };
 
   const handleClickDislikedMovie = async () => {
