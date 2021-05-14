@@ -18,8 +18,11 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: "5%",
     },
     backIconContainer: {
-      display: "flex",
-      justifySelf: "flex-start",
+      position: "absolute",
+    },
+    title: {
+      textTransform: "uppercase",
+      color: theme.palette.text.primary,
     },
     textContainer: {
       display: "flex",
@@ -49,13 +52,11 @@ const useStyles = makeStyles((theme: Theme) =>
       height: "2px",
     },
     listTag: {
-      display: "flex",
-      justifyContent: "space-between",
-      flexWrap: "wrap",
-      "& div": {
-        marginBottom: "10px",
-      },
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: "10px",
     },
+
     expandIconContainer: {
       marginLeft: "auto",
     },

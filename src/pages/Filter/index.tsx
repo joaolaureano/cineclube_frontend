@@ -2,9 +2,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
-import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import useStyles from "./styles";
-import { Container, TabScrollButton, Typography } from "@material-ui/core";
+import { Container, Typography } from "@material-ui/core";
 import { PlatformIcon } from "../../components/PlatformIcon";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
@@ -12,12 +11,8 @@ import { Divider } from "@material-ui/core";
 import tag from "../../services/tag";
 import { TagButton } from "../../components/TagButton";
 import { Tag } from "../../types/tag";
-interface TagSwitch {
-  [tagId: string]: {
-    tag: Tag;
-    selected: boolean;
-  };
-}
+import { ArrowBack } from "@material-ui/icons";
+
 const Filter = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
@@ -25,18 +20,9 @@ const Filter = (): JSX.Element => {
   const platforms: string[] = ["Netflix", "Amazon-Prime-Video"];
   const [state, setState] = React.useState<{
     [platformId: string]: boolean;
-  } | null>();
-  const [tagList, setTagList] = React.useState<TagSwitch>({
-    "": {
-      tag: {
-        createdAt: new Date(),
-        updatedAt: new Date(),
-        id: -1,
-        name: "",
-      },
-      selected: false,
-    },
-  });
+  }>({});
+  const [tagList, setTagList] = React.useState<Tag[]>([]);
+  const [selectedTagList, setSelectedTagList] = React.useState<number[]>([]);
   const parsePlatforms = () => {
     return platforms.map((platform: any) => {
       return (
@@ -61,48 +47,42 @@ const Filter = (): JSX.Element => {
     });
   };
   const parseTags = () => {
-    return Object.keys(tagList).map((tagId) => {
+    return tagList.map((tag) => {
       return (
         <TagButton
-          selected={tagList[tagId].selected}
-          title={tagList[tagId].tag.name}
-          key={tagList[tagId].tag.id}
+          selected={selectedTagList.indexOf(tag.id) !== -1}
+          title={tag.name}
+          key={tag.id}
           onClick={() => {
-            setTag(tagId);
+            setTag(tag.id);
           }}
         />
       );
     });
   };
   const setPlatform = (key: any) => {
-    if (state) {
-      state[key] = !state[key];
-      setState({
-        ...state,
-      });
-    }
-  };
-
-  const setTag = (tagID: string) => {
-    if (tagList) {
-      const oldTag = tagList[tagID];
-      oldTag.selected = !oldTag.selected;
-      const newTag = tagList;
-      newTag[tagID] = oldTag;
-
-      setTagList(newTag);
-
-      console.log(tagList);
-    }
-  };
-
-  const fetchTags = async () => {
-    const result = (await tag.getMainTags()).data;
-    const mapBoolean: TagSwitch = {};
-    result.forEach((tag) => {
-      mapBoolean[tag.id] = { tag, selected: false };
+    state[key] = !state[key];
+    setState({
+      ...state,
     });
-    setTagList(mapBoolean);
+  };
+  const backToMenu = () => {
+    history.push("/home");
+  };
+  const setTag = (tagID: number) => {
+    const oldSelectedList = [...selectedTagList];
+    const indexOf = oldSelectedList.indexOf(tagID);
+    if (indexOf !== -1) {
+      oldSelectedList.splice(indexOf, 1);
+    } else {
+      oldSelectedList.push(tagID);
+    }
+    setSelectedTagList(oldSelectedList);
+  };
+  const fetchTags = async () => {
+    const result = await tag.getMainTags();
+    const listTag = result.data;
+    setTagList(listTag);
   };
   useEffect(() => {
     fetchTags();
@@ -117,12 +97,12 @@ const Filter = (): JSX.Element => {
   return (
     <div className={styles.root}>
       <Container className={styles.header}>
-        <div className={styles.backIconContainer}>
-          <ArrowForwardIosRoundedIcon fontSize="large" />
+        <div className={styles.backIconContainer} onClick={backToMenu}>
+          <ArrowBack fontSize="large" />
         </div>
         <div className={styles.textContainer}>
-          <Typography variant="h6" component="h1">
-            Filtros
+          <Typography variant="h5" component="h1" className={styles.title}>
+            FILTROS
           </Typography>
         </div>
       </Container>
@@ -145,9 +125,6 @@ const Filter = (): JSX.Element => {
             >
               Tags:
             </Typography>
-            <div className={styles.expandIconContainer}>
-              <ExpandMoreRoundedIcon />
-            </div>
           </Container>
           <Container className={styles.listTag}>{parseTags()}</Container>
         </Container>

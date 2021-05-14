@@ -13,7 +13,7 @@ const Router = (): JSX.Element => {
     <BrowserRouter>
       <Switch>
         <Route path="/home" exact component={HomeWrapper} />
-        <Route path="/" exact component={Filter} />
+        <Route path="/" exact component={Login} />
         <Route path="/filter" exact component={Filter} />
         <ProtectedRoute
           path="/user/movies/:list"
