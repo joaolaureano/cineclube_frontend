@@ -4,12 +4,14 @@ import { useHistory } from "react-router-dom";
 import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 import ArrowForwardIosRoundedIcon from "@material-ui/icons/ArrowForwardIosRounded";
 import useStyles from "./styles";
-import { Container, Typography } from "@material-ui/core";
+import { Container, TabScrollButton, Typography } from "@material-ui/core";
 import { PlatformIcon } from "../../components/PlatformIcon";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import { Divider } from "@material-ui/core";
+import tag from "../../services/tag";
 import { TagButton } from "../../components/TagButton";
+import { Tag } from "../../types/tag";
 export interface test {
   state: boolean;
 }
@@ -21,6 +23,14 @@ const Filter = (): JSX.Element => {
   const [state, setState] = React.useState<{
     [platformId: string]: boolean;
   } | null>();
+  const [tagList, setTagList] = React.useState<Tag[]>([
+    {
+      id: -1,
+      name: "",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+  ]);
   const parsePlatforms = () => {
     return platforms.map((platform: any) => {
       return (
@@ -44,7 +54,11 @@ const Filter = (): JSX.Element => {
       );
     });
   };
-
+  const parseTags = () => {
+    return tagList.map((tag) => {
+      return <TagButton title={tag.name} key={tag.id} />;
+    });
+  };
   const setPlatform = (key: any) => {
     if (state) {
       state[key] = !state[key];
@@ -54,12 +68,20 @@ const Filter = (): JSX.Element => {
     }
   };
 
+  // useEffect(() => {
+  //   const platformStateHolder: { [platformId: string]: boolean } = {};
+  //   platforms.forEach((platform: string) => {
+  //     platformStateHolder[platform] = false;
+  //   });
+  //   setState(platformStateHolder);
+  // }, []);
   useEffect(() => {
-    const platformStateHolder: { [platformId: string]: boolean } = {};
-    platforms.forEach((platform: string) => {
-      platformStateHolder[platform] = false;
-    });
-    setState(platformStateHolder);
+    const fetchTags = async () => {
+      const result = (await tag.getMainTags()).data;
+      console.log(result);
+      setTagList(result);
+    };
+    fetchTags();
   }, []);
 
   return (
@@ -97,12 +119,7 @@ const Filter = (): JSX.Element => {
               <ExpandMoreRoundedIcon />
             </div>
           </Container>
-          <Container className={styles.listTag}>
-            <TagButton title="teste" />
-            <TagButton title="teste" />
-            <TagButton title="teste" />
-            <TagButton title="teste" />
-          </Container>
+          <Container className={styles.listTag}>{parseTags()}</Container>
         </Container>
       </Container>
     </div>

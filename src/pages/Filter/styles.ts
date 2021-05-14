@@ -52,7 +52,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "space-between",
       flexWrap: "wrap",
-      "& *": {
+      "& div": {
         marginBottom: "10px",
       },
     },

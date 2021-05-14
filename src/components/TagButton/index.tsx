@@ -1,4 +1,4 @@
-import { AvatarTypeMap, Button } from "@material-ui/core";
+import { AvatarTypeMap, Button, Chip } from "@material-ui/core";
 import { DefaultComponentProps } from "@material-ui/core/OverridableComponent";
 import React from "react";
 import styles from "./styles";
@@ -12,13 +12,12 @@ export const TagButton: React.FC<TagButtonProps> = (props) => {
   const { title } = props;
 
   return (
-    <Button
+    <Chip
       variant="outlined"
-      size="small"
+      size="medium"
       color="primary"
-      className={classes.button}
-    >
-      {title}
-    </Button>
+      className={classes.chip}
+      label={title}
+    />
   );
 };
