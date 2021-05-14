@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
@@ -10,34 +10,57 @@ import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import { Divider } from "@material-ui/core";
 import { TagButton } from "../../components/TagButton";
-
+export interface test {
+  state: boolean;
+}
 const Filter = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
   const { openSnackbar } = useContext(SharedSnackbarContext);
-  const platforms: String[] = ["Netflix", "Amazon-Prime-Video"];
-  const [state, setState] = React.useState(true);
-
+  const platforms: string[] = ["Netflix", "Amazon-Prime-Video"];
+  const [state, setState] = React.useState<{
+    [platformId: string]: boolean;
+  } | null>();
   const parsePlatforms = () => {
     return platforms.map((platform: any) => {
       return (
         <>
-          <div style={{ position: "relative" }} onClick={setPlatform}>
+          <div
+            style={{ position: "relative" }}
+            onClick={() => {
+              setPlatform(platform);
+            }}
+          >
             <PlatformIcon
               key={platform}
               className={styles.platformIcon}
               platform={platform}
             />
-            {state && <CheckRoundedIcon className={styles.checkIcon} />}
+            {state && state[platform] && (
+              <CheckRoundedIcon className={styles.checkIcon} />
+            )}
           </div>
         </>
       );
     });
   };
 
-  const setPlatform = () => {
-    setState(!state);
+  const setPlatform = (key: any) => {
+    if (state) {
+      state[key] = !state[key];
+      setState({
+        ...state,
+      });
+    }
   };
+
+  useEffect(() => {
+    const platformStateHolder: { [platformId: string]: boolean } = {};
+    platforms.forEach((platform: string) => {
+      platformStateHolder[platform] = false;
+    });
+    setState(platformStateHolder);
+  }, []);
 
   return (
     <div className={styles.root}>
