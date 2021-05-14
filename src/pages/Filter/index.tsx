@@ -7,7 +7,7 @@ import useStyles from "./styles";
 import { Container, Typography } from "@material-ui/core";
 import { PlatformIcon } from "../../components/PlatformIcon";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
-import { Platform } from "../../types/platform";
+import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import { Divider } from "@material-ui/core";
 import { TagButton } from "../../components/TagButton";
 
@@ -17,14 +17,19 @@ const Filter = (): JSX.Element => {
   const { openSnackbar } = useContext(SharedSnackbarContext);
   const platforms: String[] = ["Netflix", "Amazon-Prime-Video"];
 
-  const parsePlatforms = (platformsNames: String[]) => {
+  const parsePlatforms = () => {
     return platforms.map((platform: any) => {
       return (
-        <PlatformIcon
-          key={platform}
-          className={styles.platformIcon}
-          platform={platform}
-        />
+        <>
+          <div style={{ position: "relative" }}>
+            <PlatformIcon
+              key={platform}
+              className={styles.platformIcon}
+              platform={platform}
+            />
+            <CheckRoundedIcon className={styles.checkIcon} />
+          </div>
+        </>
       );
     });
   };
@@ -47,7 +52,7 @@ const Filter = (): JSX.Element => {
             Serviços selecionados:
           </Typography>
           <Container className={styles.listPlatform}>
-            {parsePlatforms(platforms)}
+            {parsePlatforms()}
           </Container>
         </Container>
         <Divider variant="middle" className={styles.divider} />

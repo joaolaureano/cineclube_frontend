@@ -34,6 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
     platformIcon: {
       display: "flex",
       marginRight: "3px",
+      position: "relative",
     },
     listPlatform: {
       display: "flex",
@@ -61,6 +62,14 @@ const useStyles = makeStyles((theme: Theme) =>
     tagListHeader: {
       display: "flex",
       alignItems: "center",
+    },
+    checkIcon: {
+      display: "flex",
+      position: "absolute",
+      bottom: "0px",
+      right: "0px",
+      strokeWidth: "3px",
+      stroke: `${theme.palette.primary.light}`,
     },
   })
 );
