@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     textContainer: {
       display: "flex",
-      alignSelf: "center",
       margin: "auto",
     },
     paragraph: {
@@ -45,6 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     contentWrapper: {
       paddingLeft: "20px",
       paddingRight: "20px",
+      height: "78%",
     },
     divider: {
       marginBottom: "20px",
@@ -72,6 +72,13 @@ const useStyles = makeStyles((theme: Theme) =>
       strokeWidth: "3px",
       stroke: `${theme.palette.primary.light}`,
     },
+    sendButton: {
+      background: theme.palette.grey.A200,
+      display: "flex",
+      marginLeft: "auto",
+      marginRight: "auto",
+    },
+    atBottom: {},
   })
 );
 

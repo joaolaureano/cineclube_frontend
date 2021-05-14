@@ -1,11 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-
-import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 import useStyles from "./styles";
-import { Container, Typography } from "@material-ui/core";
+import { Button, Container, Typography } from "@material-ui/core";
 import { PlatformIcon } from "../../components/PlatformIcon";
-import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import { Divider } from "@material-ui/core";
 import tag from "../../services/tag";
@@ -16,9 +13,8 @@ import { ArrowBack } from "@material-ui/icons";
 const Filter = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
-  const { openSnackbar } = useContext(SharedSnackbarContext);
   const platforms: string[] = ["Netflix", "Amazon-Prime-Video"];
-  const [state, setState] = React.useState<{
+  const [platfomList, setState] = React.useState<{
     [platformId: string]: boolean;
   }>({});
   const [tagList, setTagList] = React.useState<Tag[]>([]);
@@ -38,7 +34,7 @@ const Filter = (): JSX.Element => {
               className={styles.platformIcon}
               platform={platform}
             />
-            {state && state[platform] && (
+            {platfomList && platfomList[platform] && (
               <CheckRoundedIcon className={styles.checkIcon} />
             )}
           </div>
@@ -61,9 +57,9 @@ const Filter = (): JSX.Element => {
     });
   };
   const setPlatform = (key: any) => {
-    state[key] = !state[key];
+    platfomList[key] = !platfomList[key];
     setState({
-      ...state,
+      ...platfomList,
     });
   };
   const backToMenu = () => {
@@ -83,6 +79,11 @@ const Filter = (): JSX.Element => {
     const result = await tag.getMainTags();
     const listTag = result.data;
     setTagList(listTag);
+  };
+  const saveToStorage = () => {
+    console.log(selectedTagList);
+    console.log(tagList);
+    console.log(platfomList);
   };
   useEffect(() => {
     fetchTags();
@@ -128,6 +129,17 @@ const Filter = (): JSX.Element => {
           </Container>
           <Container className={styles.listTag}>{parseTags()}</Container>
         </Container>
+      </Container>
+      <Container className={styles.atBottom}>
+        <Button
+          disableElevation
+          variant="contained"
+          className={styles.sendButton}
+          size="medium"
+          onClick={saveToStorage}
+        >
+          Salvar
+        </Button>
       </Container>
     </div>
   );
