@@ -34,7 +34,7 @@ const Filter = (): JSX.Element => {
             }}
           >
             <PlatformIcon
-              key={platform}
+              key={`filter-platform-${platform}`}
               className={styles.platformIcon}
               platform={platform}
             />
@@ -52,7 +52,7 @@ const Filter = (): JSX.Element => {
         <TagButton
           selected={selectedTagList.indexOf(tag.id) !== -1}
           title={tag.name}
-          key={tag.id}
+          key={`filter-tag-${tag.id}`}
           onClick={() => {
             setTag(tag.id);
           }}
