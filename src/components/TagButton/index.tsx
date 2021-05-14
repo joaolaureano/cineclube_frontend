@@ -5,19 +5,21 @@ import styles from "./styles";
 
 interface TagButtonProps extends DefaultComponentProps<AvatarTypeMap> {
   title: string;
+  selected: boolean;
 }
 
 export const TagButton: React.FC<TagButtonProps> = (props) => {
   const classes = styles();
-  const { title } = props;
+  const { title, onClick, selected } = props;
 
   return (
     <Chip
-      variant="outlined"
+      variant={selected ? "outlined" : "default"}
       size="medium"
       color="primary"
       className={classes.chip}
       label={title}
+      onClick={onClick}
     />
   );
 };

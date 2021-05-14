@@ -12,8 +12,11 @@ import { Divider } from "@material-ui/core";
 import tag from "../../services/tag";
 import { TagButton } from "../../components/TagButton";
 import { Tag } from "../../types/tag";
-export interface test {
-  state: boolean;
+interface TagSwitch {
+  [tagId: string]: {
+    tag: Tag;
+    selected: boolean;
+  };
 }
 const Filter = (): JSX.Element => {
   const history = useHistory();
@@ -23,14 +26,17 @@ const Filter = (): JSX.Element => {
   const [state, setState] = React.useState<{
     [platformId: string]: boolean;
   } | null>();
-  const [tagList, setTagList] = React.useState<Tag[]>([
-    {
-      id: -1,
-      name: "",
-      createdAt: new Date(),
-      updatedAt: new Date(),
+  const [tagList, setTagList] = React.useState<TagSwitch>({
+    "": {
+      tag: {
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        id: -1,
+        name: "",
+      },
+      selected: false,
     },
-  ]);
+  });
   const parsePlatforms = () => {
     return platforms.map((platform: any) => {
       return (
@@ -55,8 +61,17 @@ const Filter = (): JSX.Element => {
     });
   };
   const parseTags = () => {
-    return tagList.map((tag) => {
-      return <TagButton title={tag.name} key={tag.id} />;
+    return Object.keys(tagList).map((tagId) => {
+      return (
+        <TagButton
+          selected={tagList[tagId].selected}
+          title={tagList[tagId].tag.name}
+          key={tagList[tagId].tag.id}
+          onClick={() => {
+            setTag(tagId);
+          }}
+        />
+      );
     });
   };
   const setPlatform = (key: any) => {
@@ -68,20 +83,35 @@ const Filter = (): JSX.Element => {
     }
   };
 
-  // useEffect(() => {
-  //   const platformStateHolder: { [platformId: string]: boolean } = {};
-  //   platforms.forEach((platform: string) => {
-  //     platformStateHolder[platform] = false;
-  //   });
-  //   setState(platformStateHolder);
-  // }, []);
+  const setTag = (tagID: string) => {
+    if (tagList) {
+      const oldTag = tagList[tagID];
+      oldTag.selected = !oldTag.selected;
+      const newTag = tagList;
+      newTag[tagID] = oldTag;
+
+      setTagList(newTag);
+
+      console.log(tagList);
+    }
+  };
+
+  const fetchTags = async () => {
+    const result = (await tag.getMainTags()).data;
+    const mapBoolean: TagSwitch = {};
+    result.forEach((tag) => {
+      mapBoolean[tag.id] = { tag, selected: false };
+    });
+    setTagList(mapBoolean);
+  };
   useEffect(() => {
-    const fetchTags = async () => {
-      const result = (await tag.getMainTags()).data;
-      console.log(result);
-      setTagList(result);
-    };
     fetchTags();
+
+    const platformStateHolder: { [platformId: string]: boolean } = {};
+    platforms.forEach((platform: string) => {
+      platformStateHolder[platform] = false;
+    });
+    setState(platformStateHolder);
   }, []);
 
   return (
