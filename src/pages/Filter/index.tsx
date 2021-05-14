@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
@@ -16,22 +16,27 @@ const Filter = (): JSX.Element => {
   const styles = useStyles();
   const { openSnackbar } = useContext(SharedSnackbarContext);
   const platforms: String[] = ["Netflix", "Amazon-Prime-Video"];
+  const [state, setState] = React.useState(true);
 
   const parsePlatforms = () => {
     return platforms.map((platform: any) => {
       return (
         <>
-          <div style={{ position: "relative" }}>
+          <div style={{ position: "relative" }} onClick={setPlatform}>
             <PlatformIcon
               key={platform}
               className={styles.platformIcon}
               platform={platform}
             />
-            <CheckRoundedIcon className={styles.checkIcon} />
+            {state && <CheckRoundedIcon className={styles.checkIcon} />}
           </div>
         </>
       );
     });
+  };
+
+  const setPlatform = () => {
+    setState(!state);
   };
 
   return (
