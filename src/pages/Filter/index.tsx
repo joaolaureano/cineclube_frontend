@@ -6,35 +6,39 @@ import { PlatformIcon } from "../../components/PlatformIcon";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import { Divider } from "@material-ui/core";
 import tag from "../../services/tag";
+import platform from "../../services/platform";
 import { TagButton } from "../../components/TagButton";
 import { Tag } from "../../types/tag";
 import { ArrowBack } from "@material-ui/icons";
+import { Platform } from "../../types/platform";
 
 const Filter = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
-  const platforms: string[] = ["Netflix", "Amazon-Prime-Video"];
+  const [platformNameList, setPlatformNameList] = React.useState<Platform[]>(
+    []
+  );
   const [platfomList, setState] = React.useState<{
     [platformId: string]: boolean;
   }>({});
   const [tagList, setTagList] = React.useState<Tag[]>([]);
   const [selectedTagList, setSelectedTagList] = React.useState<number[]>([]);
   const parsePlatforms = () => {
-    return platforms.map((platform: any) => {
+    return platformNameList.map((platform: Platform) => {
       return (
         <>
           <div
             style={{ position: "relative" }}
             onClick={() => {
-              setPlatform(platform);
+              setPlatform(platform.name);
             }}
           >
             <PlatformIcon
               key={`filter-platform-${platform}`}
               className={styles.platformIcon}
-              platform={platform}
+              platform={platform.name}
             />
-            {platfomList && platfomList[platform] && (
+            {platfomList && platfomList[platform.name] && (
               <CheckRoundedIcon className={styles.checkIcon} />
             )}
           </div>
@@ -80,19 +84,23 @@ const Filter = (): JSX.Element => {
     const listTag = result.data;
     setTagList(listTag);
   };
-  const saveToStorage = () => {
-    console.log(selectedTagList);
-    console.log(tagList);
-    console.log(platfomList);
-  };
-  useEffect(() => {
-    fetchTags();
+  const fetchPlatforms = async () => {
+    const result = await platform.getMainPlatform();
+    const listPlatforms = result.data;
 
     const platformStateHolder: { [platformId: string]: boolean } = {};
-    platforms.forEach((platform: string) => {
-      platformStateHolder[platform] = false;
+    listPlatforms.forEach((platform: Platform) => {
+      platformStateHolder[platform.name] = false;
     });
-    setState(platformStateHolder);
+    setPlatformNameList(listPlatforms);
+
+    console.log(platformNameList);
+  };
+
+  const saveToStorage = () => {};
+  useEffect(() => {
+    fetchTags();
+    fetchPlatforms();
   }, []);
 
   return (
