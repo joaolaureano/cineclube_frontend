@@ -17,6 +17,9 @@ const movies = {
   get: (): Promise<AxiosResponse<MovieState>> => {
     return api.get("/movies", {
       transformResponse: composeMovieState,
+      params: {
+        filter: JSON.parse(localStorage.getItem("filtros") as string),
+      },
     });
   },
   put: (payload: PutMoviePayload) => {
