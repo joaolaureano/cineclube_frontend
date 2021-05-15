@@ -18,10 +18,8 @@ const Filter = (): JSX.Element => {
   const [platformNameList, setPlatformNameList] = React.useState<Platform[]>(
     []
   );
-  const [platfomList, setState] = React.useState<{
-    [platformId: string]: boolean;
-  }>({});
   const [tagList, setTagList] = React.useState<Tag[]>([]);
+  const [platformList, setState] = React.useState<string[]>([]);
   const [selectedTagList, setSelectedTagList] = React.useState<number[]>([]);
   const parsePlatforms = () => {
     return platformNameList.map((platform: Platform) => {
@@ -30,7 +28,7 @@ const Filter = (): JSX.Element => {
           <div
             style={{ position: "relative" }}
             onClick={() => {
-              setPlatform(platform.name);
+              setPlatform(platform.id + "");
             }}
           >
             <PlatformIcon
@@ -38,7 +36,7 @@ const Filter = (): JSX.Element => {
               className={styles.platformIcon}
               platform={platform.name}
             />
-            {platfomList && platfomList[platform.name] && (
+            {platformList.indexOf(platform.id + "") !== -1 && (
               <CheckRoundedIcon className={styles.checkIcon} />
             )}
           </div>
@@ -60,11 +58,17 @@ const Filter = (): JSX.Element => {
       );
     });
   };
-  const setPlatform = (key: any) => {
-    platfomList[key] = !platfomList[key];
-    setState({
-      ...platfomList,
-    });
+  const setPlatform = (key: string) => {
+    const oldSelectedList = [...platformList];
+
+    const indexOf = oldSelectedList.indexOf(key);
+    if (indexOf !== -1) {
+      oldSelectedList.splice(indexOf, 1);
+    } else {
+      oldSelectedList.push(key);
+    }
+    console.log(oldSelectedList);
+    setState(oldSelectedList);
   };
   const backToMenu = () => {
     history.push("/home");
@@ -90,14 +94,23 @@ const Filter = (): JSX.Element => {
 
     const platformStateHolder: { [platformId: string]: boolean } = {};
     listPlatforms.forEach((platform: Platform) => {
-      platformStateHolder[platform.name] = false;
+      platformStateHolder[platform.id] = false;
     });
     setPlatformNameList(listPlatforms);
-
-    console.log(platformNameList);
   };
 
-  const saveToStorage = () => {};
+  const saveToStorage = () => {
+    const objFiltros: { tagsID: number[]; platformsId: string[] } = {
+      tagsID: [],
+      platformsId: [],
+    };
+    objFiltros.tagsID = [...selectedTagList];
+    objFiltros.platformsId = [...platformList];
+    localStorage.setItem("filtros", JSON.stringify(objFiltros));
+    console.log(localStorage.getItem("filtros"));
+    const test = localStorage.getItem("filtros") as string;
+    console.log(JSON.parse(test));
+  };
   useEffect(() => {
     fetchTags();
     fetchPlatforms();
