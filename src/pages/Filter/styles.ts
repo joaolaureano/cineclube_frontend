@@ -73,10 +73,14 @@ const useStyles = makeStyles((theme: Theme) =>
       stroke: `${theme.palette.primary.light}`,
     },
     sendButton: {
-      background: theme.palette.grey.A200,
-      display: "flex",
-      marginLeft: "auto",
-      marginRight: "auto",
+      background: theme.palette.text.secondary,
+      color: "#fff",
+      width: "calc(100% - 6rem)",
+      margin: "3rem 3rem 0",
+
+      "&:hover": {
+        background: theme.palette.text.primary,
+      },
     },
     atBottom: {},
   })

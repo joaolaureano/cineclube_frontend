@@ -11,10 +11,13 @@ import { TagButton } from "../../components/TagButton";
 import { Tag } from "../../types/tag";
 import { ArrowBack } from "@material-ui/icons";
 import { Platform } from "../../types/platform";
+import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 
 const Filter = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
+  const { openSnackbar } = useContext(SharedSnackbarContext);
+
   const [platformNameList, setPlatformNameList] = useState<Platform[]>([]);
   const [tagList, setTagList] = useState<Tag[]>([]);
   const [platformList, setPlatformList] = useState<string[]>([]);
@@ -107,6 +110,7 @@ const Filter = (): JSX.Element => {
     filters.platforms = [...platformList];
 
     localStorage.setItem("filters", JSON.stringify(filters));
+    openSnackbar("Filtros foram salvos", "success");
   };
 
   const setFilter = () => {
@@ -167,8 +171,6 @@ const Filter = (): JSX.Element => {
           </Container>
           <Container className={styles.listTag}>{parseTags()}</Container>
         </Container>
-      </Container>
-      <Container className={styles.atBottom}>
         <Button
           disableElevation
           variant="contained"
