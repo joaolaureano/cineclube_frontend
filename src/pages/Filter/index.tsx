@@ -109,6 +109,7 @@ const Filter = (): JSX.Element => {
     filters.tags = [...selectedTagList];
     filters.platforms = [...platformList];
 
+    localStorage.removeItem("filters");
     localStorage.setItem("filters", JSON.stringify(filters));
     openSnackbar("Filtros foram salvos", "success");
   };
