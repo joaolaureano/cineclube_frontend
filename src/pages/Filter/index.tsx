@@ -67,7 +67,6 @@ const Filter = (): JSX.Element => {
     } else {
       oldSelectedList.push(key);
     }
-    console.log(oldSelectedList);
     setState(oldSelectedList);
   };
   const backToMenu = () => {
@@ -106,14 +105,32 @@ const Filter = (): JSX.Element => {
     };
     objFiltros.tagsID = [...selectedTagList];
     objFiltros.platformsId = [...platformList];
+    console.log(objFiltros);
     localStorage.setItem("filtros", JSON.stringify(objFiltros));
-    console.log(localStorage.getItem("filtros"));
-    const test = localStorage.getItem("filtros") as string;
-    console.log(JSON.parse(test));
+  };
+
+  const setFilter = () => {
+    const objFiltros = JSON.parse(localStorage.getItem("filtros") as string);
+
+    if (objFiltros) {
+      const oldSelectedListTag = [...selectedTagList];
+      objFiltros.tagsID.forEach((tagId: number) => {
+        oldSelectedListTag.push(tagId);
+      });
+
+      const oldSelectedListPlatform = [...platformList];
+      objFiltros.platformsId.forEach((platformId: string) => {
+        oldSelectedListPlatform.push(platformId);
+      });
+
+      setSelectedTagList(oldSelectedListTag);
+      setState(oldSelectedListPlatform);
+    }
   };
   useEffect(() => {
     fetchTags();
     fetchPlatforms();
+    setFilter();
   }, []);
 
   return (
