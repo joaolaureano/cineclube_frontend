@@ -15,12 +15,11 @@ import { Platform } from "../../types/platform";
 const Filter = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
-  const [platformNameList, setPlatformNameList] = React.useState<Platform[]>(
-    []
-  );
-  const [tagList, setTagList] = React.useState<Tag[]>([]);
-  const [platformList, setState] = React.useState<string[]>([]);
-  const [selectedTagList, setSelectedTagList] = React.useState<number[]>([]);
+  const [platformNameList, setPlatformNameList] = useState<Platform[]>([]);
+  const [tagList, setTagList] = useState<Tag[]>([]);
+  const [platformList, setPlatformList] = useState<string[]>([]);
+  const [selectedTagList, setSelectedTagList] = useState<number[]>([]);
+
   const parsePlatforms = () => {
     return platformNameList.map((platform: Platform) => {
       return (
@@ -44,6 +43,7 @@ const Filter = (): JSX.Element => {
       );
     });
   };
+
   const parseTags = () => {
     return tagList.map((tag) => {
       return (
@@ -58,6 +58,7 @@ const Filter = (): JSX.Element => {
       );
     });
   };
+
   const setPlatform = (key: string) => {
     const oldSelectedList = [...platformList];
 
@@ -67,11 +68,13 @@ const Filter = (): JSX.Element => {
     } else {
       oldSelectedList.push(key);
     }
-    setState(oldSelectedList);
+    setPlatformList(oldSelectedList);
   };
+
   const backToMenu = () => {
     history.push("/home");
   };
+
   const setTag = (tagID: number) => {
     const oldSelectedList = [...selectedTagList];
     const indexOf = oldSelectedList.indexOf(tagID);
@@ -99,32 +102,29 @@ const Filter = (): JSX.Element => {
   };
 
   const saveToStorage = () => {
-    const objFiltros: { tagsID: number[]; platformsId: string[] } = {
-      tagsID: [],
-      platformsId: [],
-    };
-    objFiltros.tagsID = [...selectedTagList];
-    objFiltros.platformsId = [...platformList];
-    console.log(objFiltros);
-    localStorage.setItem("filtros", JSON.stringify(objFiltros));
+    const filters: { tags?: number[]; platforms?: string[] } = {};
+    filters.tags = [...selectedTagList];
+    filters.platforms = [...platformList];
+
+    localStorage.setItem("filters", JSON.stringify(filters));
   };
 
   const setFilter = () => {
-    const objFiltros = JSON.parse(localStorage.getItem("filtros") as string);
+    const filters = JSON.parse(localStorage.getItem("filters") as string);
 
-    if (objFiltros) {
+    if (filters) {
       const oldSelectedListTag = [...selectedTagList];
-      objFiltros.tagsID.forEach((tagId: number) => {
+      filters.tags.forEach((tagId: number) => {
         oldSelectedListTag.push(tagId);
       });
 
       const oldSelectedListPlatform = [...platformList];
-      objFiltros.platformsId.forEach((platformId: string) => {
+      filters.platforms.forEach((platformId: string) => {
         oldSelectedListPlatform.push(platformId);
       });
 
       setSelectedTagList(oldSelectedListTag);
-      setState(oldSelectedListPlatform);
+      setPlatformList(oldSelectedListPlatform);
     }
   };
   useEffect(() => {
