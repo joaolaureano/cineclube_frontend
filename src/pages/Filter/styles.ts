@@ -26,7 +26,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     textContainer: {
       display: "flex",
-      alignSelf: "center",
       margin: "auto",
     },
     paragraph: {
@@ -45,6 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
     contentWrapper: {
       paddingLeft: "20px",
       paddingRight: "20px",
+      height: "78%",
     },
     divider: {
       marginBottom: "20px",
@@ -72,6 +72,17 @@ const useStyles = makeStyles((theme: Theme) =>
       strokeWidth: "3px",
       stroke: `${theme.palette.primary.light}`,
     },
+    sendButton: {
+      background: theme.palette.text.secondary,
+      color: "#fff",
+      width: "calc(100% - 6rem)",
+      margin: "3rem 3rem 0",
+
+      "&:hover": {
+        background: theme.palette.text.primary,
+      },
+    },
+    atBottom: {},
   })
 );
 

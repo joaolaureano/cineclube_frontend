@@ -1,44 +1,44 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-
-import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 import useStyles from "./styles";
-import { Container, Typography } from "@material-ui/core";
+import { Button, Container, Typography } from "@material-ui/core";
 import { PlatformIcon } from "../../components/PlatformIcon";
-import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import CheckRoundedIcon from "@material-ui/icons/CheckRounded";
 import { Divider } from "@material-ui/core";
 import tag from "../../services/tag";
+import platform from "../../services/platform";
 import { TagButton } from "../../components/TagButton";
 import { Tag } from "../../types/tag";
 import { ArrowBack } from "@material-ui/icons";
+import { Platform } from "../../types/platform";
+import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 
 const Filter = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
   const { openSnackbar } = useContext(SharedSnackbarContext);
-  const platforms: string[] = ["Netflix", "Amazon-Prime-Video"];
-  const [state, setState] = React.useState<{
-    [platformId: string]: boolean;
-  }>({});
-  const [tagList, setTagList] = React.useState<Tag[]>([]);
-  const [selectedTagList, setSelectedTagList] = React.useState<number[]>([]);
+
+  const [platformNameList, setPlatformNameList] = useState<Platform[]>([]);
+  const [tagList, setTagList] = useState<Tag[]>([]);
+  const [platformList, setPlatformList] = useState<string[]>([]);
+  const [selectedTagList, setSelectedTagList] = useState<number[]>([]);
+
   const parsePlatforms = () => {
-    return platforms.map((platform: any) => {
+    return platformNameList.map((platform: Platform) => {
       return (
         <>
           <div
             style={{ position: "relative" }}
             onClick={() => {
-              setPlatform(platform);
+              setPlatform(platform.id + "");
             }}
           >
             <PlatformIcon
               key={`filter-platform-${platform}`}
               className={styles.platformIcon}
-              platform={platform}
+              platform={platform.name}
             />
-            {state && state[platform] && (
+            {platformList.indexOf(platform.id + "") !== -1 && (
               <CheckRoundedIcon className={styles.checkIcon} />
             )}
           </div>
@@ -46,6 +46,7 @@ const Filter = (): JSX.Element => {
       );
     });
   };
+
   const parseTags = () => {
     return tagList.map((tag) => {
       return (
@@ -60,15 +61,23 @@ const Filter = (): JSX.Element => {
       );
     });
   };
-  const setPlatform = (key: any) => {
-    state[key] = !state[key];
-    setState({
-      ...state,
-    });
+
+  const setPlatform = (key: string) => {
+    const oldSelectedList = [...platformList];
+
+    const indexOf = oldSelectedList.indexOf(key);
+    if (indexOf !== -1) {
+      oldSelectedList.splice(indexOf, 1);
+    } else {
+      oldSelectedList.push(key);
+    }
+    setPlatformList(oldSelectedList);
   };
+
   const backToMenu = () => {
     history.push("/home");
   };
+
   const setTag = (tagID: number) => {
     const oldSelectedList = [...selectedTagList];
     const indexOf = oldSelectedList.indexOf(tagID);
@@ -84,14 +93,49 @@ const Filter = (): JSX.Element => {
     const listTag = result.data;
     setTagList(listTag);
   };
-  useEffect(() => {
-    fetchTags();
+  const fetchPlatforms = async () => {
+    const result = await platform.getMainPlatform();
+    const listPlatforms = result.data;
 
     const platformStateHolder: { [platformId: string]: boolean } = {};
-    platforms.forEach((platform: string) => {
-      platformStateHolder[platform] = false;
+    listPlatforms.forEach((platform: Platform) => {
+      platformStateHolder[platform.id] = false;
     });
-    setState(platformStateHolder);
+    setPlatformNameList(listPlatforms);
+  };
+
+  const saveToStorage = () => {
+    const filters: { tags?: number[]; platforms?: string[] } = {};
+    filters.tags = [...selectedTagList];
+    filters.platforms = [...platformList];
+
+    localStorage.removeItem("filters");
+    localStorage.setItem("filters", JSON.stringify(filters));
+    openSnackbar("Filtros foram salvos", "success");
+  };
+
+  const setFilter = () => {
+    const filters = JSON.parse(localStorage.getItem("filters") as string);
+
+    if (filters) {
+      const oldSelectedListTag = [...selectedTagList];
+      filters.tags.forEach((tagId: number) => {
+        oldSelectedListTag.push(tagId);
+      });
+
+      const oldSelectedListPlatform = [...platformList];
+      filters.platforms.forEach((platformId: string) => {
+        oldSelectedListPlatform.push(platformId);
+      });
+
+      setSelectedTagList(oldSelectedListTag);
+      setPlatformList(oldSelectedListPlatform);
+    }
+  };
+  useEffect(() => {
+    fetchTags();
+    fetchPlatforms();
+    setFilter();
   }, []);
 
   return (
@@ -128,6 +172,15 @@ const Filter = (): JSX.Element => {
           </Container>
           <Container className={styles.listTag}>{parseTags()}</Container>
         </Container>
+        <Button
+          disableElevation
+          variant="contained"
+          className={styles.sendButton}
+          size="medium"
+          onClick={saveToStorage}
+        >
+          Salvar
+        </Button>
       </Container>
     </div>
   );
