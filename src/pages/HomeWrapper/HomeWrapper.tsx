@@ -2,6 +2,7 @@ import { MovieMap, MovieState } from "../../types/movie";
 import { Home } from "./Home/Home";
 import MovieService from "../../services/movies";
 import { useEffect, useState } from "react";
+import { Spinner } from "../../components/Spinner";
 
 export const HomeWrapper: React.FC = () => {
   const [movieState, setMovieState] = useState({} as MovieState);
@@ -43,7 +44,7 @@ export const HomeWrapper: React.FC = () => {
       {movieState.movies ? (
         <Home state={movieState} updateMovieList={getMovieList} />
       ) : (
-        <p>Loading</p>
+        <Spinner />
       )}
     </>
   );
