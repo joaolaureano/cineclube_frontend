@@ -47,13 +47,28 @@ export const Home: React.FC<HomeProps> = (props) => {
     return state.movies[state.movieIds[selectedMovieIndex - 1]];
   };
 
-  const incrementSelectedMovie = (): void => {
+  const incrementSelectedMovie = async (): Promise<void> => {
     const numberOfMovies = state.movieIds.length;
     let newMovieIndex = selectedMovieIndex + 1;
     if (newMovieIndex >= numberOfMovies) {
-      newMovieIndex = 0;
+      const filters: { tags?: number[]; platforms?: string[] } = {};
+
+      if (filters) {
+        clearFilters();
+        await updateMovieList(selectedMovieIndex + 1);
+      } else {
+        // Implementar FIX 06 - US00 aqui
+      }
     }
     setSelectedMovieIndex(newMovieIndex);
+  };
+
+  const clearFilters = () => {
+    localStorage.removeItem("filters");
+    openSnackbar(
+      "Você chegou ao fim da lista. Os filtros foram resetados.",
+      "info"
+    );
   };
 
   const decrementSelectedMovie = (): void => {
