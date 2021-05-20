@@ -32,7 +32,7 @@ const Login = (): JSX.Element => {
           setToken(token);
           openSnackbar("Login bem-sucedido", "success");
           if (user.firstLogin) {
-            return history.push("/signup-preferences");
+            return history.push("/signupPreferences");
           } else {
             return history.push("/home");
           }
