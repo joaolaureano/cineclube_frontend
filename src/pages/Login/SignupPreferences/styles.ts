@@ -16,6 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
       alignItems: "center",
       paddingLeft: "10px",
       marginBottom: "5%",
+      marginTop: "10%",
     },
     backIconContainer: {
       position: "absolute",
@@ -24,6 +25,27 @@ const useStyles = makeStyles((theme: Theme) =>
       textTransform: "uppercase",
       color: theme.palette.text.primary,
     },
+
+    description: {
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      paddingLeft: "10px",
+      marginBottom: "5%",
+    },
+
+    subtitle: {
+      marginLeft: "1rem",
+      marginRight: "1rem",
+      margin: "auto",
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      paddingLeft: "10px",
+      marginBottom: "5%",
+      color: theme.palette.text.primary,
+    },
+
     textContainer: {
       display: "flex",
       margin: "auto",
@@ -51,6 +73,7 @@ const useStyles = makeStyles((theme: Theme) =>
       marginTop: "25px",
       height: "2px",
     },
+
     listTag: {
       display: "grid",
       gridTemplateColumns: "1fr 1fr",

@@ -142,18 +142,29 @@ export const LoginSignupPreferences: React.FC = () => {
   return (
     <div className={styles.root}>
       <Container className={styles.header}>
-        {/*<div className={styles.backIconContainer} onClick={backToMenu}>
-          <ArrowBack fontSize="large" />
-        </div>*/}
         <div className={styles.textContainer}>
           <Typography variant="h5" component="h1" className={styles.title}>
-            FILTROS
+            PREFERÊNCIAS
           </Typography>
         </div>
       </Container>
+
+      <Container className={styles.description}>
+        <div className={styles.textContainer}>
+          <Typography
+            variant="subtitle1"
+            component="h1"
+            className={styles.subtitle}
+          >
+            Selecione as suas preferências para ter a melhor experiência
+            possível.
+          </Typography>
+        </div>
+      </Container>
+
       <Container className={styles.contentWrapper}>
         <Container>
-          <Typography variant="h6" component="h2" className={styles.paragraph}>
+          <Typography variant="subtitle1" className={styles.paragraph}>
             Serviços selecionados:
           </Typography>
           <Container className={styles.listPlatform}>

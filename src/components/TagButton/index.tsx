@@ -14,7 +14,7 @@ export const TagButton: React.FC<TagButtonProps> = (props) => {
 
   return (
     <Chip
-      variant={selected ? "outlined" : "default"}
+      variant={selected ? "default" : "outlined"}
       size="medium"
       color="primary"
       label={title}
