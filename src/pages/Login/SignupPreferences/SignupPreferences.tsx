@@ -112,6 +112,7 @@ export const LoginSignupPreferences: React.FC = () => {
     localStorage.removeItem("filters");
     localStorage.setItem("filters", JSON.stringify(filters));
     openSnackbar("Filtros foram salvos", "success");
+    history.push("/home");
   };
 
   const setFilter = () => {
@@ -141,9 +142,9 @@ export const LoginSignupPreferences: React.FC = () => {
   return (
     <div className={styles.root}>
       <Container className={styles.header}>
-        <div className={styles.backIconContainer} onClick={backToMenu}>
+        {/*<div className={styles.backIconContainer} onClick={backToMenu}>
           <ArrowBack fontSize="large" />
-        </div>
+        </div>*/}
         <div className={styles.textContainer}>
           <Typography variant="h5" component="h1" className={styles.title}>
             FILTROS
@@ -179,7 +180,7 @@ export const LoginSignupPreferences: React.FC = () => {
           size="medium"
           onClick={saveToStorage}
         >
-          Salvar
+          Salvar e Continuar
         </Button>
       </Container>
     </div>
