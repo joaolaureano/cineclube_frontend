@@ -32,7 +32,10 @@ export const LikeModal: React.FC<ModalProps> = (props: ModalProps) => {
             aria-label="dislike"
             color="primary"
           >
-            <ThumbDown fontSize="large" className={classes.buttonIcon} />
+            <ThumbDown
+              fontSize="large"
+              className={[classes.buttonIcon, classes.buttonMargin].join(" ")}
+            />
           </IconButton>
         </div>
       </div>

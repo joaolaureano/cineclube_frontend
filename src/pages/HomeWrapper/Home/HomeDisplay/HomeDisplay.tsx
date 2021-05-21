@@ -77,9 +77,8 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             color="textPrimary"
             component="p"
           >
-            {movie.synopsis}
+            {movie.critic} {movie.synopsis}
           </Typography>
-
           <AvatarGroup className={classes.platforms}>
             {movie.platforms.map(({ name }) => {
               return (
