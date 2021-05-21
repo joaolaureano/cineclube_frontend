@@ -26,6 +26,114 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
 
   const { movie, logic, modalLiked } = props;
 
+  const renderMovie = () => {
+    return (
+      <Container className={classes.content}>
+        <img
+          src={movie.pathBanner}
+          alt="movie cover"
+          className={classes.cover}
+        />
+        <div className={classes.movieInfo}>
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="h2"
+            className={classes.movieTitle}
+          >
+            {movie.title}
+          </Typography>
+          <Typography
+            className={classes.originalTitle}
+            gutterBottom
+            variant="body1"
+            component="p"
+          >
+            {`(${movie.originalTitle})`}
+          </Typography>
+          <Typography
+            className={classes.year}
+            gutterBottom
+            variant="body1"
+            component="p"
+          >
+            {movie.year}
+          </Typography>
+          <Typography
+            className={classes.duration}
+            variant="caption"
+            display="block"
+            gutterBottom
+          >
+            {`${movie.duration} MIN`}
+          </Typography>
+          <Typography
+            className={classes.synopsis}
+            variant="body1"
+            color="textPrimary"
+            component="p"
+          >
+            {movie.synopsis}
+          </Typography>
+
+          <AvatarGroup className={classes.platforms}>
+            {movie.platforms.map(({ name }) => {
+              return (
+                <PlatformIcon
+                  key={name}
+                  className={classes.platform}
+                  variant="rounded"
+                  platform={name}
+                />
+              );
+            })}
+          </AvatarGroup>
+
+          <div>
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              className={classes.cast}
+            >
+              Direção:&nbsp;
+            </Typography>
+            <Typography className={[classes.cast, classes.castNames].join(" ")}>
+              {movie.director}
+            </Typography>
+          </div>
+
+          <div>
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              className={classes.cast}
+            >
+              Elenco principal:&nbsp;
+            </Typography>
+            <Typography className={[classes.cast, classes.castNames].join(" ")}>
+              {movie.actors.join(", ")}
+            </Typography>
+          </div>
+
+          <div className={classes.tags}>
+            {movie.moviesTags.map(({ tag }) => {
+              return (
+                <Chip
+                  variant="outlined"
+                  size="small"
+                  label={tag.name}
+                  key={tag.name}
+                  className={classes.tag}
+                  icon={<FiberManualRecordIcon />}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </Container>
+    );
+  };
+
   return (
     <div className={classes.root}>
       <Container className={classes.container}>
@@ -41,119 +149,23 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
         </div>
 
         {/* Conteudo do Filme */}
-        <Container className={classes.content}>
-          <img
-            src={movie.pathBanner}
-            alt="movie cover"
-            className={classes.cover}
-          />
-          <div className={classes.movieInfo}>
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="h2"
-              className={classes.movieTitle}
-            >
-              {movie.title}
+        {movie ? (
+          renderMovie()
+        ) : (
+          <div className={classes.listEndContainer}>
+            <Typography variant="h5" className={classes.listEndMessage}>
+              Você chegou ao fim da lista de filmes.
             </Typography>
-            <Typography
-              className={classes.originalTitle}
-              gutterBottom
-              variant="body1"
-              component="p"
-            >
-              {`(${movie.originalTitle})`}
-            </Typography>
-            <Typography
-              className={classes.year}
-              gutterBottom
-              variant="body1"
-              component="p"
-            >
-              {movie.year}
-            </Typography>
-            <Typography
-              className={classes.duration}
-              variant="caption"
-              display="block"
-              gutterBottom
-            >
-              {`${movie.duration} MIN`}
-            </Typography>
-            <Typography
-              className={classes.synopsis}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              {movie.synopsis}
-            </Typography>
-
-            <AvatarGroup className={classes.platforms}>
-              {movie.platforms.map(({ name }) => {
-                return (
-                  <PlatformIcon
-                    key={name}
-                    className={classes.platform}
-                    variant="rounded"
-                    platform={name}
-                  />
-                );
-              })}
-            </AvatarGroup>
-
-            <div>
-              <Typography
-                variant="body1"
-                color="textPrimary"
-                className={classes.cast}
-              >
-                Direção:&nbsp;
-              </Typography>
-              <Typography
-                className={[classes.cast, classes.castNames].join(" ")}
-              >
-                {movie.director}
-              </Typography>
-            </div>
-
-            <div>
-              <Typography
-                variant="body1"
-                color="textPrimary"
-                className={classes.cast}
-              >
-                Elenco principal:&nbsp;
-              </Typography>
-              <Typography
-                className={[classes.cast, classes.castNames].join(" ")}
-              >
-                {movie.actors.join(", ")}
-              </Typography>
-            </div>
-
-            <div className={classes.tags}>
-              {movie.moviesTags.map(({ tag }) => {
-                return (
-                  <Chip
-                    variant="outlined"
-                    size="small"
-                    label={tag.name}
-                    key={tag.name}
-                    className={classes.tag}
-                    icon={<FiberManualRecordIcon />}
-                  />
-                );
-              })}
-            </div>
           </div>
-        </Container>
+        )}
 
         {/* Botoes do Tinder */}
         <AppBar position="fixed" color="transparent" className={classes.appBar}>
           <div className={classes.bottomMenu}>
             <IconButton
-              onClick={logic.functions.handleClickUndoLastAction}
+              onClick={
+                movie ? logic.functions.handleClickUndoLastAction : () => {}
+              }
               aria-label="undo"
               color="primary"
             >
@@ -165,7 +177,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               flexItem
             />
             <IconButton
-              onClick={logic.functions.handleClickDontWantToWatch}
+              onClick={
+                movie ? logic.functions.handleClickDontWantToWatch : () => {}
+              }
               aria-label="dislike"
               color="primary"
             >
@@ -177,7 +191,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               flexItem
             />
             <IconButton
-              onClick={logic.functions.handleClickWantoWatch}
+              onClick={movie ? logic.functions.handleClickWantoWatch : () => {}}
               aria-label="like"
               color="primary"
             >
@@ -189,7 +203,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               flexItem
             />
             <IconButton
-              onClick={logic.functions.handleClickWatched}
+              onClick={movie ? logic.functions.handleClickWatched : () => {}}
               aria-label="star"
               color="primary"
             >

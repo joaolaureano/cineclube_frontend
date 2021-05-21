@@ -114,6 +114,23 @@ const useStyles = makeStyles((theme) => {
       marginRight: "8px",
     },
 
+    listEndContainer: {
+      height: "calc(100vh - 5.5rem)",
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: theme.palette.background.default,
+    },
+
+    listEndMessage: {
+      color: theme.palette.text.primary,
+      textTransform: "uppercase",
+      textAlign: "center",
+      fontFamily: "Barlow Condensed, sans-serif",
+      marginTop: "5.5rem",
+    },
+
     appBar: {
       top: "auto",
       bottom: 0,
