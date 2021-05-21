@@ -51,13 +51,11 @@ export const Home: React.FC<HomeProps> = (props) => {
     const numberOfMovies = state.movieIds.length;
     let newMovieIndex = selectedMovieIndex + 1;
     if (newMovieIndex >= numberOfMovies) {
-      const filters: { tags?: number[]; platforms?: string[] } = {};
+      const filters = localStorage.getItem("filters");
 
       if (filters) {
         clearFilters();
         await updateMovieList(selectedMovieIndex + 1);
-      } else {
-        // Implementar FIX 06 - US00 aqui
       }
     }
     setSelectedMovieIndex(newMovieIndex);
