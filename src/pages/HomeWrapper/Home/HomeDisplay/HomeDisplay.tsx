@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppBar, Divider, Container, IconButton } from "@material-ui/core";
 
 import Chip from "@material-ui/core/Chip";
@@ -23,9 +23,13 @@ interface HomeDisplayProps {
 
 export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const classes = useStyles();
-
   const { movie, logic, modalLiked } = props;
-
+  useEffect(() => {
+    window.scrollTo({
+      behavior: "smooth",
+      top: 0,
+    });
+  }, [movie]);
   const renderMovie = () => {
     return (
       <Container className={classes.content}>
