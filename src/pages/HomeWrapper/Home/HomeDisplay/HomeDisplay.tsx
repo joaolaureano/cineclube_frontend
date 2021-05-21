@@ -163,9 +163,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
         <AppBar position="fixed" color="transparent" className={classes.appBar}>
           <div className={classes.bottomMenu}>
             <IconButton
-              onClick={
-                movie ? logic.functions.handleClickUndoLastAction : () => {}
-              }
+              onClick={logic.functions.handleClickUndoLastAction}
               aria-label="undo"
               color="primary"
             >
