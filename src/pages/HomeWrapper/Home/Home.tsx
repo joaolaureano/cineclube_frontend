@@ -39,6 +39,13 @@ export const Home: React.FC<HomeProps> = (props) => {
   );
   const [openModal, setOpenModal] = useState(false);
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      behavior: "smooth",
+      top: 0,
+    });
+  };
+
   const getSelectedMovie = (): Movie => {
     return state.movies[state.movieIds[selectedMovieIndex]];
   };
