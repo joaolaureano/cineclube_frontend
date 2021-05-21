@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, RouteComponentProps } from "react-router-dom";
 
 import {
@@ -15,6 +15,7 @@ import { MovieCard } from "./MovieCard";
 import { MovieUserStatus } from "../../types/userMovieStatus";
 import { UserMovie } from "../../types/UserMovie";
 import UserService from "../../services/user";
+import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 
 import useStyles from "./styles";
 
@@ -23,6 +24,7 @@ interface Params {
 }
 
 export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
+  const { openSnackbar } = useContext(SharedSnackbarContext);
   const history = useHistory();
   const styles = useStyles();
 
@@ -49,6 +51,14 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
         MovieUserStatus.WANT_TO_WATCH
       );
       const listWantToWatch = listWantToWatchResponse.data;
+
+      if (
+        !listDislikedResponse.data ||
+        !listLikedResponse.data ||
+        !listWantToWatchResponse.data
+      ) {
+        openSnackbar("Ocorreu um erro!", "error");
+      }
 
       const listWatched: UserMovie[] = [...listLiked, ...listDisliked];
       const listWantToWatchAux: UserMovie[] = [...listWantToWatch];

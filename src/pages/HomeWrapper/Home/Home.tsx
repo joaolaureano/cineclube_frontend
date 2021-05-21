@@ -81,13 +81,18 @@ export const Home: React.FC<HomeProps> = (props) => {
   };
 
   const handleClickWantoWatch = async () => {
-    openSnackbar("Quero assistir", "info");
-
     const movieID = String(getSelectedMovie().id);
-    await UserService.setMovieStatus({
+    const response = await UserService.setMovieStatus({
       id: movieID,
       status: MovieUserStatus.WANT_TO_WATCH,
     });
+
+    if (response.data.success) {
+      openSnackbar("Quero assistir", "info");
+    } else {
+      openSnackbar("Opa! Ocorreu um erro!", "error");
+    }
+
     incrementSelectedMovie();
   };
   const handleClickLikeOrNotMovie = () => {};
@@ -97,24 +102,32 @@ export const Home: React.FC<HomeProps> = (props) => {
     if (previousMovieId < 0) return;
 
     const movieId = String(getPreviousMovie().id);
-    await UserService.setMovieStatus({
+    const response = await UserService.setMovieStatus({
       id: movieId,
       status: MovieUserStatus.NONE,
     });
 
-    openSnackbar("Desfeita a ultima ação", "success");
-    decrementSelectedMovie();
+    if (response.data.success) {
+      openSnackbar("Desfeita a ultima ação", "success");
+      decrementSelectedMovie();
+    } else {
+      openSnackbar("Opa! Ocorreu um erro!", "error");
+    }
   };
 
   const handleClickDontWantToWatch = async () => {
-    openSnackbar("Não quero assistir", "info");
-
     const movieID = String(getSelectedMovie().id);
-    await UserService.setMovieStatus({
+    const response = await UserService.setMovieStatus({
       id: movieID,
       status: MovieUserStatus.DONT_WANT_TO_WATCH,
     });
-    incrementSelectedMovie();
+
+    if (response.data.success) {
+      openSnackbar("Não quero assistir", "info");
+      incrementSelectedMovie();
+    } else {
+      openSnackbar("Opa! Ocorreu um erro!", "error");
+    }
   };
 
   const handleClickWatched = () => {
@@ -129,12 +142,17 @@ export const Home: React.FC<HomeProps> = (props) => {
     console.log("Disliked");
     const movieID = String(getSelectedMovie().id);
     setOpenModal(!openModal);
-    await UserService.setMovieStatus({
+    const response = await UserService.setMovieStatus({
       id: movieID,
       status: MovieUserStatus.WATCHED_AND_DISLIKED,
     });
-    incrementSelectedMovie();
-    openSnackbar("Não gostei do filme", "info");
+
+    if (response.data.success) {
+      incrementSelectedMovie();
+      openSnackbar("Não gostei do filme", "info");
+    } else {
+      openSnackbar("Opa! Ocorreu um erro!", "error");
+    }
   };
 
   const handleClickLikedMovie = async () => {

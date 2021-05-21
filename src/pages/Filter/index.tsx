@@ -90,11 +90,23 @@ const Filter = (): JSX.Element => {
   };
   const fetchTags = async () => {
     const result = await tag.getMainTags();
+
+    if (!result.data) {
+      setTagList([]);
+      return openSnackbar("Ocorreu um erro!", "error");
+    }
+
     const listTag = result.data;
     setTagList(listTag);
   };
   const fetchPlatforms = async () => {
     const result = await platform.getMainPlatform();
+
+    if (!result.data) {
+      setPlatformNameList([]);
+      return openSnackbar("Ocorreu um erro!", "error");
+    }
+
     const listPlatforms = result.data;
 
     const platformStateHolder: { [platformId: string]: boolean } = {};
