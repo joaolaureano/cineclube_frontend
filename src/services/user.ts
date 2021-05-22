@@ -36,7 +36,7 @@ const user = {
 const parseMovieCardInfo = (data: string): UserMovie[] => {
   const response = JSON.parse(data);
 
-  if (!response.body.success) {
+  if (!response.success) {
     throw new Error("Erro");
   }
 
@@ -52,7 +52,7 @@ const parseMovieCardInfo = (data: string): UserMovie[] => {
 const parseUser = (data: string): User => {
   const response = JSON.parse(data);
 
-  if (!response.body.success) {
+  if (!response.success) {
     throw new Error("Erro");
   }
 

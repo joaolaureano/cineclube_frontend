@@ -13,7 +13,7 @@ const tag = {
 const composeTags = (data: string): Tag[] => {
   const response = JSON.parse(data);
 
-  if (!response.body.success) {
+  if (!response.success) {
     throw new Error("Erro");
   }
 

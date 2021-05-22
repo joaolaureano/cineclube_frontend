@@ -13,7 +13,7 @@ const platform = {
 const composePlatform = (data: string): Platform[] => {
   const response = JSON.parse(data);
 
-  if (!response.body.success) {
+  if (!response.success) {
     throw new Error("Erro");
   }
 
