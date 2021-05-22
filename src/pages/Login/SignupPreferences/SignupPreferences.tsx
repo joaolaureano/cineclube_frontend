@@ -34,7 +34,7 @@ export const LoginSignupPreferences: React.FC = () => {
             }}
           >
             <PlatformIcon
-              key={`filter-platform-${platform}`}
+              key={`preference-platform-${platform}`}
               className={styles.platformIcon}
               platform={platform.name}
             />
@@ -53,7 +53,7 @@ export const LoginSignupPreferences: React.FC = () => {
         <TagButton
           selected={selectedTagList.indexOf(tag.id) !== -1}
           title={tag.name}
-          key={`filter-tag-${tag.id}`}
+          key={`preference-tag-${tag.id}`}
           onClick={() => {
             setTag(tag.id);
           }}
