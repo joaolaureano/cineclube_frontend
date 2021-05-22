@@ -71,13 +71,15 @@ const composeMovieState = (data: string): MovieState => {
 
   const moviesResponse = response.body.movies;
   const movies: MovieMap = {};
-
   const movieIds: number[] = [];
-  moviesResponse.forEach((movieDto: MovieDto) => {
-    const movie: Movie = mapMovieDtoToMovie(movieDto);
-    movies[movie.id] = movie;
-    movieIds.push(movie.id);
-  });
+  if (response.body) {
+    const moviesResponse = response.body.movies;
+    moviesResponse.forEach((movieDto: MovieDto) => {
+      const movie: Movie = mapMovieDtoToMovie(movieDto);
+      movies[movie.id] = movie;
+      movieIds.push(movie.id);
+    });
+  }
 
   const selectedMovieIndex = 0;
   return { movies, movieIds, selectedMovieIndex };
