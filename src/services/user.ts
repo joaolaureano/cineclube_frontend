@@ -35,6 +35,11 @@ const user = {
 
 const parseMovieCardInfo = (data: string): UserMovie[] => {
   const response = JSON.parse(data);
+
+  if (!response.body.success) {
+    throw new Error("Erro");
+  }
+
   const moviesResponse = response.body.userMovies;
   const movies: UserMovie[] = [];
   moviesResponse.forEach((movie: any) => {
@@ -46,6 +51,11 @@ const parseMovieCardInfo = (data: string): UserMovie[] => {
 
 const parseUser = (data: string): User => {
   const response = JSON.parse(data);
+
+  if (!response.body.success) {
+    throw new Error("Erro");
+  }
+
   const user: User = response.body?.user;
   return user;
 };

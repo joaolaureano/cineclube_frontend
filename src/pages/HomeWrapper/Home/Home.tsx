@@ -82,19 +82,20 @@ export const Home: React.FC<HomeProps> = (props) => {
 
   const handleClickWantoWatch = async () => {
     const movieID = String(getSelectedMovie().id);
-    const response = await UserService.setMovieStatus({
-      id: movieID,
-      status: MovieUserStatus.WANT_TO_WATCH,
-    });
 
-    if (response.data.success) {
+    try {
+      await UserService.setMovieStatus({
+        id: movieID,
+        status: MovieUserStatus.WANT_TO_WATCH,
+      });
+
       openSnackbar("Quero assistir", "info");
-    } else {
+      incrementSelectedMovie();
+    } catch (err) {
       openSnackbar("Opa! Ocorreu um erro!", "error");
     }
-
-    incrementSelectedMovie();
   };
+
   const handleClickLikeOrNotMovie = () => {};
 
   const handleClickUndoLastAction = async () => {
@@ -102,30 +103,32 @@ export const Home: React.FC<HomeProps> = (props) => {
     if (previousMovieId < 0) return;
 
     const movieId = String(getPreviousMovie().id);
-    const response = await UserService.setMovieStatus({
-      id: movieId,
-      status: MovieUserStatus.NONE,
-    });
 
-    if (response.data.success) {
+    try {
+      await UserService.setMovieStatus({
+        id: movieId,
+        status: MovieUserStatus.NONE,
+      });
+
       openSnackbar("Desfeita a ultima ação", "success");
       decrementSelectedMovie();
-    } else {
+    } catch (err) {
       openSnackbar("Opa! Ocorreu um erro!", "error");
     }
   };
 
   const handleClickDontWantToWatch = async () => {
     const movieID = String(getSelectedMovie().id);
-    const response = await UserService.setMovieStatus({
-      id: movieID,
-      status: MovieUserStatus.DONT_WANT_TO_WATCH,
-    });
 
-    if (response.data.success) {
+    try {
+      await UserService.setMovieStatus({
+        id: movieID,
+        status: MovieUserStatus.DONT_WANT_TO_WATCH,
+      });
+
       openSnackbar("Não quero assistir", "info");
       incrementSelectedMovie();
-    } else {
+    } catch (err) {
       openSnackbar("Opa! Ocorreu um erro!", "error");
     }
   };
@@ -142,16 +145,17 @@ export const Home: React.FC<HomeProps> = (props) => {
     console.log("Disliked");
     const movieID = String(getSelectedMovie().id);
     setOpenModal(!openModal);
-    const response = await UserService.setMovieStatus({
-      id: movieID,
-      status: MovieUserStatus.WATCHED_AND_DISLIKED,
-    });
 
-    if (response.data.success) {
+    try {
+      await UserService.setMovieStatus({
+        id: movieID,
+        status: MovieUserStatus.WATCHED_AND_DISLIKED,
+      });
+
       incrementSelectedMovie();
       openSnackbar("Não gostei do filme", "info");
-    } else {
-      openSnackbar("Opa! Ocorreu um erro!", "error");
+    } catch (err) {
+      openSnackbar("Erro ao adicionar filme", "error");
     }
   };
 
@@ -160,18 +164,18 @@ export const Home: React.FC<HomeProps> = (props) => {
     const movieID = String(getSelectedMovie().id);
     setOpenModal(!openModal);
 
-    const response = await UserService.setMovieStatus({
-      id: movieID,
-      status: MovieUserStatus.WATCHED_AND_LIKED,
-    });
+    try {
+      await UserService.setMovieStatus({
+        id: movieID,
+        status: MovieUserStatus.WATCHED_AND_LIKED,
+      });
 
-    if (response.data.success) {
       await updateMovieList(selectedMovieIndex + 1);
       incrementSelectedMovie();
       return openSnackbar("Gostei do filme", "info");
+    } catch (err) {
+      openSnackbar("Erro ao adicionar filme", "error");
     }
-
-    openSnackbar("Erro ao adicionar filme", "error");
   };
 
   const handleCloseModal = () => {

@@ -62,6 +62,11 @@ const mapMovieDtoToMovie = (movieDto: MovieDto): Movie => {
 
 const composeMovieState = (data: string): MovieState => {
   const response = JSON.parse(data);
+
+  if (!response.body.success) {
+    throw new Error("Erro");
+  }
+
   const moviesResponse = response.body.movies;
   const movies: MovieMap = {};
 

@@ -89,31 +89,28 @@ const Filter = (): JSX.Element => {
     setSelectedTagList(oldSelectedList);
   };
   const fetchTags = async () => {
-    const result = await tag.getMainTags();
-
-    if (!result.data) {
-      setTagList([]);
+    try {
+      const result = await tag.getMainTags();
+      const listTag = result.data;
+      setTagList(listTag);
+    } catch (err) {
       return openSnackbar("Ocorreu um erro!", "error");
     }
-
-    const listTag = result.data;
-    setTagList(listTag);
   };
   const fetchPlatforms = async () => {
-    const result = await platform.getMainPlatform();
+    try {
+      const result = await platform.getMainPlatform();
 
-    if (!result.data) {
-      setPlatformNameList([]);
+      const listPlatforms = result.data;
+
+      const platformStateHolder: { [platformId: string]: boolean } = {};
+      listPlatforms.forEach((platform: Platform) => {
+        platformStateHolder[platform.id] = false;
+      });
+      setPlatformNameList(listPlatforms);
+    } catch (err) {
       return openSnackbar("Ocorreu um erro!", "error");
     }
-
-    const listPlatforms = result.data;
-
-    const platformStateHolder: { [platformId: string]: boolean } = {};
-    listPlatforms.forEach((platform: Platform) => {
-      platformStateHolder[platform.id] = false;
-    });
-    setPlatformNameList(listPlatforms);
   };
 
   const saveToStorage = () => {
