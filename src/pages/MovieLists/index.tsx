@@ -26,7 +26,7 @@ interface Params {
 }
 
 export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
-  const { openSnackbar } = useContext(SharedSnackbarContext);
+  const { openSnackbar, closeSnackbar } = useContext(SharedSnackbarContext);
   const history = useHistory();
   const styles = useStyles();
 
@@ -86,10 +86,12 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
   };
 
   const handleLike = async (id: number) => {
+    openSnackbar("Atualizando a lista...", "info");
     const response = await UserService.setMovieStatus({
       id: String(id),
       status: MovieUserStatus.WATCHED_AND_LIKED,
     });
+    closeSnackbar();
     if (response.data.success) {
       if (currentTab === 0) {
         const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
