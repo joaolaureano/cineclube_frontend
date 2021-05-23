@@ -85,13 +85,20 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
       status: MovieUserStatus.WATCHED_AND_LIKED,
     });
     if (response.data.success) {
-      const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
-      movie!.status = MovieUserStatus.WATCHED_AND_LIKED;
       if (currentTab === 0) {
+        const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
+        movie!.status = MovieUserStatus.WATCHED_AND_LIKED;
         setWatchedMovies([movie!, ...watchedMovies]);
         setWantToWatchMovies(
           wantToWatchMovies.filter((movie) => movie.movieId !== id)
         );
+      } else if (currentTab === 1) {
+        const movie = watchedMovies.find((movie) => movie.movieId === id);
+        movie!.status = MovieUserStatus.WATCHED_AND_LIKED;
+        const filteredList = watchedMovies.filter(
+          (movie) => movie.movieId !== id
+        );
+        setWatchedMovies([...watchedMovies]);
       }
     }
   };
