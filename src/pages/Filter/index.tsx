@@ -89,19 +89,28 @@ const Filter = (): JSX.Element => {
     setSelectedTagList(oldSelectedList);
   };
   const fetchTags = async () => {
-    const result = await tag.getMainTags();
-    const listTag = result.data;
-    setTagList(listTag);
+    try {
+      const result = await tag.getMainTags();
+      const listTag = result.data;
+      setTagList(listTag);
+    } catch (err) {
+      return openSnackbar("Ocorreu um erro!", "error");
+    }
   };
   const fetchPlatforms = async () => {
-    const result = await platform.getMainPlatform();
-    const listPlatforms = result.data;
+    try {
+      const result = await platform.getMainPlatform();
 
-    const platformStateHolder: { [platformId: string]: boolean } = {};
-    listPlatforms.forEach((platform: Platform) => {
-      platformStateHolder[platform.id] = false;
-    });
-    setPlatformNameList(listPlatforms);
+      const listPlatforms = result.data;
+
+      const platformStateHolder: { [platformId: string]: boolean } = {};
+      listPlatforms.forEach((platform: Platform) => {
+        platformStateHolder[platform.id] = false;
+      });
+      setPlatformNameList(listPlatforms);
+    } catch (err) {
+      return openSnackbar("Ocorreu um erro!", "error");
+    }
   };
 
   const saveToStorage = () => {

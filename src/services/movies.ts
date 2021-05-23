@@ -14,18 +14,20 @@ enum MovieUserStatus {
 }
 
 const movies = {
-  get: (): Promise<AxiosResponse<MovieState>> => {
+  get: async (): Promise<AxiosResponse<MovieState>> => {
     const filters = JSON.parse(localStorage.getItem("filters") as string);
     const joinedTags = filters?.tags.join(",");
     const joinedPlatforms = filters?.platforms.join(",");
 
-    return api.get("/movies", {
+    const response = await api.get("/movies", {
       transformResponse: composeMovieState,
       params: {
         tags: joinedTags,
         platforms: joinedPlatforms,
       },
     });
+
+    return response;
   },
   put: (payload: PutMoviePayload) => {
     return api.put("/movies", payload);
@@ -62,6 +64,12 @@ const mapMovieDtoToMovie = (movieDto: MovieDto): Movie => {
 
 const composeMovieState = (data: string): MovieState => {
   const response = JSON.parse(data);
+
+  if (!response.success) {
+    throw new Error("Erro");
+  }
+
+  const moviesResponse = response.body.movies;
   const movies: MovieMap = {};
   const movieIds: number[] = [];
   if (response.body) {
