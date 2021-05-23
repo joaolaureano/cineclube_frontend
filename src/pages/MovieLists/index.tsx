@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, RouteComponentProps } from "react-router-dom";
 
 import {
@@ -15,6 +15,7 @@ import { MovieCard } from "./MovieCard";
 import { MovieUserStatus } from "../../types/userMovieStatus";
 import { UserMovie } from "../../types/UserMovie";
 import UserService from "../../services/user";
+import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 
 import useStyles from "./styles";
 import { ConfirmDeleteModal } from "../../components/ConfirmDeleteModal";
@@ -25,6 +26,7 @@ interface Params {
 }
 
 export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
+  const { openSnackbar } = useContext(SharedSnackbarContext);
   const history = useHistory();
   const styles = useStyles();
 
@@ -40,26 +42,30 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
 
   useEffect(() => {
     async function getMovies() {
-      const listDislikedResponse = await UserService.getMovieByStatus(
-        MovieUserStatus.WATCHED_AND_DISLIKED
-      );
-      const listDisliked = listDislikedResponse.data;
+      try {
+        const listDislikedResponse = await UserService.getMovieByStatus(
+          MovieUserStatus.WATCHED_AND_DISLIKED
+        );
+        const listDisliked = listDislikedResponse.data;
 
-      const listLikedResponse = await UserService.getMovieByStatus(
-        MovieUserStatus.WATCHED_AND_LIKED
-      );
-      const listLiked = listLikedResponse.data;
+        const listLikedResponse = await UserService.getMovieByStatus(
+          MovieUserStatus.WATCHED_AND_LIKED
+        );
+        const listLiked = listLikedResponse.data;
 
-      const listWantToWatchResponse = await UserService.getMovieByStatus(
-        MovieUserStatus.WANT_TO_WATCH
-      );
-      const listWantToWatch = listWantToWatchResponse.data;
+        const listWantToWatchResponse = await UserService.getMovieByStatus(
+          MovieUserStatus.WANT_TO_WATCH
+        );
+        const listWantToWatch = listWantToWatchResponse.data;
 
-      const listWatched: UserMovie[] = [...listLiked, ...listDisliked];
-      const listWantToWatchAux: UserMovie[] = [...listWantToWatch];
+        const listWatched: UserMovie[] = [...listLiked, ...listDisliked];
+        const listWantToWatchAux: UserMovie[] = [...listWantToWatch];
 
-      setWantToWatchMovies(listWantToWatchAux);
-      setWatchedMovies(listWatched);
+        setWantToWatchMovies(listWantToWatchAux);
+        setWatchedMovies(listWatched);
+      } catch (err) {
+        openSnackbar("Ocorreu um erro!", "error");
+      }
     }
 
     getMovies();

@@ -1,11 +1,15 @@
+import { useHistory } from "react-router-dom";
 import { MovieMap, MovieState } from "../../types/movie";
+import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 import { Home } from "./Home/Home";
 import MovieService from "../../services/movies";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Spinner } from "../../components/Spinner";
 
 export const HomeWrapper: React.FC = () => {
   const [movieState, setMovieState] = useState({} as MovieState);
+  const { openSnackbar } = useContext(SharedSnackbarContext);
+  const history = useHistory();
 
   const getMovieList = async (selectedMovieIndex: number = 0) => {
     const response = await MovieService.get();
@@ -33,7 +37,12 @@ export const HomeWrapper: React.FC = () => {
 
   useEffect(() => {
     const setMovieList = async () => {
-      await getMovieList();
+      try {
+        await getMovieList();
+      } catch (err) {
+        openSnackbar("Erro ao buscar a lista de filmes recomendados.", "error");
+        history.push("/");
+      }
     };
 
     setMovieList();
