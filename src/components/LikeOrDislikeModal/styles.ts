@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme: Theme) =>
     buttonIcon: {
       fontSize: "60px",
     },
+    buttonMargin: {
+      marginTop: "24.5px",
+    },
   })
 );
 

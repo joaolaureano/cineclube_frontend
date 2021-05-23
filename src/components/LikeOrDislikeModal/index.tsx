@@ -2,9 +2,8 @@ import React from "react";
 import { CustomModal } from "../CustomModal/";
 import useStyles from "./styles";
 import { IconButton } from "@material-ui/core";
-import CheckIcon from "@material-ui/icons/Check";
-import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
+import { ThumbDown, ThumbUp } from "@material-ui/icons";
 
 interface ModalProps {
   open: boolean;
@@ -24,15 +23,14 @@ export const LikeOrDislikeModal: React.FC<ModalProps> = (props: ModalProps) => {
         </Typography>
 
         <div className={classes.buttons}>
-          <IconButton
-            onClick={props.confirm}
-            aria-label="remove"
-            color="primary"
-          >
-            <CheckIcon fontSize="large" className={classes.buttonIcon} />
+          <IconButton onClick={props.confirm} aria-label="like" color="primary">
+            <ThumbUp fontSize="large" className={classes.buttonIcon} />
           </IconButton>
-          <IconButton onClick={props.deny} aria-label="cancel" color="primary">
-            <CloseIcon fontSize="large" className={classes.buttonIcon} />
+          <IconButton onClick={props.deny} aria-label="dislike" color="primary">
+            <ThumbDown
+              fontSize="large"
+              className={[classes.buttonIcon, classes.buttonMargin].join(" ")}
+            />
           </IconButton>
         </div>
       </div>

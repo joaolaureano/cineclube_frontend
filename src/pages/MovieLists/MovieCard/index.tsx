@@ -173,7 +173,10 @@ export const MovieCard: React.FC<MovieCardProps> = (props) => {
       />
       <LikeOrDislikeModal
         open={openLikeOrDislikeModal}
-        confirm={handleLike}
+        confirm={() => {
+          setOpenLikeOrDislikeModal(false);
+          return handleLike;
+        }}
         deny={() => {
           setOpenLikeOrDislikeModal(false);
           return handleDislike;
