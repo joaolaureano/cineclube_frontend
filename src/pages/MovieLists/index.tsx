@@ -91,8 +91,10 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
     if (response.data.success) {
       if (currentTab === 0) {
         setWantToWatchMovies(
-          wantToWatchMovies.filter((movie) => movie.movieId != id)
+          wantToWatchMovies.filter((movie) => movie.movieId !== id)
         );
+      } else if (currentTab === 1) {
+        setWatchedMovies(watchedMovies.filter((movie) => movie.movieId !== id));
       }
     }
   };
