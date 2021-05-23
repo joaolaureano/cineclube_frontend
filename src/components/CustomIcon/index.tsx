@@ -9,6 +9,7 @@ import menuWantToWatch from "../../assets/images/icons/menu-want-to-watch.svg";
 import menusettings from "../../assets/images/icons/menu-settings.svg";
 import menuProfile from "../../assets/images/icons/menu-profile.svg";
 import menuAchievements from "../../assets/images/icons/menu-achievements.svg";
+import menuFilters from "../../assets/images/icons/menu-filters.svg";
 
 interface CustomIconProps {
   type:
@@ -20,7 +21,8 @@ interface CustomIconProps {
     | "menuWantToWatch"
     | "menusettings"
     | "menuProfile"
-    | "menuAchievements";
+    | "menuAchievements"
+    | "menuFilters";
   className?: string;
 }
 
@@ -44,6 +46,8 @@ const getIcon = (type: string) => {
       return menusettings;
     case "menuAchievements":
       return menuAchievements;
+    case "menuFilters":
+      return menuFilters;
   }
 };
 

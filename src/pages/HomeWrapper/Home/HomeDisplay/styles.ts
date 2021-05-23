@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => {
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-
       height: "100%",
       paddingBottom: "5.2rem",
 
@@ -22,13 +21,13 @@ const useStyles = makeStyles((theme) => {
     topMenu: {
       position: "fixed",
       top: 0,
+      zIndex: 5,
 
       width: "100%",
       padding: "1.7rem 2rem 1.5rem 2rem",
 
       display: "flex",
       flexDirection: "row",
-      justifyContent: "space-between",
       alignItems: "center",
       background: "inherit",
       boxShadow: "none",
@@ -36,8 +35,15 @@ const useStyles = makeStyles((theme) => {
 
     logo: {
       height: "2.75rem",
+      alignSelf: "flex-start",
     },
-
+    sideIcon: {
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
+      marginLeft: "auto",
+      gap: "10px",
+    },
     content: {
       marginTop: "6.25rem",
     },
@@ -106,6 +112,23 @@ const useStyles = makeStyles((theme) => {
     tag: {
       marginBottom: "8px",
       marginRight: "8px",
+    },
+
+    listEndContainer: {
+      height: "calc(100vh - 5.5rem)",
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      background: theme.palette.background.default,
+    },
+
+    listEndMessage: {
+      color: theme.palette.text.primary,
+      textTransform: "uppercase",
+      textAlign: "center",
+      fontFamily: "Barlow Condensed, sans-serif",
+      marginTop: "5.5rem",
     },
 
     appBar: {

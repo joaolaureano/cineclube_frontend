@@ -4,4 +4,5 @@ export interface User {
   email: string;
   photoPath: string;
   randomness: number;
+  firstLogin: boolean;
 }

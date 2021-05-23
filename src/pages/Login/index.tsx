@@ -27,12 +27,15 @@ const Login = (): JSX.Element => {
     try {
       if (token) {
         const loginResponse = await UserService.auth();
-        const { user } = loginResponse.data.body;
-
+        const user = loginResponse.data;
         if (user) {
           setToken(token);
           openSnackbar("Login bem-sucedido", "success");
-          return history.push("/home");
+          if (user.firstLogin) {
+            return history.push("/signupPreferences");
+          } else {
+            return history.push("/home");
+          }
         }
 
         throw new Error("Falha no login");

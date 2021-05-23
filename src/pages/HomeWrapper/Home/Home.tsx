@@ -4,9 +4,11 @@ import { HomeDisplay } from "./HomeDisplay/HomeDisplay";
 import { SharedSnackbarContext } from "../../../components/SnackBar/SnackContext";
 import { MovieUserStatus } from "../../../types/userMovieStatus";
 import UserService from "../../../services/user";
+import { useHistory } from "react-router-dom";
 
 interface HomeProps {
   state: MovieState;
+  updateMovieList: (selectedMovieIndex?: number) => void;
 }
 
 export interface MovieStateLogic {
@@ -22,17 +24,21 @@ interface MovieStateLogicFunctions {
   handleClickLikedMovie: () => void;
   handleClickDislikedMovie: () => void;
   handleCloseModal: () => void;
+  handleClickGoToFilterPage: () => void;
 }
 
 export const Home: React.FC<HomeProps> = (props) => {
   const { openSnackbar } = useContext(SharedSnackbarContext);
 
-  const { state } = props;
+  const { state, updateMovieList } = props;
+
+  const history = useHistory();
 
   const [selectedMovieIndex, setSelectedMovieIndex] = useState(
     state.selectedMovieIndex
   );
   const [openModal, setOpenModal] = useState(false);
+
   const getSelectedMovie = (): Movie => {
     return state.movies[state.movieIds[selectedMovieIndex]];
   };
@@ -41,13 +47,26 @@ export const Home: React.FC<HomeProps> = (props) => {
     return state.movies[state.movieIds[selectedMovieIndex - 1]];
   };
 
-  const incrementSelectedMovie = (): void => {
+  const incrementSelectedMovie = async (): Promise<void> => {
     const numberOfMovies = state.movieIds.length;
     let newMovieIndex = selectedMovieIndex + 1;
     if (newMovieIndex >= numberOfMovies) {
-      newMovieIndex = 0;
+      const filters = localStorage.getItem("filters");
+
+      if (filters) {
+        clearFilters();
+        await updateMovieList(selectedMovieIndex + 1);
+      }
     }
     setSelectedMovieIndex(newMovieIndex);
+  };
+
+  const clearFilters = () => {
+    localStorage.removeItem("filters");
+    openSnackbar(
+      "Você chegou ao fim da lista. Os filtros foram resetados.",
+      "info"
+    );
   };
 
   const decrementSelectedMovie = (): void => {
@@ -100,6 +119,10 @@ export const Home: React.FC<HomeProps> = (props) => {
     setOpenModal(!openModal);
   };
 
+  const handleClickGoToFilterPage = () => {
+    history.push("/filter");
+  };
+
   const handleClickDislikedMovie = async () => {
     console.log("Disliked");
     const movieID = String(getSelectedMovie().id);
@@ -117,12 +140,18 @@ export const Home: React.FC<HomeProps> = (props) => {
     const movieID = String(getSelectedMovie().id);
     setOpenModal(!openModal);
 
-    await UserService.setMovieStatus({
+    const response = await UserService.setMovieStatus({
       id: movieID,
       status: MovieUserStatus.WATCHED_AND_LIKED,
     });
-    incrementSelectedMovie();
-    openSnackbar("Gostei do filme", "info");
+
+    if (response.data.success) {
+      await updateMovieList(selectedMovieIndex + 1);
+      incrementSelectedMovie();
+      return openSnackbar("Gostei do filme", "info");
+    }
+
+    openSnackbar("Erro ao adicionar filme", "error");
   };
 
   const handleCloseModal = () => {
@@ -139,6 +168,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       handleClickLikedMovie,
       handleClickDislikedMovie,
       handleCloseModal,
+      handleClickGoToFilterPage,
     },
   };
 
