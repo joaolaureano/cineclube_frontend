@@ -38,7 +38,6 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
   const [isLikeModalOpen, setIsLikeModalOpen] = useState(false);
   const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>();
 
-  //Testando
   useEffect(() => {
     async function getMovies() {
       const listDislikedResponse = await UserService.getMovieByStatus(
@@ -103,8 +102,21 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
     closeModal();
   };
 
-  const handleDislike = (id: number) => {
-    alert(`Clicked DISLIKE on movie ${id}`);
+  const handleDislike = async (id: number) => {
+    const response = await UserService.setMovieStatus({
+      id: String(id),
+      status: MovieUserStatus.WATCHED_AND_DISLIKED,
+    });
+    if (response.data.success) {
+      const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
+      movie!.status = MovieUserStatus.WATCHED_AND_DISLIKED;
+      if (currentTab === 0) {
+        setWatchedMovies([movie!, ...watchedMovies]);
+        setWantToWatchMovies(
+          wantToWatchMovies.filter((movie) => movie.movieId !== id)
+        );
+      }
+    }
   };
 
   const handleDelete = async () => {
@@ -139,10 +151,6 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
     setIsDeleteModalOpen(false);
     setIsLikeModalOpen(false);
     setSelectedMovieId(undefined);
-  };
-
-  const handleWatch = (id: number) => {
-    alert(`Clicked WATCH on movie ${id}`);
   };
 
   const renderWatchedMovies = () => {
