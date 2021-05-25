@@ -115,10 +115,12 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
   };
 
   const handleDislike = async (id: number) => {
+    openSnackbar("Atualizando a lista...", "info");
     const response = await UserService.setMovieStatus({
       id: String(id),
       status: MovieUserStatus.WATCHED_AND_DISLIKED,
     });
+    closeSnackbar();
     if (response.data.success) {
       if (currentTab === 0) {
         const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
