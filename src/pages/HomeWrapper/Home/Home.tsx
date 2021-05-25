@@ -106,13 +106,18 @@ export const Home: React.FC<HomeProps> = (props) => {
 
       if (listWantToWatch.length % 10 === 0) {
         const pos = Math.round(Math.random() * (listWantToWatch.length - 1));
-        const selectedMovie = listWantToWatch[pos];
-        //const displayMovie:RecommendedMovieMessage = {
-        //  platform:
-        //}
-      }
+        const selectedMovie = listWantToWatch[pos].movie;
 
-      openSnackbar("Quero assistir", "info");
+        const displayMovie: RecommendedMovieMessage = {
+          platform: selectedMovie.platforms.map((platform) => platform.name),
+          title: selectedMovie.title,
+          sizeList: listWantToWatch.length,
+        };
+
+        setRecommendMovie(displayMovie);
+        setOpenModalRecommend(true);
+      } else openSnackbar("Quero assistir", "info");
+
       incrementSelectedMovie();
     } catch (err) {
       openSnackbar("Opa! Ocorreu um erro!", "error");
@@ -165,7 +170,6 @@ export const Home: React.FC<HomeProps> = (props) => {
   };
 
   const handleClickDislikedMovie = async () => {
-    console.log("Disliked");
     const movieID = String(getSelectedMovie().id);
     setOpenModal(!openModal);
 
@@ -183,7 +187,6 @@ export const Home: React.FC<HomeProps> = (props) => {
   };
 
   const handleClickLikedMovie = async () => {
-    console.log("Liked");
     const movieID = String(getSelectedMovie().id);
     setOpenModal(!openModal);
 
@@ -204,8 +207,10 @@ export const Home: React.FC<HomeProps> = (props) => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+
   const handleCloseModalRecommend = () => {
     setOpenModalRecommend(false);
+    setRecommendMovie(undefined);
   };
 
   const useStateLogic: MovieStateLogic = {
@@ -229,6 +234,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       logic={useStateLogic}
       modalLiked={openModal}
       modalRecommendedMovie={openModalRecommend}
+      recommendedMovie={recommendMovie}
     />
   );
 };
