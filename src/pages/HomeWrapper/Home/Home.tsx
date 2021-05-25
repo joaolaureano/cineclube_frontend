@@ -1,5 +1,9 @@
 import { useState, useContext } from "react";
-import { Movie, MovieState } from "../../../types/movie";
+import {
+  Movie,
+  MovieState,
+  RecommendedMovieMessage,
+} from "../../../types/movie";
 import { HomeDisplay } from "./HomeDisplay/HomeDisplay";
 import { SharedSnackbarContext } from "../../../components/SnackBar/SnackContext";
 import { MovieUserStatus } from "../../../types/userMovieStatus";
@@ -24,6 +28,7 @@ interface MovieStateLogicFunctions {
   handleClickLikedMovie: () => void;
   handleClickDislikedMovie: () => void;
   handleCloseModal: () => void;
+  handleCloseModalRecommend: () => void;
   handleClickGoToFilterPage: () => void;
 }
 
@@ -38,6 +43,12 @@ export const Home: React.FC<HomeProps> = (props) => {
     state.selectedMovieIndex
   );
   const [openModal, setOpenModal] = useState(false);
+
+  const [openModalRecommend, setOpenModalRecommend] = useState(false);
+
+  const [recommendMovie, setRecommendMovie] = useState<
+    RecommendedMovieMessage | undefined
+  >();
 
   const getSelectedMovie = (): Movie => {
     return state.movies[state.movieIds[selectedMovieIndex]];
@@ -86,6 +97,20 @@ export const Home: React.FC<HomeProps> = (props) => {
         id: movieID,
         status: MovieUserStatus.WANT_TO_WATCH,
       });
+
+      const listWantToWatchResponse = await UserService.getMovieByStatus(
+        MovieUserStatus.WANT_TO_WATCH
+      );
+
+      const listWantToWatch = listWantToWatchResponse.data;
+
+      if (listWantToWatch.length % 10 === 0) {
+        const pos = Math.round(Math.random() * (listWantToWatch.length - 1));
+        const selectedMovie = listWantToWatch[pos];
+        //const displayMovie:RecommendedMovieMessage = {
+        //  platform:
+        //}
+      }
 
       openSnackbar("Quero assistir", "info");
       incrementSelectedMovie();
@@ -179,6 +204,9 @@ export const Home: React.FC<HomeProps> = (props) => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
+  const handleCloseModalRecommend = () => {
+    setOpenModalRecommend(false);
+  };
 
   const useStateLogic: MovieStateLogic = {
     functions: {
@@ -190,6 +218,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       handleClickLikedMovie,
       handleClickDislikedMovie,
       handleCloseModal,
+      handleCloseModalRecommend,
       handleClickGoToFilterPage,
     },
   };
@@ -199,6 +228,7 @@ export const Home: React.FC<HomeProps> = (props) => {
       movie={getSelectedMovie()}
       logic={useStateLogic}
       modalLiked={openModal}
+      modalRecommendedMovie={openModalRecommend}
     />
   );
 };
