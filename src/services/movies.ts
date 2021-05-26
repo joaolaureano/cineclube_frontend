@@ -2,10 +2,10 @@ import { AxiosResponse } from "axios";
 import api from "../api/api";
 import { Movie, MovieDto, MovieMap, MovieState, CastDto } from "../types/movie";
 
-interface PutMoviePayload {
-  id: number;
-  status: MovieUserStatus;
-}
+// interface PutMoviePayload {
+//   id: number;
+//   status: MovieUserStatus;
+// }
 
 enum MovieUserStatus {
   ALREADY_WATCHED = "already_watched",
@@ -29,9 +29,9 @@ const movies = {
 
     return response;
   },
-  put: (payload: PutMoviePayload) => {
-    return api.put("/movies", payload);
-  },
+  // put: (payload: PutMoviePayload) => {
+  //   return api.put("/movies", payload);
+  // },
 };
 
 const mapMovieDtoToMovie = (movieDto: MovieDto): Movie => {
