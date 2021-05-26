@@ -180,8 +180,16 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
               type="watched"
               liked={movie.status === MovieUserStatus.WATCHED_AND_LIKED}
               onDelete={handleOpenDeleteModal}
-              onLike={handleLike}
-              onDislike={handleDislike}
+              onLike={
+                movie.status === MovieUserStatus.WATCHED_AND_LIKED
+                  ? () => {}
+                  : handleLike
+              }
+              onDislike={
+                movie.status === MovieUserStatus.WATCHED_AND_LIKED
+                  ? handleDislike
+                  : () => {}
+              }
               movie={{
                 id: movie.movie.id,
                 title: movie.movie.title,
