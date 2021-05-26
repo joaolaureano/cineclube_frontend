@@ -19,12 +19,10 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       justifyContent: "space-around",
       alignItems: "center",
+      marginTop: "8px",
     },
     buttonIcon: {
       fontSize: "60px",
-    },
-    buttonMargin: {
-      marginTop: "24.5px",
     },
   })
 );

@@ -1,41 +1,38 @@
 import React from "react";
 import { CustomModal } from "../CustomModal/";
-import ThumbUp from "@material-ui/icons/ThumbUp";
-import ThumbDown from "@material-ui/icons/ThumbDown";
 import useStyles from "./styles";
 import { IconButton } from "@material-ui/core";
+import CheckIcon from "@material-ui/icons/Check";
+import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 
 interface ModalProps {
   open: boolean;
-  like: () => void;
-  dislike: () => void;
+  confirm: () => void;
+  deny: () => void;
   onClose: () => void;
 }
 
-export const LikeModal: React.FC<ModalProps> = (props: ModalProps) => {
+export const ConfirmDeleteModal: React.FC<ModalProps> = (props: ModalProps) => {
   const classes = useStyles();
 
   return (
     <CustomModal open={props.open} onClose={props.onClose}>
       <div className={classes.modalParent}>
         <Typography variant="h5" color="textPrimary">
-          Você gostou do filme ?
+          Você quer mesmo remover da lista ?
         </Typography>
 
         <div className={classes.buttons}>
-          <IconButton onClick={props.like} aria-label="like" color="primary">
-            <ThumbUp fontSize="large" className={classes.buttonIcon} />
-          </IconButton>
           <IconButton
-            onClick={props.dislike}
-            aria-label="dislike"
+            onClick={props.confirm}
+            aria-label="remove"
             color="primary"
           >
-            <ThumbDown
-              fontSize="large"
-              className={[classes.buttonIcon, classes.buttonMargin].join(" ")}
-            />
+            <CheckIcon fontSize="large" className={classes.buttonIcon} />
+          </IconButton>
+          <IconButton onClick={props.deny} aria-label="cancel" color="primary">
+            <CloseIcon fontSize="large" className={classes.buttonIcon} />
           </IconButton>
         </div>
       </div>

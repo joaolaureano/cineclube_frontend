@@ -2,29 +2,23 @@ import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    modal: {
-      textAlign: "center",
-      color: "blue",
+    container: {
+      width: "100%",
+      height: "100vh",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
+      background: theme.palette.background.default,
     },
-    modalParent: {
+    content: {
       display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
       flexDirection: "column",
-    },
-    buttons: {
-      display: "flex",
-      justifyContent: "space-around",
+      justifyContent: "center",
       alignItems: "center",
     },
-    buttonIcon: {
-      fontSize: "60px",
-    },
-    buttonMargin: {
-      marginTop: "24.5px",
+    spinner: {},
+    text: {
+      marginTop: "2rem",
     },
   })
 );

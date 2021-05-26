@@ -7,13 +7,9 @@ const useFirebase = () => {
   const [authUser, setAuthUser] = useState(firebaseAuth().currentUser);
 
   useEffect(() => {
-    const unsubscribe = firebaseAuth().onAuthStateChanged((user) => {
+    firebaseAuth().onAuthStateChanged((user) => {
       setAuthUser(user);
     });
-
-    return () => {
-      unsubscribe();
-    };
   }, []);
 
   const login = async () => {

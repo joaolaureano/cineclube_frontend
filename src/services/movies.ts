@@ -2,10 +2,10 @@ import { AxiosResponse } from "axios";
 import api from "../api/api";
 import { Movie, MovieDto, MovieMap, MovieState, CastDto } from "../types/movie";
 
-interface PutMoviePayload {
-  id: number;
-  status: MovieUserStatus;
-}
+// interface PutMoviePayload {
+//   id: number;
+//   status: MovieUserStatus;
+// }
 
 enum MovieUserStatus {
   ALREADY_WATCHED = "already_watched",
@@ -14,14 +14,24 @@ enum MovieUserStatus {
 }
 
 const movies = {
-  get: (): Promise<AxiosResponse<MovieState>> => {
-    return api.get("/movies", {
+  get: async (): Promise<AxiosResponse<MovieState>> => {
+    const filters = JSON.parse(localStorage.getItem("filters") as string);
+    const joinedTags = filters?.tags.join(",");
+    const joinedPlatforms = filters?.platforms.join(",");
+
+    const response = await api.get("/movies", {
       transformResponse: composeMovieState,
+      params: {
+        tags: joinedTags,
+        platforms: joinedPlatforms,
+      },
     });
+
+    return response;
   },
-  put: (payload: PutMoviePayload) => {
-    return api.put("/movies", payload);
-  },
+  // put: (payload: PutMoviePayload) => {
+  //   return api.put("/movies", payload);
+  // },
 };
 
 const mapMovieDtoToMovie = (movieDto: MovieDto): Movie => {
@@ -54,15 +64,22 @@ const mapMovieDtoToMovie = (movieDto: MovieDto): Movie => {
 
 const composeMovieState = (data: string): MovieState => {
   const response = JSON.parse(data);
+
+  if (!response.success) {
+    throw new Error("Erro");
+  }
+
   const moviesResponse = response.body.movies;
   const movies: MovieMap = {};
-
   const movieIds: number[] = [];
-  moviesResponse.forEach((movieDto: MovieDto) => {
-    const movie: Movie = mapMovieDtoToMovie(movieDto);
-    movies[movie.id] = movie;
-    movieIds.push(movie.id);
-  });
+  if (response.body) {
+    const moviesResponse = response.body.movies;
+    moviesResponse.forEach((movieDto: MovieDto) => {
+      const movie: Movie = mapMovieDtoToMovie(movieDto);
+      movies[movie.id] = movie;
+      movieIds.push(movie.id);
+    });
+  }
 
   const selectedMovieIndex = 0;
   return { movies, movieIds, selectedMovieIndex };

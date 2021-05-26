@@ -10,7 +10,7 @@ interface PutMoviePayload {
 }
 
 const user = {
-  auth: () => {
+  auth: (): Promise<AxiosResponse<User>> => {
     return api.post("/user/auth", {
       transformResponse: parseUser,
     });
@@ -35,6 +35,11 @@ const user = {
 
 const parseMovieCardInfo = (data: string): UserMovie[] => {
   const response = JSON.parse(data);
+
+  if (!response.success) {
+    throw new Error("Erro");
+  }
+
   const moviesResponse = response.body.userMovies;
   const movies: UserMovie[] = [];
   moviesResponse.forEach((movie: any) => {
@@ -46,7 +51,15 @@ const parseMovieCardInfo = (data: string): UserMovie[] => {
 
 const parseUser = (data: string): User => {
   const response = JSON.parse(data);
-  const user: User = response.body?.user;
+  if (!response.success) {
+    throw new Error("Erro");
+  }
+
+  const user: User = {
+    ...response.body?.user,
+    firstLogin: response.firstLogin,
+  };
+
   return user;
 };
 

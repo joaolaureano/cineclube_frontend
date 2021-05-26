@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory, RouteComponentProps } from "react-router-dom";
 
 import {
@@ -15,46 +15,57 @@ import { MovieCard } from "./MovieCard";
 import { MovieUserStatus } from "../../types/userMovieStatus";
 import { UserMovie } from "../../types/UserMovie";
 import UserService from "../../services/user";
+import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 
 import useStyles from "./styles";
+import { ConfirmDeleteModal } from "../../components/ConfirmDeleteModal";
+import { LikeModal } from "../../components/LikeModal";
 
 interface Params {
   list: "watched" | "wantToWatch";
 }
 
 export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
+  const { openSnackbar, closeSnackbar } = useContext(SharedSnackbarContext);
   const history = useHistory();
   const styles = useStyles();
 
   const { list } = match.params;
   const defaultList = list === "watched" ? 1 : 0;
   const [currentTab, setCurrentTab] = useState(defaultList);
-  const [watchedMovies, setWatchedMovies] = useState<Object[]>([]);
-  const [wantToWatchMovies, setWantToWatchMovies] = useState<Object[]>([]);
+  const [watchedMovies, setWatchedMovies] = useState<UserMovie[]>([]);
 
-  //Testando
+  const [wantToWatchMovies, setWantToWatchMovies] = useState<UserMovie[]>([]);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isLikeModalOpen, setIsLikeModalOpen] = useState(false);
+  const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>();
+
   useEffect(() => {
     async function getMovies() {
-      const listDislikedResponse = await UserService.getMovieByStatus(
-        MovieUserStatus.WATCHED_AND_DISLIKED
-      );
-      const listDisliked = listDislikedResponse.data;
+      try {
+        const listDislikedResponse = await UserService.getMovieByStatus(
+          MovieUserStatus.WATCHED_AND_DISLIKED
+        );
+        const listDisliked = listDislikedResponse.data;
 
-      const listLikedResponse = await UserService.getMovieByStatus(
-        MovieUserStatus.WATCHED_AND_LIKED
-      );
-      const listLiked = listLikedResponse.data;
+        const listLikedResponse = await UserService.getMovieByStatus(
+          MovieUserStatus.WATCHED_AND_LIKED
+        );
+        const listLiked = listLikedResponse.data;
 
-      const listWantToWatchResponse = await UserService.getMovieByStatus(
-        MovieUserStatus.WANT_TO_WATCH
-      );
-      const listWantToWatch = listWantToWatchResponse.data;
+        const listWantToWatchResponse = await UserService.getMovieByStatus(
+          MovieUserStatus.WANT_TO_WATCH
+        );
+        const listWantToWatch = listWantToWatchResponse.data;
 
-      const listWatched: UserMovie[] = [...listLiked, ...listDisliked];
-      const listWantToWatchAux: UserMovie[] = [...listWantToWatch];
+        const listWatched: UserMovie[] = [...listLiked, ...listDisliked];
+        const listWantToWatchAux: UserMovie[] = [...listWantToWatch];
 
-      setWantToWatchMovies(listWantToWatchAux);
-      setWatchedMovies(listWatched);
+        setWantToWatchMovies(listWantToWatchAux);
+        setWatchedMovies(listWatched);
+      } catch (err) {
+        openSnackbar("Ocorreu um erro!", "error");
+      }
     }
 
     getMovies();
@@ -68,20 +79,96 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
     setCurrentTab(tab);
   };
 
-  const handleLike = (id: number) => {
-    alert(`Clicked LIKE on movie ${id}`);
+  const handleLikeFromModal = async () => {
+    const id = selectedMovieId;
+    if (id) await handleLike(id);
+    closeModal();
   };
 
-  const handleDislike = (id: number) => {
-    alert(`Clicked DISLIKE on movie ${id}`);
+  const handleLike = async (id: number) => {
+    openSnackbar("Atualizando a lista...", "info");
+    const response = await UserService.setMovieStatus({
+      id: String(id),
+      status: MovieUserStatus.WATCHED_AND_LIKED,
+    });
+    closeSnackbar();
+    if (response.data.success) {
+      if (currentTab === 0) {
+        const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
+        movie!.status = MovieUserStatus.WATCHED_AND_LIKED;
+        setWatchedMovies([movie!, ...watchedMovies]);
+        setWantToWatchMovies(
+          wantToWatchMovies.filter((movie) => movie.movieId !== id)
+        );
+      } else if (currentTab === 1) {
+        const movie = watchedMovies.find((movie) => movie.movieId === id);
+        movie!.status = MovieUserStatus.WATCHED_AND_LIKED;
+        setWatchedMovies([...watchedMovies]);
+      }
+    }
   };
 
-  const handleDelete = (id: number) => {
-    alert(`Clicked DELETE on movie ${id}`);
+  const handleDislikeFromModal = async () => {
+    const id = selectedMovieId;
+    if (id) await handleDislike(id);
+    closeModal();
   };
 
-  const handleWatch = (id: number) => {
-    alert(`Clicked WATCH on movie ${id}`);
+  const handleDislike = async (id: number) => {
+    openSnackbar("Atualizando a lista...", "info");
+    const response = await UserService.setMovieStatus({
+      id: String(id),
+      status: MovieUserStatus.WATCHED_AND_DISLIKED,
+    });
+    closeSnackbar();
+    if (response.data.success) {
+      if (currentTab === 0) {
+        const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
+        movie!.status = MovieUserStatus.WATCHED_AND_DISLIKED;
+        setWatchedMovies([movie!, ...watchedMovies]);
+        setWantToWatchMovies(
+          wantToWatchMovies.filter((movie) => movie.movieId !== id)
+        );
+      } else if (currentTab === 1) {
+        const movie = watchedMovies.find((movie) => movie.movieId === id);
+        movie!.status = MovieUserStatus.WATCHED_AND_DISLIKED;
+        setWatchedMovies([...watchedMovies]);
+      }
+    }
+  };
+
+  const handleDelete = async () => {
+    const id = selectedMovieId;
+    const response = await UserService.setMovieStatus({
+      id: String(id),
+      status: MovieUserStatus.NONE,
+    });
+    if (response.data.success) {
+      if (currentTab === 0) {
+        setWantToWatchMovies(
+          wantToWatchMovies.filter((movie) => movie.movieId !== id)
+        );
+      } else if (currentTab === 1) {
+        setWatchedMovies(watchedMovies.filter((movie) => movie.movieId !== id));
+      }
+      closeModal();
+    }
+  };
+
+  const handleOpenDeleteModal = (movieId: number) => {
+    setSelectedMovieId(movieId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleOpenLikeModal = (movieId: number) => {
+    setSelectedMovieId(movieId);
+    setIsLikeModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsDeleteModalOpen(false);
+    setIsLikeModalOpen(false);
+    setSelectedMovieId(undefined);
   };
 
   const renderWatchedMovies = () => {
@@ -92,9 +179,17 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
               key={`watched-${movie.movie.id}`}
               type="watched"
               liked={movie.status === MovieUserStatus.WATCHED_AND_LIKED}
-              onDelete={handleDelete}
-              onLike={handleLike}
-              onDislike={handleDislike}
+              onDelete={handleOpenDeleteModal}
+              onLike={
+                movie.status === MovieUserStatus.WATCHED_AND_LIKED
+                  ? () => {}
+                  : handleLike
+              }
+              onDislike={
+                movie.status === MovieUserStatus.WATCHED_AND_LIKED
+                  ? handleDislike
+                  : () => {}
+              }
               movie={{
                 id: movie.movie.id,
                 title: movie.movie.title,
@@ -114,8 +209,8 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
             <MovieCard
               key={`wanted-${movie.movie.id}`}
               type="wantsToWatch"
-              onDelete={handleDelete}
-              onWatch={handleWatch}
+              onDelete={handleOpenDeleteModal}
+              onWatch={handleOpenLikeModal}
               movie={{
                 id: movie.movie.id,
                 title: movie.movie.title,
@@ -158,6 +253,26 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
           {currentTab === 0 ? renderWantToWatchMovies() : renderWatchedMovies()}
         </div>
       </Container>
+      <ConfirmDeleteModal
+        open={isDeleteModalOpen}
+        confirm={handleDelete}
+        deny={() => {
+          closeModal();
+        }}
+        onClose={() => setIsDeleteModalOpen(false)}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      />
+      <LikeModal
+        open={isLikeModalOpen}
+        like={handleLikeFromModal}
+        dislike={handleDislikeFromModal}
+        onClose={() => {
+          closeModal();
+        }}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      />
     </div>
   );
 };

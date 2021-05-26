@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AppBar, Divider, Container, IconButton } from "@material-ui/core";
 
 import Chip from "@material-ui/core/Chip";
@@ -7,9 +7,10 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 import useStyles from "./styles";
-import { Movie } from "../../../../types/movie";
+import { Movie, RecommendedMovieMessage } from "../../../../types/movie";
 import { MovieStateLogic } from "../Home";
 import { LikeModal } from "../../../../components/LikeModal";
+import { MessageModal } from "../../../../components/MessageModal";
 import { PlatformIcon } from "../../../../components/PlatformIcon";
 import TemporaryDrawer from "../../../../components/Menu";
 import logoImg from "../../../../assets/images/logos/home-logo.png";
@@ -19,12 +20,125 @@ interface HomeDisplayProps {
   movie: Movie;
   logic: MovieStateLogic;
   modalLiked: boolean;
+  modalRecommendedMovie: boolean;
+  recommendedMovie?: RecommendedMovieMessage;
 }
 
 export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const classes = useStyles();
-
   const { movie, logic, modalLiked } = props;
+  useEffect(() => {
+    window.scrollTo({
+      behavior: "smooth",
+      top: 0,
+    });
+  }, [movie]);
+  const renderMovie = () => {
+    return (
+      <Container className={classes.content}>
+        <img
+          src={movie.pathBanner}
+          alt="movie cover"
+          className={classes.cover}
+        />
+        <div className={classes.movieInfo}>
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="h2"
+            className={classes.movieTitle}
+          >
+            {movie.title}
+          </Typography>
+          <Typography
+            className={classes.originalTitle}
+            gutterBottom
+            variant="body1"
+            component="p"
+          >
+            {`(${movie.originalTitle})`}
+          </Typography>
+          <Typography
+            className={classes.year}
+            gutterBottom
+            variant="body1"
+            component="p"
+          >
+            {movie.year}
+          </Typography>
+          <Typography
+            className={classes.duration}
+            variant="caption"
+            display="block"
+            gutterBottom
+          >
+            {`${movie.duration} MIN`}
+          </Typography>
+          <Typography
+            className={classes.synopsis}
+            variant="body1"
+            color="textPrimary"
+            component="p"
+          >
+            {movie.critic} {movie.synopsis}
+          </Typography>
+          <AvatarGroup className={classes.platforms}>
+            {movie.platforms.map(({ name }) => {
+              return (
+                <PlatformIcon
+                  key={name}
+                  className={classes.platform}
+                  variant="rounded"
+                  platform={name}
+                />
+              );
+            })}
+          </AvatarGroup>
+
+          <div>
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              className={classes.cast}
+            >
+              Direção:&nbsp;
+            </Typography>
+            <Typography className={[classes.cast, classes.castNames].join(" ")}>
+              {movie.director}
+            </Typography>
+          </div>
+
+          <div>
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              className={classes.cast}
+            >
+              Elenco principal:&nbsp;
+            </Typography>
+            <Typography className={[classes.cast, classes.castNames].join(" ")}>
+              {movie.actors.join(", ")}
+            </Typography>
+          </div>
+
+          <div className={classes.tags}>
+            {movie.moviesTags.map(({ tag }) => {
+              return (
+                <Chip
+                  variant="outlined"
+                  size="small"
+                  label={tag.name}
+                  key={tag.name}
+                  className={classes.tag}
+                  icon={<FiberManualRecordIcon />}
+                />
+              );
+            })}
+          </div>
+        </div>
+      </Container>
+    );
+  };
 
   return (
     <div className={classes.root}>
@@ -32,117 +146,24 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
         {/* Botão Menu */}
         <div className={classes.topMenu}>
           <img src={logoImg} alt="Cinehal logo" className={classes.logo} />
-          <TemporaryDrawer />
+          <div className={classes.sideIcon}>
+            <span onClick={logic.functions.handleClickGoToFilterPage}>
+              <CustomIcon type="menuFilters" />
+            </span>
+            <TemporaryDrawer />
+          </div>
         </div>
 
         {/* Conteudo do Filme */}
-        <Container className={classes.content}>
-          <img
-            src={movie.pathBanner}
-            alt="movie cover"
-            className={classes.cover}
-          />
-          <div className={classes.movieInfo}>
-            <Typography
-              gutterBottom
-              variant="h5"
-              component="h2"
-              className={classes.movieTitle}
-            >
-              {movie.title}
+        {movie ? (
+          renderMovie()
+        ) : (
+          <div className={classes.listEndContainer}>
+            <Typography variant="h5" className={classes.listEndMessage}>
+              Você chegou ao fim da lista de filmes.
             </Typography>
-            <Typography
-              className={classes.originalTitle}
-              gutterBottom
-              variant="body1"
-              component="p"
-            >
-              {`(${movie.originalTitle})`}
-            </Typography>
-            <Typography
-              className={classes.year}
-              gutterBottom
-              variant="body1"
-              component="p"
-            >
-              {movie.year}
-            </Typography>
-            <Typography
-              className={classes.duration}
-              variant="caption"
-              display="block"
-              gutterBottom
-            >
-              {`${movie.duration} MIN`}
-            </Typography>
-            <Typography
-              className={classes.synopsis}
-              variant="body1"
-              color="textPrimary"
-              component="p"
-            >
-              {movie.synopsis}
-            </Typography>
-
-            <AvatarGroup className={classes.platforms}>
-              {movie.platforms.map(({ name }) => {
-                return (
-                  <PlatformIcon
-                    key={name}
-                    className={classes.platform}
-                    variant="rounded"
-                    platform={name}
-                  />
-                );
-              })}
-            </AvatarGroup>
-
-            <div>
-              <Typography
-                variant="body1"
-                color="textPrimary"
-                className={classes.cast}
-              >
-                Direção:&nbsp;
-              </Typography>
-              <Typography
-                className={[classes.cast, classes.castNames].join(" ")}
-              >
-                {movie.director}
-              </Typography>
-            </div>
-
-            <div>
-              <Typography
-                variant="body1"
-                color="textPrimary"
-                className={classes.cast}
-              >
-                Elenco principal:&nbsp;
-              </Typography>
-              <Typography
-                className={[classes.cast, classes.castNames].join(" ")}
-              >
-                {movie.actors.join(", ")}
-              </Typography>
-            </div>
-
-            <div className={classes.tags}>
-              {movie.moviesTags.map(({ tag }) => {
-                return (
-                  <Chip
-                    variant="outlined"
-                    size="small"
-                    label={tag.name}
-                    key={tag.name}
-                    className={classes.tag}
-                    icon={<FiberManualRecordIcon />}
-                  />
-                );
-              })}
-            </div>
           </div>
-        </Container>
+        )}
 
         {/* Botoes do Tinder */}
         <AppBar position="fixed" color="transparent" className={classes.appBar}>
@@ -160,7 +181,9 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               flexItem
             />
             <IconButton
-              onClick={logic.functions.handleClickDontWantToWatch}
+              onClick={
+                movie ? logic.functions.handleClickDontWantToWatch : () => {}
+              }
               aria-label="dislike"
               color="primary"
             >
@@ -172,7 +195,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               flexItem
             />
             <IconButton
-              onClick={logic.functions.handleClickWantoWatch}
+              onClick={movie ? logic.functions.handleClickWantoWatch : () => {}}
               aria-label="like"
               color="primary"
             >
@@ -184,7 +207,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               flexItem
             />
             <IconButton
-              onClick={logic.functions.handleClickWatched}
+              onClick={movie ? logic.functions.handleClickWatched : () => {}}
               aria-label="star"
               color="primary"
             >
@@ -198,6 +221,17 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
             />
+            {props.modalRecommendedMovie && (
+              <MessageModal
+                movie={{
+                  platform: props.recommendedMovie!.platform,
+                  sizeList: props.recommendedMovie!.sizeList,
+                  title: props.recommendedMovie!.title,
+                }}
+                open={props.modalRecommendedMovie}
+                onClose={logic.functions.handleCloseModalRecommend}
+              />
+            )}
           </div>
         </AppBar>
       </Container>

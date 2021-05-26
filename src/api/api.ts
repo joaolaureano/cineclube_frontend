@@ -9,9 +9,10 @@ const api = axios.create({
 
 api.interceptors.request.use(
   async (config) => {
-    config.headers.authorization = await firebase
-      .auth()
-      .currentUser?.getIdToken();
+    const idToken = firebase.auth().currentUser
+      ? await firebase.auth().currentUser?.getIdToken()
+      : localStorage.getItem("token");
+    config.headers.authorization = idToken;
     return config;
   },
   (error) => {
