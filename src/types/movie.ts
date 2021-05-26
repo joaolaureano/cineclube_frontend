@@ -17,6 +17,12 @@ export interface Movie {
   actors: string[];
 }
 
+export interface RecommendedMovieMessage {
+  sizeList: number;
+  title: string;
+  platform: string[];
+}
+
 export interface ActorDto {
   id: number;
   name: string;

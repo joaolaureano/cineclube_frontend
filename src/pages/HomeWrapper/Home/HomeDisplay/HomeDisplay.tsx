@@ -7,9 +7,10 @@ import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 import AvatarGroup from "@material-ui/lab/AvatarGroup";
 
 import useStyles from "./styles";
-import { Movie } from "../../../../types/movie";
+import { Movie, RecommendedMovieMessage } from "../../../../types/movie";
 import { MovieStateLogic } from "../Home";
 import { LikeModal } from "../../../../components/LikeModal";
+import { MessageModal } from "../../../../components/MessageModal";
 import { PlatformIcon } from "../../../../components/PlatformIcon";
 import TemporaryDrawer from "../../../../components/Menu";
 import logoImg from "../../../../assets/images/logos/home-logo.png";
@@ -19,6 +20,8 @@ interface HomeDisplayProps {
   movie: Movie;
   logic: MovieStateLogic;
   modalLiked: boolean;
+  modalRecommendedMovie: boolean;
+  recommendedMovie?: RecommendedMovieMessage;
 }
 
 export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
@@ -218,6 +221,17 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               aria-labelledby="simple-modal-title"
               aria-describedby="simple-modal-description"
             />
+            {props.modalRecommendedMovie && (
+              <MessageModal
+                movie={{
+                  platform: props.recommendedMovie!.platform,
+                  sizeList: props.recommendedMovie!.sizeList,
+                  title: props.recommendedMovie!.title,
+                }}
+                open={props.modalRecommendedMovie}
+                onClose={logic.functions.handleCloseModalRecommend}
+              />
+            )}
           </div>
         </AppBar>
       </Container>
