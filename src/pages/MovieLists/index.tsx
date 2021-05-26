@@ -26,7 +26,7 @@ interface Params {
 }
 
 export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
-  const { openSnackbar } = useContext(SharedSnackbarContext);
+  const { openSnackbar, closeSnackbar } = useContext(SharedSnackbarContext);
   const history = useHistory();
   const styles = useStyles();
 
@@ -86,18 +86,24 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
   };
 
   const handleLike = async (id: number) => {
+    openSnackbar("Atualizando a lista...", "info");
     const response = await UserService.setMovieStatus({
       id: String(id),
       status: MovieUserStatus.WATCHED_AND_LIKED,
     });
+    closeSnackbar();
     if (response.data.success) {
-      const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
-      movie!.status = MovieUserStatus.WATCHED_AND_LIKED;
       if (currentTab === 0) {
+        const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
+        movie!.status = MovieUserStatus.WATCHED_AND_LIKED;
         setWatchedMovies([movie!, ...watchedMovies]);
         setWantToWatchMovies(
           wantToWatchMovies.filter((movie) => movie.movieId !== id)
         );
+      } else if (currentTab === 1) {
+        const movie = watchedMovies.find((movie) => movie.movieId === id);
+        movie!.status = MovieUserStatus.WATCHED_AND_LIKED;
+        setWatchedMovies([...watchedMovies]);
       }
     }
   };
@@ -109,18 +115,24 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
   };
 
   const handleDislike = async (id: number) => {
+    openSnackbar("Atualizando a lista...", "info");
     const response = await UserService.setMovieStatus({
       id: String(id),
       status: MovieUserStatus.WATCHED_AND_DISLIKED,
     });
+    closeSnackbar();
     if (response.data.success) {
-      const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
-      movie!.status = MovieUserStatus.WATCHED_AND_DISLIKED;
       if (currentTab === 0) {
+        const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
+        movie!.status = MovieUserStatus.WATCHED_AND_DISLIKED;
         setWatchedMovies([movie!, ...watchedMovies]);
         setWantToWatchMovies(
           wantToWatchMovies.filter((movie) => movie.movieId !== id)
         );
+      } else if (currentTab === 1) {
+        const movie = watchedMovies.find((movie) => movie.movieId === id);
+        movie!.status = MovieUserStatus.WATCHED_AND_DISLIKED;
+        setWatchedMovies([...watchedMovies]);
       }
     }
   };
@@ -168,8 +180,16 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
               type="watched"
               liked={movie.status === MovieUserStatus.WATCHED_AND_LIKED}
               onDelete={handleOpenDeleteModal}
-              onLike={handleLike}
-              onDislike={handleDislike}
+              onLike={
+                movie.status === MovieUserStatus.WATCHED_AND_LIKED
+                  ? () => {}
+                  : handleLike
+              }
+              onDislike={
+                movie.status === MovieUserStatus.WATCHED_AND_LIKED
+                  ? handleDislike
+                  : () => {}
+              }
               movie={{
                 id: movie.movie.id,
                 title: movie.movie.title,
