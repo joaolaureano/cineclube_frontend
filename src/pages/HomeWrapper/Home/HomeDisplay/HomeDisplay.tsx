@@ -80,7 +80,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             color="textPrimary"
             component="p"
           >
-            {movie.critic} {movie.synopsis}
+            {movie.synopsis}
           </Typography>
           <AvatarGroup className={classes.platforms}>
             {movie.platforms.map(({ name }) => {
@@ -118,6 +118,19 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             </Typography>
             <Typography className={[classes.cast, classes.castNames].join(" ")}>
               {movie.actors.join(", ")}
+            </Typography>
+          </div>
+
+          <div className={classes.synopsisContainer}>
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              className={classes.cast}
+            >
+              Sinopse:&nbsp;
+            </Typography>
+            <Typography className={classes.synopsis2} variant="body1">
+              {movie.critic}
             </Typography>
           </div>
 
