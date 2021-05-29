@@ -89,10 +89,20 @@ const useStyles = makeStyles((theme) => {
       lineHeight: "1.4rem",
     },
 
+    synopsis2: {
+      lineHeight: "1.4rem",
+      display: "inline",
+      fontWeight: 700,
+    },
+
     platforms: { padding: "1rem 0" },
 
     cast: {
       display: "inline",
+    },
+
+    synopsisContainer: {
+      padding: "1rem 0 0 0",
     },
 
     castNames: {
