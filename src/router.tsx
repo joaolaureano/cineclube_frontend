@@ -8,6 +8,7 @@ import Login from "./pages/Login";
 import LoginTest from "./pages/LoginTest";
 import Filter from "./pages/Filter";
 import { LoginSignupPreferences } from "./pages/Login/SignupPreferences/SignupPreferences";
+import { AchievementList } from "./pages/AchievementList";
 
 const Router = (): JSX.Element => {
   return (
@@ -26,6 +27,11 @@ const Router = (): JSX.Element => {
           path="/signupPreferences"
           exact
           component={LoginSignupPreferences}
+        />
+        <ProtectedRoute
+          path="/user/achievements"
+          exact
+          component={AchievementList}
         />
       </Switch>
     </BrowserRouter>
