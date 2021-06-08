@@ -36,6 +36,10 @@ export default function TemporaryDrawer() {
     history.push(`user/movies/${listName}`);
   };
 
+  const handleOpenAchievementList = () => {
+    history.push("user/achievements");
+  };
+
   const list = (anchor: Anchor) => (
     <div
       role="presentation"
@@ -104,7 +108,7 @@ export default function TemporaryDrawer() {
           className={classes.textIcon}
           button
           key="achievements"
-          onClick={() => alert("Conquistas")}
+          onClick={() => handleOpenAchievementList()}
         >
           <ListItemText
             primary={
