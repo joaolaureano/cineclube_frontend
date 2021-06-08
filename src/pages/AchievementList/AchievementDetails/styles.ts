@@ -45,6 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
       textTransform: "uppercase",
       fontFamily: "Barlow Condensed, sans-serif",
+      textAlign: "center",
       fontSize: "2.5rem",
       fontStyle: "italic",
     },
