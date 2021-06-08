@@ -7,12 +7,21 @@ import useStyles from "./styles";
 
 interface AchievementCardProps {
   achievement: Achievement;
+  onClick?: (achievement: Achievement) => void;
 }
 export const AchievementCard = (props: AchievementCardProps): JSX.Element => {
   const styles = useStyles();
 
+  const handleClickAchievement = () => {
+    if (props.onClick) props.onClick(props.achievement);
+  };
+
   return (
-    <Card className={styles.card} variant="outlined">
+    <Card
+      className={styles.card}
+      variant="outlined"
+      onClick={handleClickAchievement}
+    >
       <CardContent className={styles.cardContent}>
         <div className={styles.imageWrapper}>
           <img

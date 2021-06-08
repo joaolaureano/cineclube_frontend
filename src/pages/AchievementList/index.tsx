@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router";
 import { Container, IconButton, Typography } from "@material-ui/core";
-
-import useStyles from "./styles";
 import { ArrowBack } from "@material-ui/icons";
 import { AchievementCard } from "./AchievementCard";
+import { AchievementDetails } from "./AchievementDetails";
+import { Achievement } from "../../types/achievement";
+
+import useStyles from "./styles";
 
 export const AchievementList = () => {
+  const [isAchievementOpen, setIsAchievementOpen] = useState(false);
+  const [selectedAchievement, setselectedAchievement] = useState<
+    Achievement | undefined
+  >();
   const history = useHistory();
   const styles = useStyles();
 
   const handleClickBack = () => {
     history.goBack();
+  };
+
+  const handleCloseAchievementDetails = () => {
+    setselectedAchievement(undefined);
+    setIsAchievementOpen(false);
+  };
+
+  const handleClickAchievement = (achievement: Achievement) => {
+    setselectedAchievement(achievement);
+    setIsAchievementOpen(true);
   };
 
   const renderAchievements = () => {
@@ -28,7 +44,12 @@ export const AchievementList = () => {
     };
 
     return arr.map((achievement) => {
-      return <AchievementCard achievement={achievementData} />;
+      return (
+        <AchievementCard
+          onClick={handleClickAchievement}
+          achievement={achievementData}
+        />
+      );
     });
   };
 
@@ -45,6 +66,11 @@ export const AchievementList = () => {
         </header>
         <div className={styles.achievementList}>{renderAchievements()}</div>
       </Container>
+      <AchievementDetails
+        visible={isAchievementOpen}
+        achievement={selectedAchievement}
+        onClose={handleCloseAchievementDetails}
+      />
     </div>
   );
 };
