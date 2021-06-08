@@ -1,34 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import { Container, IconButton, Typography } from "@material-ui/core";
-
-import useStyles from "./styles";
 import { ArrowBack } from "@material-ui/icons";
 import { AchievementCard } from "./AchievementCard";
+import AchievementService from "../../services/achievement";
+import { Achievement } from "../../types/achievement";
+
+import useStyles from "./styles";
 
 export const AchievementList = () => {
+  const [achievements, setAchievements] = useState<Achievement[]>([]);
+
   const history = useHistory();
   const styles = useStyles();
+
+  useEffect(() => {
+    const fetchUserAchievements = async () => {
+      const response = await AchievementService.getUserAchievements();
+
+      const achievements: Achievement[] = response.data;
+      setAchievements(achievements);
+    };
+
+    fetchUserAchievements();
+  }, []);
 
   const handleClickBack = () => {
     history.goBack();
   };
 
   const renderAchievements = () => {
-    const arr = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-
-    const achievementData = {
-      tagName: "Horror",
-      targetScore: 3,
-      pathImage:
-        "https://lh3.googleusercontent.com/u/0/d/1rOIf8eTXBys63J9iGkSBLjDsOG-aLtML=w1858-h994-iv1",
-      title: "Não tenha medo!",
-      description:
-        "O filme já acabou e acho que nada daquilo é real. Enfim, parabéns pela conquista de 3 filmes de terror assistidos.",
-    };
-
-    return arr.map((achievement) => {
-      return <AchievementCard achievement={achievementData} />;
+    return achievements.map((achievement) => {
+      return <AchievementCard achievement={achievement} />;
     });
   };
 
