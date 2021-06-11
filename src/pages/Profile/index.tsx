@@ -5,6 +5,7 @@ import { useFirebase } from "../../services/auth";
 import { Container, Typography } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
 import { useState } from "react";
+import { Divider } from "@material-ui/core";
 
 const Profile = (): JSX.Element => {
   const history = useHistory();
@@ -12,18 +13,18 @@ const Profile = (): JSX.Element => {
   const auth = useFirebase();
 
   const [photoUrl, setPhotoUrl] = useState<string>("");
+  const [userName, setUserName] = useState<string>("");
+  const [userEmail, setUserEmail] = useState<string>("");
 
   const backToMenu = () => {
     history.push("/home");
   };
   useEffect(() => {
-    // console.log("loading...");
     const user = auth.authUser;
     if (user) {
-      if (user.photoURL) {
-        setPhotoUrl(user.photoURL);
-        console.log(user.photoURL);
-      }
+      if (user.photoURL) setPhotoUrl(user.photoURL);
+      if (user.displayName) setUserName(user.displayName);
+      if (user.email) setUserEmail(user.email);
     }
   }, []);
 
@@ -43,7 +44,23 @@ const Profile = (): JSX.Element => {
         <img src={photoUrl} />
       </Container>
       <Container className={styles.contentWrapper}>
-        <p>seila</p>
+        <Typography
+          className={styles.profileInfo}
+          variant="body1"
+          color="textPrimary"
+          component="p"
+        >
+          {userName}
+        </Typography>
+        <Divider variant="middle" className={styles.divider} />
+        <Typography
+          className={styles.profileInfo}
+          variant="body1"
+          color="textPrimary"
+          component="p"
+        >
+          {userEmail}
+        </Typography>
       </Container>
     </div>
   );

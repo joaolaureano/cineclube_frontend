@@ -1,4 +1,5 @@
 import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
+import { isPartiallyEmittedExpression } from "typescript";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -42,9 +43,17 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     contentWrapper: {
-      paddingLeft: "20px",
-      paddingRight: "20px",
       height: "78%",
+      padding: "0",
+    },
+    profileInfo: {
+      padding: "10px 16px",
+      backgroundColor: theme.palette.background.paper,
+    },
+    divider: {
+      height: "1px",
+      width: "100vw",
+      margin: "0",
     },
   })
 );
