@@ -106,7 +106,7 @@ const reorderWithRandom = (movieIds: number[]) => {
   let oldMovieIds = [...newMovieIds];
 
   let firstSlice = movieIds.slice(
-    i + INTERVAL_BETWEEN_RANDOM,
+    i + INTERVAL_BETWEEN_RANDOM - 1,
     randomMovieIndex + i + INTERVAL_BETWEEN_RANDOM
   );
   // console.log("1")
@@ -128,37 +128,53 @@ const reorderWithRandom = (movieIds: number[]) => {
     newMovieIds = newMovieIds.concat(
       oldMovieIds.slice(i, i + INTERVAL_BETWEEN_RANDOM - 1)
     );
+
     randomMovieIndex = getRndInteger(
       i + INTERVAL_BETWEEN_RANDOM,
-      oldMovieIds.length - 1
+      movieIds.length - 1
     );
-    randomMovie = oldMovieIds.slice(i + INTERVAL_BETWEEN_RANDOM)[
-      randomMovieIndex
-    ];
-    newMovieIds.push(randomMovie);
-    oldMovieIds = [...newMovieIds];
 
+    console.log(randomMovieIndex);
+
+    // randomMovieIndex = getRndInteger(
+    //   i + INTERVAL_BETWEEN_RANDOM,
+    //   oldMovieIds.length - 1
+    // );
+
+    randomMovie = oldMovieIds[randomMovieIndex];
+
+    newMovieIds.push(randomMovie);
+    let auxMovieIds = [...newMovieIds];
+
+    console.log("OLA");
+    console.log(oldMovieIds);
     firstSlice = oldMovieIds.slice(
-      i + INTERVAL_BETWEEN_RANDOM,
-      randomMovieIndex + i + INTERVAL_BETWEEN_RANDOM
+      i + INTERVAL_BETWEEN_RANDOM - 1,
+      randomMovieIndex
     );
-    secondSlice = oldMovieIds.slice(
-      randomMovieIndex + 1 + i + INTERVAL_BETWEEN_RANDOM
-    );
+
+    console.log("1");
+    console.log(firstSlice);
+
+    secondSlice = oldMovieIds.slice(randomMovieIndex + 1);
+
+    console.log("2");
+    console.log(secondSlice);
+
+    auxMovieIds = newMovieIds.concat(firstSlice).concat(secondSlice);
 
     i += INTERVAL_BETWEEN_RANDOM;
 
+    console.log("New");
     console.log(newMovieIds);
+
+    console.log("Old");
     console.log(oldMovieIds);
-    // newMovieIds = oldMovieIds.slice(i, i+INTERVAL_BETWEEN_RANDOM);
-    // randomMovieIndex = getRndInteger(i+INTERVAL_BETWEEN_RANDOM, oldMovieIds.length);
-    // randomMovie = oldMovieIds.slice(i+INTERVAL_BETWEEN_RANDOM)[randomMovieIndex];
-    // newMovieIds.push(randomMovie);
-    // oldMovieIds = oldMovieIds.concat(movieIds.slice(i+INTERVAL_BETWEEN_RANDOM, randomMovieIndex)).concat(movieIds.slice(randomMovieIndex-1));
-    // console.log(i);
-    // i+=INTERVAL_BETWEEN_RANDOM;
-    // console.log(newMovieIds);
-    // console.log(oldMovieIds);
+
+    console.log("Aux");
+    console.log(auxMovieIds);
+
+    oldMovieIds = auxMovieIds;
   }
   return movieIds;
 };
