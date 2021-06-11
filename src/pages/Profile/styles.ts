@@ -28,6 +28,19 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       margin: "auto",
     },
+    photoWrapper: {
+      paddingLeft: "20px",
+      paddingRight: "20px",
+      height: "45%",
+      width: "75%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      "& img": {
+        height: "55%",
+        width: "70%",
+      },
+    },
     contentWrapper: {
       paddingLeft: "20px",
       paddingRight: "20px",

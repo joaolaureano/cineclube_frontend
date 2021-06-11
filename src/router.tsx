@@ -18,7 +18,7 @@ const Router = (): JSX.Element => {
         <Route path="/home" exact component={HomeWrapper} />
         <Route path="/" exact component={Login} />
         <Route path="/filter" exact component={Filter} />
-        <Route path="/profile" exact component={Profile} />
+        <Route path="/user/profile" exact component={Profile} />
         <ProtectedRoute
           path="/user/movies/:list"
           exact

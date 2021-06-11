@@ -1,19 +1,30 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useStyles from "./styles";
+import { useFirebase } from "../../services/auth";
 import { Container, Typography } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
-import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
+import { useState } from "react";
 
 const Profile = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
+  const auth = useFirebase();
+
+  const [photoUrl, setPhotoUrl] = useState<string>("");
 
   const backToMenu = () => {
     history.push("/home");
   };
   useEffect(() => {
-    console.log("loading...");
+    // console.log("loading...");
+    const user = auth.authUser;
+    if (user) {
+      if (user.photoURL) {
+        setPhotoUrl(user.photoURL);
+        console.log(user.photoURL);
+      }
+    }
   }, []);
 
   return (
@@ -28,8 +39,12 @@ const Profile = (): JSX.Element => {
           </Typography>
         </div>
       </Container>
-      <Container className={styles.contentWrapper}></Container>
-      <Container className={styles.contentWrapper}></Container>
+      <Container className={styles.photoWrapper}>
+        <img src={photoUrl} />
+      </Container>
+      <Container className={styles.contentWrapper}>
+        <p>seila</p>
+      </Container>
     </div>
   );
 };
