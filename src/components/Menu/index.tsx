@@ -40,6 +40,10 @@ export default function TemporaryDrawer() {
     history.push("user/achievements");
   };
 
+  const handleOpenProfile = () => {
+    history.push("user/profile");
+  };
+
   const list = (anchor: Anchor) => (
     <div
       role="presentation"
@@ -58,7 +62,7 @@ export default function TemporaryDrawer() {
           className={classes.textIcon}
           button
           key="profile"
-          onClick={() => alert("Perfil")}
+          onClick={() => handleOpenProfile()}
         >
           <ListItemText
             primary={<Typography className={classes.text}>Perfil</Typography>}
