@@ -13,7 +13,7 @@ enum MovieUserStatus {
   DONT_WANT_TO_WATCH = "dont_want_to_watch",
 }
 
-const INTERVAL_BETWEEN_RANDOM = 3;
+const INTERVAL_BETWEEN_RANDOM = 6;
 
 const movies = {
   get: async (): Promise<AxiosResponse<MovieState>> => {
@@ -99,30 +99,42 @@ const reorderWithRandom = (movieIds: number[]) => {
     i + INTERVAL_BETWEEN_RANDOM,
     movieIds.length - 1
   );
-  let randomMovie = movieIds.slice(i + INTERVAL_BETWEEN_RANDOM)[
-    randomMovieIndex
-  ];
+
+  if (randomMovieIndex > movieIds.length) {
+    randomMovieIndex = movieIds.length - 1;
+  }
+
+  let randomMovie = movieIds[randomMovieIndex];
+
   newMovieIds.push(randomMovie);
   let oldMovieIds = [...newMovieIds];
 
+  // let firstSlice = movieIds.slice(
+  //   i + INTERVAL_BETWEEN_RANDOM - 1,
+  //   randomMovieIndex + i + INTERVAL_BETWEEN_RANDOM
+  // );
+  // // console.log("1")
+  // // console.log(firstSlice)
+  // let secondSlice = movieIds.slice(
+  //   randomMovieIndex + 1 + i + INTERVAL_BETWEEN_RANDOM
+  // );
+  // // console.log("2")
+  // // console.log(secondSlice);
+
   let firstSlice = movieIds.slice(
     i + INTERVAL_BETWEEN_RANDOM - 1,
-    randomMovieIndex + i + INTERVAL_BETWEEN_RANDOM
+    randomMovieIndex
   );
-  // console.log("1")
-  // console.log(firstSlice)
-  let secondSlice = movieIds.slice(
-    randomMovieIndex + 1 + i + INTERVAL_BETWEEN_RANDOM
-  );
-  // console.log("2")
-  // console.log(secondSlice);
+
+  let secondSlice = movieIds.slice(randomMovieIndex + 1);
 
   oldMovieIds = oldMovieIds.concat(firstSlice).concat(secondSlice);
   i += INTERVAL_BETWEEN_RANDOM;
   console.log(newMovieIds);
   console.log(oldMovieIds);
+  console.log(randomMovieIndex);
 
-  while (i < movieIds.length) {
+  while (i + INTERVAL_BETWEEN_RANDOM < movieIds.length) {
     console.log(newMovieIds);
     console.log(oldMovieIds);
     newMovieIds = newMovieIds.concat(
@@ -133,6 +145,10 @@ const reorderWithRandom = (movieIds: number[]) => {
       i + INTERVAL_BETWEEN_RANDOM,
       movieIds.length - 1
     );
+
+    if (randomMovieIndex > movieIds.length) {
+      randomMovieIndex = movieIds.length - 1;
+    }
 
     console.log(randomMovieIndex);
 
@@ -176,7 +192,15 @@ const reorderWithRandom = (movieIds: number[]) => {
 
     oldMovieIds = auxMovieIds;
   }
-  return movieIds;
+
+  if (i < movieIds.length && newMovieIds.length < oldMovieIds.length) {
+    newMovieIds = newMovieIds.concat(oldMovieIds.slice(i));
+  }
+
+  console.log("New");
+  console.log(newMovieIds);
+
+  return newMovieIds;
 };
 
 export default movies;
