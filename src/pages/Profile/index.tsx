@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import useStyles from "./styles";
 import { useFirebase } from "../../services/auth";
@@ -6,13 +6,15 @@ import { Container, Typography } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
 import { useState } from "react";
 import { Divider } from "@material-ui/core";
-import { Button } from "@material-ui/core";
 import { LogoutButton } from "../../components/LogoutButton";
+import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 
 const Profile = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
   const auth = useFirebase();
+
+  const { openSnackbar } = useContext(SharedSnackbarContext);
 
   const [photoUrl, setPhotoUrl] = useState<string>("");
   const [userName, setUserName] = useState<string>("");
@@ -22,8 +24,13 @@ const Profile = (): JSX.Element => {
     history.push("/home");
   };
 
-  const logout = () => {
-    console.log("k");
+  const logout = async () => {
+    if (await auth.logout()) {
+      openSnackbar("Logout bem-sucedido", "success");
+      history.push("/");
+    } else {
+      openSnackbar("Logout não foi realizado", "failure");
+    }
   };
 
   useEffect(() => {

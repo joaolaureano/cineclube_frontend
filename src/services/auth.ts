@@ -29,6 +29,7 @@ const useFirebase = () => {
   const logout = async () => {
     try {
       await firebaseAuth().signOut();
+      localStorage.clear();
       return true;
     } catch (err) {
       console.log(err.message);
