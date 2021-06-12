@@ -6,6 +6,8 @@ import { Container, Typography } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
 import { useState } from "react";
 import { Divider } from "@material-ui/core";
+import { Button } from "@material-ui/core";
+import { LogoutButton } from "../../components/LogoutButton";
 
 const Profile = (): JSX.Element => {
   const history = useHistory();
@@ -19,6 +21,11 @@ const Profile = (): JSX.Element => {
   const backToMenu = () => {
     history.push("/home");
   };
+
+  const logout = () => {
+    console.log("k");
+  };
+
   useEffect(() => {
     const user = auth.authUser;
     if (user) {
@@ -61,6 +68,10 @@ const Profile = (): JSX.Element => {
         >
           {userEmail}
         </Typography>
+        <Divider variant="middle" className={styles.divider} />
+        <Container className={styles.logoutButton}>
+          <LogoutButton onClick={logout}>{"Logout"}</LogoutButton>
+        </Container>
       </Container>
     </div>
   );

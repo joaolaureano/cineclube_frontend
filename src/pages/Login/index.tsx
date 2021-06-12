@@ -1,14 +1,11 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-
 import { Typography, Container } from "@material-ui/core";
 import { useFirebase } from "../../services/auth";
 import { GoogleButton } from "../../components/GoogleButton";
-
 import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 import UserService from "../../services/user";
 import logoImg from "../../assets/images/logos/login-logo.png";
-
 import useStyles from "./styles";
 
 const Login = (): JSX.Element => {

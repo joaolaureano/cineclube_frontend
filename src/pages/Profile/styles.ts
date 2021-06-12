@@ -45,15 +45,18 @@ const useStyles = makeStyles((theme: Theme) =>
     contentWrapper: {
       height: "78%",
       padding: "0",
+      backgroundColor: theme.palette.background.paper,
     },
     profileInfo: {
       padding: "10px 16px",
-      backgroundColor: theme.palette.background.paper,
     },
     divider: {
       height: "1px",
       width: "100vw",
       margin: "0",
+    },
+    logoutButton: {
+      marginTop: "50px",
     },
   })
 );
