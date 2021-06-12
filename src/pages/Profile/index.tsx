@@ -1,18 +1,20 @@
 import React, { useContext, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import useStyles from "./styles";
-import { useFirebase } from "../../services/auth";
+
 import { Container, Typography } from "@material-ui/core";
 import { ArrowBack } from "@material-ui/icons";
 import { useState } from "react";
 import { Divider } from "@material-ui/core";
 import { LogoutButton } from "../../components/LogoutButton";
 import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
+import { AuthContext } from "../../contexts/AuthContext";
+
+import useStyles from "./styles";
 
 const Profile = (): JSX.Element => {
   const history = useHistory();
   const styles = useStyles();
-  const auth = useFirebase();
+  const auth = useContext(AuthContext);
 
   const { openSnackbar } = useContext(SharedSnackbarContext);
 

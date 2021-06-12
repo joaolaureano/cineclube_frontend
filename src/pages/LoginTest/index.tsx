@@ -1,14 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Container, Typography } from "@material-ui/core";
 
-import { useFirebase } from "../../services/auth";
+import { AuthContext } from "../../contexts/AuthContext";
+
 import useStyles from "./styles";
 
 const Example = (): JSX.Element => {
   const history = useHistory();
 
-  const { logout } = useFirebase();
+  const { logout } = useContext(AuthContext);
 
   const handleLogout = async () => {
     const loggedOut = await logout();

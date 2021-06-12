@@ -15,10 +15,10 @@ const Router = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route path="/home" exact component={HomeWrapper} />
         <Route path="/" exact component={Login} />
-        <Route path="/filter" exact component={Filter} />
-        <Route path="/user/profile" exact component={Profile} />
+        <ProtectedRoute path="/home" exact component={HomeWrapper} />
+        <ProtectedRoute path="/filter" exact component={Filter} />
+        <ProtectedRoute path="/user/profile" exact component={Profile} />
         <ProtectedRoute
           path="/user/movies/:list"
           exact
