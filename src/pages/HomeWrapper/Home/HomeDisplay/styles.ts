@@ -145,6 +145,7 @@ const useStyles = makeStyles((theme) => {
       top: "auto",
       bottom: 0,
       background: theme.palette.primary.main,
+      zIndex: 5,
     },
 
     bottomMenu: {
