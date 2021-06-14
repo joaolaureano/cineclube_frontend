@@ -15,6 +15,8 @@ import { PlatformIcon } from "../../../../components/PlatformIcon";
 import TemporaryDrawer from "../../../../components/Menu";
 import logoImg from "../../../../assets/images/logos/home-logo.png";
 import { CustomIcon } from "../../../../components/CustomIcon";
+import { Achievement } from "../../../../types/achievement";
+import { AchievementDetails } from "../../../AchievementList/AchievementDetails";
 
 interface HomeDisplayProps {
   movie: Movie;
@@ -22,11 +24,13 @@ interface HomeDisplayProps {
   modalLiked: boolean;
   modalRecommendedMovie: boolean;
   recommendedMovie?: RecommendedMovieMessage;
+  achievements: Achievement[];
+  closeAchievement: () => void;
 }
 
 export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const classes = useStyles();
-  const { movie, logic, modalLiked } = props;
+  const { movie, logic, modalLiked, achievements, closeAchievement } = props;
   useEffect(() => {
     window.scrollTo({
       behavior: "smooth",
@@ -159,6 +163,11 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
 
   return (
     <div className={classes.root}>
+      <AchievementDetails
+        visible={achievements.length > 0}
+        achievement={achievements[0]}
+        onClose={closeAchievement}
+      />
       <Container className={classes.container}>
         {/* Botão Menu */}
         <div className={classes.topMenu}>
