@@ -10,6 +10,7 @@ import Filter from "./pages/Filter";
 import { LoginSignupPreferences } from "./pages/Login/SignupPreferences/SignupPreferences";
 import { AchievementList } from "./pages/AchievementList";
 import Profile from "./pages/Profile";
+import Credits from "./pages/Credits";
 
 const Router = (): JSX.Element => {
   return (
@@ -19,6 +20,7 @@ const Router = (): JSX.Element => {
         <Route path="/" exact component={Login} />
         <Route path="/filter" exact component={Filter} />
         <Route path="/user/profile" exact component={Profile} />
+        <Route path="/credits" exact component={Credits} />
         <ProtectedRoute
           path="/user/movies/:list"
           exact
