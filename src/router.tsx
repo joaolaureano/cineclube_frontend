@@ -9,12 +9,14 @@ import Filter from "./pages/Filter";
 import { LoginSignupPreferences } from "./pages/Login/SignupPreferences/SignupPreferences";
 import { AchievementList } from "./pages/AchievementList";
 import Profile from "./pages/Profile";
+import Credits from "./pages/Credits";
 
 const Router = (): JSX.Element => {
   return (
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Login} />
+        <Route path="/credits" exact component={Credits} />
         <ProtectedRoute path="/home" exact component={HomeWrapper} />
         <ProtectedRoute path="/filter" exact component={Filter} />
         <ProtectedRoute path="/user/profile" exact component={Profile} />

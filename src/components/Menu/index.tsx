@@ -40,6 +40,10 @@ export default function TemporaryDrawer() {
     history.push("user/achievements");
   };
 
+  const handleOpenCredits = () => {
+    history.push("/credits");
+  };
+
   const handleOpenProfile = () => {
     history.push("user/profile");
   };
@@ -129,12 +133,10 @@ export default function TemporaryDrawer() {
           className={classes.textIcon}
           button
           key="settings"
-          onClick={() => alert("Configuração")}
+          onClick={() => handleOpenCredits()}
         >
           <ListItemText
-            primary={
-              <Typography className={classes.text}>Configuração</Typography>
-            }
+            primary={<Typography className={classes.text}>Créditos</Typography>}
           />
           <ListItemIcon className={classes.icon}>
             <Container className={classes.borderIcon}>
