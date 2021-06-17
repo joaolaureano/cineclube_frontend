@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import {
   Movie,
   MovieState,
@@ -9,6 +9,7 @@ import { SharedSnackbarContext } from "../../../components/SnackBar/SnackContext
 import { MovieUserStatus } from "../../../types/userMovieStatus";
 import UserService from "../../../services/user";
 import { useHistory } from "react-router-dom";
+import { Achievement } from "../../../types/achievement";
 
 interface HomeProps {
   state: MovieState;
@@ -49,6 +50,8 @@ export const Home: React.FC<HomeProps> = (props) => {
   const [recommendMovie, setRecommendMovie] = useState<
     RecommendedMovieMessage | undefined
   >();
+
+  const [achievements, setAchievements] = useState({} as Achievement[]);
 
   const getSelectedMovie = (): Movie => {
     return state.movies[state.movieIds[selectedMovieIndex]];
@@ -174,10 +177,14 @@ export const Home: React.FC<HomeProps> = (props) => {
     setOpenModal(!openModal);
 
     try {
-      await UserService.setMovieStatus({
+      const response = await UserService.setMovieStatus({
         id: movieID,
         status: MovieUserStatus.WATCHED_AND_DISLIKED,
       });
+
+      if (response.data.body) {
+        setAchievements(response.data.body.achievements);
+      }
 
       incrementSelectedMovie();
       openSnackbar("Não gostei do filme", "info");
@@ -191,10 +198,13 @@ export const Home: React.FC<HomeProps> = (props) => {
     setOpenModal(!openModal);
 
     try {
-      await UserService.setMovieStatus({
+      const response = await UserService.setMovieStatus({
         id: movieID,
         status: MovieUserStatus.WATCHED_AND_LIKED,
       });
+      if (response.data.body) {
+        setAchievements(response.data.body.achievements);
+      }
 
       await updateMovieList(selectedMovieIndex + 1);
       incrementSelectedMovie();
@@ -228,6 +238,10 @@ export const Home: React.FC<HomeProps> = (props) => {
     },
   };
 
+  const handleCloseAchievementDetails = () => {
+    setAchievements(achievements.slice(1, achievements.length));
+  };
+
   return (
     <HomeDisplay
       movie={getSelectedMovie()}
@@ -235,6 +249,8 @@ export const Home: React.FC<HomeProps> = (props) => {
       modalLiked={openModal}
       modalRecommendedMovie={openModalRecommend}
       recommendedMovie={recommendMovie}
+      closeAchievement={handleCloseAchievementDetails}
+      achievements={achievements}
     />
   );
 };
