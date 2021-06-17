@@ -36,6 +36,18 @@ export default function TemporaryDrawer() {
     history.push(`user/movies/${listName}`);
   };
 
+  const handleOpenAchievementList = () => {
+    history.push("user/achievements");
+  };
+
+  const handleOpenCredits = () => {
+    history.push("/credits");
+  };
+
+  const handleOpenProfile = () => {
+    history.push("user/profile");
+  };
+
   const list = (anchor: Anchor) => (
     <div
       role="presentation"
@@ -54,7 +66,7 @@ export default function TemporaryDrawer() {
           className={classes.textIcon}
           button
           key="profile"
-          onClick={() => alert("Perfil")}
+          onClick={() => handleOpenProfile()}
         >
           <ListItemText
             primary={<Typography className={classes.text}>Perfil</Typography>}
@@ -104,7 +116,7 @@ export default function TemporaryDrawer() {
           className={classes.textIcon}
           button
           key="achievements"
-          onClick={() => alert("Conquistas")}
+          onClick={() => handleOpenAchievementList()}
         >
           <ListItemText
             primary={
@@ -121,12 +133,10 @@ export default function TemporaryDrawer() {
           className={classes.textIcon}
           button
           key="settings"
-          onClick={() => alert("Configuração")}
+          onClick={() => handleOpenCredits()}
         >
           <ListItemText
-            primary={
-              <Typography className={classes.text}>Configuração</Typography>
-            }
+            primary={<Typography className={classes.text}>Créditos</Typography>}
           />
           <ListItemIcon className={classes.icon}>
             <Container className={classes.borderIcon}>

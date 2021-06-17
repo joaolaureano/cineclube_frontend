@@ -15,6 +15,8 @@ import { PlatformIcon } from "../../../../components/PlatformIcon";
 import TemporaryDrawer from "../../../../components/Menu";
 import logoImg from "../../../../assets/images/logos/home-logo.png";
 import { CustomIcon } from "../../../../components/CustomIcon";
+import { Achievement } from "../../../../types/achievement";
+import { AchievementDetails } from "../../../AchievementList/AchievementDetails";
 
 interface HomeDisplayProps {
   movie: Movie;
@@ -22,11 +24,13 @@ interface HomeDisplayProps {
   modalLiked: boolean;
   modalRecommendedMovie: boolean;
   recommendedMovie?: RecommendedMovieMessage;
+  achievements: Achievement[];
+  closeAchievement: () => void;
 }
 
 export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
   const classes = useStyles();
-  const { movie, logic, modalLiked } = props;
+  const { movie, logic, modalLiked, achievements, closeAchievement } = props;
   useEffect(() => {
     window.scrollTo({
       behavior: "smooth",
@@ -80,7 +84,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             color="textPrimary"
             component="p"
           >
-            {movie.critic} {movie.synopsis}
+            {movie.critic}
           </Typography>
           <AvatarGroup className={classes.platforms}>
             {movie.platforms.map(({ name }) => {
@@ -121,6 +125,23 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             </Typography>
           </div>
 
+          <div className={classes.synopsisContainer}>
+            <Typography
+              variant="body1"
+              color="textPrimary"
+              className={classes.synopsis}
+            >
+              Sinopse:
+            </Typography>
+            <Typography
+              className={classes.synopsis}
+              variant="body1"
+              color="textPrimary"
+            >
+              {movie.synopsis}
+            </Typography>
+          </div>
+
           <div className={classes.tags}>
             {movie.moviesTags.map(({ tag }) => {
               return (
@@ -142,6 +163,11 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
 
   return (
     <div className={classes.root}>
+      <AchievementDetails
+        visible={achievements.length > 0}
+        achievement={achievements[0]}
+        onClose={closeAchievement}
+      />
       <Container className={classes.container}>
         {/* Botão Menu */}
         <div className={classes.topMenu}>

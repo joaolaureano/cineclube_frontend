@@ -13,6 +13,8 @@ enum MovieUserStatus {
   DONT_WANT_TO_WATCH = "dont_want_to_watch",
 }
 
+const INTERVAL_BETWEEN_RANDOM = 6;
+
 const movies = {
   get: async (): Promise<AxiosResponse<MovieState>> => {
     const filters = JSON.parse(localStorage.getItem("filters") as string);
@@ -80,9 +82,88 @@ const composeMovieState = (data: string): MovieState => {
       movieIds.push(movie.id);
     });
   }
-
   const selectedMovieIndex = 0;
-  return { movies, movieIds, selectedMovieIndex };
+  return { movies, movieIds: reorderWithRandom(movieIds), selectedMovieIndex };
+};
+
+const getRndInteger = (min: number, max: number) => {
+  return Math.floor(Math.random() * (max - min)) + min;
+};
+
+const reorderWithRandom = (movieIds: number[]) => {
+  let i = 0;
+
+  let newMovieIds = movieIds.slice(i, i + INTERVAL_BETWEEN_RANDOM - 1);
+  let randomMovieIndex = getRndInteger(
+    i + INTERVAL_BETWEEN_RANDOM,
+    movieIds.length - 1
+  );
+
+  if (randomMovieIndex > movieIds.length) {
+    randomMovieIndex = movieIds.length - 1;
+  }
+
+  let randomMovie = movieIds[randomMovieIndex];
+
+  newMovieIds.push(randomMovie);
+  let oldMovieIds = [...newMovieIds];
+
+  let firstSlice = movieIds.slice(
+    i + INTERVAL_BETWEEN_RANDOM - 1,
+    randomMovieIndex
+  );
+
+  let secondSlice = movieIds.slice(randomMovieIndex + 1);
+
+  oldMovieIds = oldMovieIds.concat(firstSlice).concat(secondSlice);
+
+  i += INTERVAL_BETWEEN_RANDOM;
+
+  while (i + INTERVAL_BETWEEN_RANDOM < movieIds.length) {
+    newMovieIds = newMovieIds.concat(
+      oldMovieIds.slice(i, i + INTERVAL_BETWEEN_RANDOM - 1)
+    );
+
+    randomMovieIndex = getRndInteger(
+      i + INTERVAL_BETWEEN_RANDOM,
+      movieIds.length - 1
+    );
+
+    if (randomMovieIndex > movieIds.length) {
+      randomMovieIndex = movieIds.length - 1;
+    }
+
+    randomMovie = oldMovieIds[randomMovieIndex];
+
+    newMovieIds.push(randomMovie);
+    let auxMovieIds = [...newMovieIds];
+
+    firstSlice = oldMovieIds.slice(
+      i + INTERVAL_BETWEEN_RANDOM - 1,
+      randomMovieIndex
+    );
+
+    secondSlice = oldMovieIds.slice(randomMovieIndex + 1);
+
+    auxMovieIds = newMovieIds.concat(firstSlice).concat(secondSlice);
+
+    i += INTERVAL_BETWEEN_RANDOM;
+
+    oldMovieIds = auxMovieIds;
+  }
+
+  if (i < movieIds.length && newMovieIds.length < oldMovieIds.length) {
+    newMovieIds = newMovieIds.concat(oldMovieIds.slice(i));
+  }
+
+  if (
+    newMovieIds[newMovieIds.length - 1] === undefined ||
+    newMovieIds[0] === newMovieIds[1]
+  ) {
+    return newMovieIds.splice(0, newMovieIds.length - 1);
+  }
+
+  return newMovieIds;
 };
 
 export default movies;
