@@ -15,6 +15,7 @@ const Login = (): JSX.Element => {
   const { openSnackbar } = useContext(SharedSnackbarContext);
 
   const handleLogin = async () => {
+    auth.setIsLoggingIn(true);
     const token = await auth.login();
 
     try {
@@ -24,8 +25,10 @@ const Login = (): JSX.Element => {
         if (user) {
           openSnackbar("Login bem-sucedido", "success");
           if (user.firstLogin) {
+            auth.setIsLoggingIn(false);
             return history.push("/signupPreferences");
           } else {
+            auth.setIsLoggingIn(false);
             return history.push("/home");
           }
         }
@@ -39,7 +42,7 @@ const Login = (): JSX.Element => {
 
   return (
     <>
-      {auth.hasSession ? (
+      {auth.hasSession && !auth.isLoggingIn ? (
         <Redirect to="/home" />
       ) : (
         <div className={styles.container}>

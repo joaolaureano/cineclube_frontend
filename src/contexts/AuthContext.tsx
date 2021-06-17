@@ -8,6 +8,8 @@ interface AuthContextData {
   getToken: () => Promise<string | undefined>;
   hasSession: boolean;
   isLoadingUser: boolean;
+  isLoggingIn: boolean;
+  setIsLoggingIn: (value: boolean) => void;
   authUser: firebase.User | null;
 }
 
@@ -23,6 +25,7 @@ export const AuthContextProvider = ({
   const [authUser, setAuthUser] = useState(firebase.auth().currentUser);
   const [hasSession, setHasSession] = useState(!!localStorage.getItem("token"));
   const [isLoadingUser, setIsLoadingUser] = useState(true);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -86,7 +89,16 @@ export const AuthContextProvider = ({
 
   return (
     <AuthContext.Provider
-      value={{ login, logout, getToken, hasSession, isLoadingUser, authUser }}
+      value={{
+        login,
+        logout,
+        getToken,
+        hasSession,
+        isLoadingUser,
+        isLoggingIn,
+        setIsLoggingIn,
+        authUser,
+      }}
     >
       {children}
     </AuthContext.Provider>
