@@ -3,6 +3,7 @@ import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
+      width: "100%",
       "&:not(:first-child)": {
         marginTop: "0.5rem",
       },
@@ -12,6 +13,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: "flex",
       alignItems: "center",
       padding: "0.75rem !important",
+      width: "100%",
     },
 
     imageWrapper: {
