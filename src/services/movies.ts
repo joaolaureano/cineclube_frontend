@@ -68,7 +68,7 @@ const composeMovieState = (data: string): MovieState => {
   const response = JSON.parse(data);
 
   if (!response.success) {
-    throw new Error("Erro");
+    throw new Error(response.errorMessage);
   }
 
   const moviesResponse = response.body.movies;
