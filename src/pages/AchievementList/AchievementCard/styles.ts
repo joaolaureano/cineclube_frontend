@@ -3,8 +3,10 @@ import { Theme, createStyles, makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
-      marginTop: "0.5rem",
       width: "100%",
+      "&:not(:first-child)": {
+        marginTop: "0.5rem",
+      },
     },
 
     cardContent: {
