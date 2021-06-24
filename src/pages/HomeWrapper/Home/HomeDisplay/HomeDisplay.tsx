@@ -17,6 +17,7 @@ import logoImg from "../../../../assets/images/logos/home-logo.png";
 import { CustomIcon } from "../../../../components/CustomIcon";
 import { Achievement } from "../../../../types/achievement";
 import { AchievementDetails } from "../../../AchievementList/AchievementDetails";
+import { Tutorial } from "../../Tutorial/Tutorial";
 
 interface HomeDisplayProps {
   movie: Movie;
@@ -168,6 +169,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
         achievement={achievements[0]}
         onClose={closeAchievement}
       />
+      <Tutorial />
       <Container className={classes.container}>
         {/* Botão Menu */}
         <div className={classes.topMenu}>
