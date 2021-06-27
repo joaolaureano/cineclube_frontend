@@ -20,6 +20,8 @@ import { SharedSnackbarContext } from "../../components/SnackBar/SnackContext";
 import useStyles from "./styles";
 import { ConfirmDeleteModal } from "../../components/ConfirmDeleteModal";
 import { LikeModal } from "../../components/LikeModal";
+import { Achievement } from "../../types/achievement";
+import { AchievementDetails } from "../AchievementList/AchievementDetails";
 
 interface Params {
   list: "watched" | "wantToWatch";
@@ -39,7 +41,7 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isLikeModalOpen, setIsLikeModalOpen] = useState(false);
   const [selectedMovieId, setSelectedMovieId] = useState<number | undefined>();
-
+  const [achievements, setAchievements] = useState({} as Achievement[]);
   useEffect(() => {
     async function getMovies() {
       try {
@@ -91,6 +93,9 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
       id: String(id),
       status: MovieUserStatus.WATCHED_AND_LIKED,
     });
+    if (response.data.body) {
+      setAchievements(response.data.body.achievements);
+    }
     closeSnackbar();
     if (response.data.success) {
       if (currentTab === 0) {
@@ -120,6 +125,9 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
       id: String(id),
       status: MovieUserStatus.WATCHED_AND_DISLIKED,
     });
+    if (response.data.body) {
+      setAchievements(response.data.body.achievements);
+    }
     closeSnackbar();
     if (response.data.success) {
       if (currentTab === 0) {
@@ -222,9 +230,16 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
         })
       : null;
   };
-
+  const handleCloseAchievementDetails = () => {
+    setAchievements(achievements.slice(1, achievements.length));
+  };
   return (
     <div className={styles.root}>
+      <AchievementDetails
+        visible={achievements.length > 0}
+        achievement={achievements[0]}
+        onClose={handleCloseAchievementDetails}
+      />
       <Container className={styles.container}>
         <header className={styles.header}>
           <IconButton className={styles.backIcon} onClick={handleClickBack}>
