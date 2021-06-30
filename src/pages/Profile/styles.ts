@@ -30,16 +30,13 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: "auto",
     },
     photoWrapper: {
-      paddingLeft: "20px",
-      paddingRight: "20px",
       height: "45%",
-      width: "75%",
       display: "flex",
       justifyContent: "center",
       alignItems: "center",
       "& img": {
-        height: "55%",
-        width: "70%",
+        height: "180px",
+        width: "180px",
       },
     },
     contentWrapper: {
