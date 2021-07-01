@@ -6,11 +6,13 @@ interface AuthContextData {
   login: () => Promise<string | undefined>;
   logout: () => Promise<boolean | undefined>;
   getToken: () => Promise<string | undefined>;
+  setIsLoggingIn: (value: boolean) => void;
+  setIsFirstLogin: (value: boolean) => void;
+  authUser: firebase.User | null;
   hasSession: boolean;
   isLoadingUser: boolean;
   isLoggingIn: boolean;
-  setIsLoggingIn: (value: boolean) => void;
-  authUser: firebase.User | null;
+  isFirstLogin: boolean;
 }
 
 export const AuthContext = createContext({} as AuthContextData);
@@ -26,6 +28,7 @@ export const AuthContextProvider = ({
   const [hasSession, setHasSession] = useState(!!localStorage.getItem("token"));
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [isFirstLogin, setIsFirstLogin] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
@@ -93,11 +96,13 @@ export const AuthContextProvider = ({
         login,
         logout,
         getToken,
+        setIsLoggingIn,
+        setIsFirstLogin,
+        authUser,
         hasSession,
         isLoadingUser,
         isLoggingIn,
-        setIsLoggingIn,
-        authUser,
+        isFirstLogin,
       }}
     >
       {children}
