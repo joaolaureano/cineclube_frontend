@@ -9,7 +9,6 @@ import tag from "../../../services/tag";
 import platform from "../../../services/platform";
 import { TagButton } from "../../../components/TagButton";
 import { Tag } from "../../../types/tag";
-import { ArrowBack } from "@material-ui/icons";
 import { Platform } from "../../../types/platform";
 import { SharedSnackbarContext } from "../../../components/SnackBar/SnackContext";
 
@@ -72,10 +71,6 @@ export const LoginSignupPreferences: React.FC = () => {
       oldSelectedList.push(key);
     }
     setPlatformList(oldSelectedList);
-  };
-
-  const backToMenu = () => {
-    history.push("/home");
   };
 
   const setTag = (tagID: number) => {
