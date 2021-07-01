@@ -28,7 +28,7 @@ export const AuthContextProvider = ({
   const [hasSession, setHasSession] = useState(!!localStorage.getItem("token"));
   const [isLoadingUser, setIsLoadingUser] = useState(true);
   const [isLoggingIn, setIsLoggingIn] = useState(false);
-  const [isFirstLogin, setIsFirstLogin] = useState(true);
+  const [isFirstLogin, setIsFirstLogin] = useState(false);
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((user) => {
