@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme: Theme) =>
     movieItem: {
       display: "flex",
       width: "100%",
-      minHeight: "120px",
+      height: "120px",
       border: "none",
 
       "&:not(:first-child)": {
