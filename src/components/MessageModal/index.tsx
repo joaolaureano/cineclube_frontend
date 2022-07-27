@@ -1,12 +1,8 @@
 import React from "react";
 import { CustomModal } from "../CustomModal/";
-import ThumbUp from "@material-ui/icons/ThumbUp";
-import ThumbDown from "@material-ui/icons/ThumbDown";
 import useStyles from "./styles";
-import { IconButton } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { PlatformIcon } from "../PlatformIcon";
-import platform from "../../services/platform";
 import { RecommendedMovieMessage } from "../../types/movie";
 
 interface ModalProps {

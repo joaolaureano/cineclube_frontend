@@ -2,17 +2,6 @@ import { AxiosResponse } from "axios";
 import api from "../api/api";
 import { Movie, MovieDto, MovieMap, MovieState, CastDto } from "../types/movie";
 
-// interface PutMoviePayload {
-//   id: number;
-//   status: MovieUserStatus;
-// }
-
-enum MovieUserStatus {
-  ALREADY_WATCHED = "already_watched",
-  WANT_TO_WATCH = "want_to_watch",
-  DONT_WANT_TO_WATCH = "dont_want_to_watch",
-}
-
 const INTERVAL_BETWEEN_RANDOM = 6;
 
 const movies = {
@@ -71,7 +60,6 @@ const composeMovieState = (data: string): MovieState => {
     throw new Error(response.errorMessage);
   }
 
-  const moviesResponse = response.body.movies;
   const movies: MovieMap = {};
   const movieIds: number[] = [];
   if (response.body) {

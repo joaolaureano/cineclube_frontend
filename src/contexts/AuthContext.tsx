@@ -52,7 +52,8 @@ export const AuthContextProvider = ({
       setToken(token);
       return token;
     } catch (err) {
-      console.log(err.message);
+      const error = err as Error;
+      console.log(error.message);
     }
   };
 
@@ -63,7 +64,8 @@ export const AuthContextProvider = ({
       await firebase.auth().signOut();
       return true;
     } catch (err) {
-      console.log(err.message);
+      const error = err as Error;
+      console.log(error.message);
     }
   };
 
@@ -85,8 +87,9 @@ export const AuthContextProvider = ({
       const token = await authUser?.getIdToken();
       setToken(token);
       return token;
-    } catch (err) {
-      console.log(err.message);
+    } catch (err: unknown) {
+      const error = err as Error;
+      console.log(error.message);
     }
   };
 

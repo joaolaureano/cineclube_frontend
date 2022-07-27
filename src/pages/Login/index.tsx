@@ -16,6 +16,7 @@ const Login = (): JSX.Element => {
 
   const handleLogin = async () => {
     auth.setIsLoggingIn(true);
+    console.log("here");
     const token = await auth.login();
 
     try {

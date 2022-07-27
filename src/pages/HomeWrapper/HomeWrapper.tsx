@@ -42,8 +42,10 @@ export const HomeWrapper: React.FC = () => {
       try {
         await getMovieList();
       } catch (err) {
+        const error = err as Error;
+        console.log(error.message);
         openSnackbar("Erro ao buscar a lista de filmes recomendados.", "error");
-        if (err.message === "User does not exist in database.")
+        if (error.message === "User does not exist in database.")
           return await auth.logout();
         history.push("/");
       }
