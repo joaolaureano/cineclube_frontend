@@ -54,15 +54,15 @@ export const Home: React.FC<HomeProps> = (props) => {
   const [achievements, setAchievements] = useState({} as Achievement[]);
 
   const getSelectedMovie = (): Movie => {
-    return state.movies[state.movieIds[selectedMovieIndex]];
+    return state.movies[state.movie_ids[selectedMovieIndex]];
   };
 
   const getPreviousMovie = (): Movie => {
-    return state.movies[state.movieIds[selectedMovieIndex - 1]];
+    return state.movies[state.movie_ids[selectedMovieIndex - 1]];
   };
 
   const incrementSelectedMovie = async (): Promise<void> => {
-    const numberOfMovies = state.movieIds.length;
+    const numberOfMovies = state.movie_ids.length;
     let newMovieIndex = selectedMovieIndex + 1;
     if (newMovieIndex >= numberOfMovies) {
       const filters = localStorage.getItem("filters");
@@ -84,7 +84,7 @@ export const Home: React.FC<HomeProps> = (props) => {
   };
 
   const decrementSelectedMovie = (): void => {
-    const numberOfMovies = state.movieIds.length;
+    const numberOfMovies = state.movie_ids.length;
     let newMovieIndex = selectedMovieIndex - 1;
     if (newMovieIndex < 0) {
       newMovieIndex = numberOfMovies - 1;
@@ -114,7 +114,7 @@ export const Home: React.FC<HomeProps> = (props) => {
         const displayMovie: RecommendedMovieMessage = {
           platform: selectedMovie.platforms.map((platform) => platform.name),
           title: selectedMovie.title,
-          sizeList: listWantToWatch.length,
+          size_list: listWantToWatch.length,
         };
 
         setRecommendMovie(displayMovie);
@@ -133,11 +133,11 @@ export const Home: React.FC<HomeProps> = (props) => {
     const previousMovieId = selectedMovieIndex - 1;
     if (previousMovieId < 0) return;
 
-    const movieId = String(getPreviousMovie().id);
+    const movie_id = String(getPreviousMovie().id);
 
     try {
       await UserService.setMovieStatus({
-        id: movieId,
+        id: movie_id,
         status: MovieUserStatus.NONE,
       });
 

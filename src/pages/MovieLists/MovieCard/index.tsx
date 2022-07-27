@@ -18,7 +18,7 @@ import { Platform } from "../../../types/platform";
 interface MovieDetails {
   id: number;
   title: string;
-  pathBanner: string;
+  path_banner: string;
   platforms: Platform[];
 }
 
@@ -113,7 +113,7 @@ export const MovieCard: React.FC<MovieCardProps> = (props) => {
       <Card className={styles.movieItem}>
         <CardMedia
           className={styles.movieCover}
-          image={props.movie.pathBanner}
+          image={props.movie.path_banner}
           title="movie cover"
           component="img"
         />

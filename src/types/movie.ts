@@ -4,21 +4,21 @@ import { Platform } from "./platform";
 export interface Movie {
   id: number;
   title: string;
-  originalTitle: string;
+  original_title: string;
   synopsis: string;
   critic: string;
   curator: string;
   year: number;
-  pathBanner: string;
+  path_banner: string;
   platforms: Platform[];
-  moviesTags: MoviesTags[];
+  movies_Tags: MoviesTags[];
   director: string;
   duration: number;
   actors: string[];
 }
 
 export interface RecommendedMovieMessage {
-  sizeList: number;
+  size_list: number;
   title: string;
   platform: string[];
 }
@@ -29,8 +29,8 @@ export interface ActorDto {
 }
 
 export interface CastDto {
-  actorId: number;
-  movieId: number;
+  actor_id: number;
+  movie_id: number;
   director: boolean;
   actor: ActorDto;
 }
@@ -38,31 +38,31 @@ export interface CastDto {
 export interface MovieDto {
   id: number;
   title: string;
-  originalTitle: string;
+  original_title: string;
   synopsis: string;
   critic: string;
   curator: string;
   year: number;
-  pathBanner: string;
+  path_banner: string;
   platforms: Platform[];
-  moviesTags: MoviesTags[];
+  movies_Tags: MoviesTags[];
   duration: number;
   cast: CastDto[];
 }
 
 export interface MoviesDto {
   movies: MovieDto[];
-  movieIds: number[];
+  movie_ids: number[];
 }
 
 export interface MovieState {
   movies: MovieMap;
-  movieIds: number[];
+  movie_ids: number[];
   selectedMovieIndex: number;
 }
 
 export interface MovieMap {
-  [movieId: number]: Movie;
+  [movie_id: number]: Movie;
 }
 export interface MovieStatus {
   movies: Movie[];

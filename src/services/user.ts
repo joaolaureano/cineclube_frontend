@@ -19,7 +19,7 @@ const user = {
   setMovieStatus: (data: PutMoviePayload) => {
     const { id, status } = data;
     return api.post("/user/movie", {
-      movieId: id,
+      movie_id: id,
       status,
     });
   },
@@ -57,7 +57,7 @@ const parseUser = (data: string): User => {
 
   const user: User = {
     ...response.body?.user,
-    firstLogin: response.firstLogin,
+    first_login: response.first_login,
   };
 
   return user;

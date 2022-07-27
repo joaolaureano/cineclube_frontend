@@ -19,7 +19,7 @@ export const MessageModal: React.FC<ModalProps> = (props: ModalProps) => {
       <div className={classes.modal}>
         <div className={classes.texts}>
           <Typography variant="h6" color="textPrimary" className={classes.typo}>
-            Você já tem <span>{props.movie.sizeList}</span> filmes na lista
+            Você já tem <span>{props.movie.size_list}</span> filmes na lista
             "Quero Assistir".
           </Typography>
           <Typography variant="h6" color="textPrimary" className={classes.typo}>

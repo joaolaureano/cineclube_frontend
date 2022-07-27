@@ -15,23 +15,23 @@ export const HomeWrapper: React.FC = () => {
 
   const getMovieList = async (selectedMovieIndex: number = 0) => {
     const response = await MovieService.get();
-    const { movieIds, movies } = response.data;
+    const { movie_ids, movies } = response.data;
 
     const currentMovieIds =
       selectedMovieIndex === 0
         ? []
-        : movieState.movieIds.splice(0, selectedMovieIndex);
+        : movieState.movie_ids.splice(0, selectedMovieIndex);
 
     const currentMovies: MovieMap = {};
-    currentMovieIds.forEach((movieId) => {
-      currentMovies[movieId] = movieState.movies[movieId];
+    currentMovieIds.forEach((movie_id) => {
+      currentMovies[movie_id] = movieState.movies[movie_id];
     });
 
-    const finalMovieIds = [...currentMovieIds, ...movieIds];
+    const finalMovieIds = [...currentMovieIds, ...movie_ids];
     const finalMovies = { ...currentMovies, ...movies };
 
     setMovieState({
-      movieIds: finalMovieIds,
+      movie_ids: finalMovieIds,
       movies: finalMovies,
       selectedMovieIndex,
     });

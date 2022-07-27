@@ -2,7 +2,7 @@ export interface Achievement {
   id: number;
   title: string;
   description: string;
-  pathImage: string;
-  targetScore: number;
-  tagName: string;
+  path_image: string;
+  target_score: number;
+  tag_name: string;
 }

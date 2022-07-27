@@ -7,14 +7,14 @@ const INTERVAL_BETWEEN_RANDOM = 6;
 const movies = {
   get: async (): Promise<AxiosResponse<MovieState>> => {
     const filters = JSON.parse(localStorage.getItem("filters") as string);
-    const joinedTags = filters?.tags.join(",");
-    const joinedPlatforms = filters?.platforms.join(",");
+    const joined_tags = filters?.tags.join(",");
+    const joined_platforms = filters?.platforms.join(",");
 
     const response = await api.get("/movies", {
       transformResponse: composeMovieState,
       params: {
-        tags: joinedTags,
-        platforms: joinedPlatforms,
+        tags: joined_tags,
+        platforms: joined_platforms,
       },
     });
 
@@ -29,14 +29,14 @@ const mapMovieDtoToMovie = (movieDto: MovieDto): Movie => {
   let movie: Movie = {
     id: movieDto.id,
     title: movieDto.title,
-    originalTitle: movieDto.originalTitle,
+    original_title: movieDto.original_title,
     synopsis: movieDto.synopsis,
     critic: movieDto.critic,
     curator: movieDto.curator,
     year: movieDto.year,
-    pathBanner: movieDto.pathBanner,
+    path_banner: movieDto.path_banner,
     platforms: movieDto.platforms,
-    moviesTags: movieDto.moviesTags,
+    movies_Tags: movieDto.movies_Tags,
     duration: movieDto.duration,
     director: "",
     actors: [],
@@ -61,64 +61,68 @@ const composeMovieState = (data: string): MovieState => {
   }
 
   const movies: MovieMap = {};
-  const movieIds: number[] = [];
+  const movie_ids: number[] = [];
   if (response.body) {
     const moviesResponse = response.body.movies;
     moviesResponse.forEach((movieDto: MovieDto) => {
       const movie: Movie = mapMovieDtoToMovie(movieDto);
       movies[movie.id] = movie;
-      movieIds.push(movie.id);
+      movie_ids.push(movie.id);
     });
   }
   const selectedMovieIndex = 0;
-  return { movies, movieIds: reorderWithRandom(movieIds), selectedMovieIndex };
+  return {
+    movies,
+    movie_ids: reorderWithRandom(movie_ids),
+    selectedMovieIndex,
+  };
 };
 
 const getRndInteger = (min: number, max: number) => {
   return Math.floor(Math.random() * (max - min)) + min;
 };
 
-const reorderWithRandom = (movieIds: number[]) => {
+const reorderWithRandom = (movie_ids: number[]) => {
   let i = 0;
 
-  let newMovieIds = movieIds.slice(i, i + INTERVAL_BETWEEN_RANDOM - 1);
+  let newMovieIds = movie_ids.slice(i, i + INTERVAL_BETWEEN_RANDOM - 1);
   let randomMovieIndex = getRndInteger(
     i + INTERVAL_BETWEEN_RANDOM,
-    movieIds.length - 1
+    movie_ids.length - 1
   );
 
-  if (randomMovieIndex > movieIds.length) {
-    randomMovieIndex = movieIds.length - 1;
+  if (randomMovieIndex > movie_ids.length) {
+    randomMovieIndex = movie_ids.length - 1;
   }
 
-  let randomMovie = movieIds[randomMovieIndex];
+  let randomMovie = movie_ids[randomMovieIndex];
 
   newMovieIds.push(randomMovie);
   let oldMovieIds = [...newMovieIds];
 
-  let firstSlice = movieIds.slice(
+  let firstSlice = movie_ids.slice(
     i + INTERVAL_BETWEEN_RANDOM - 1,
     randomMovieIndex
   );
 
-  let secondSlice = movieIds.slice(randomMovieIndex + 1);
+  let secondSlice = movie_ids.slice(randomMovieIndex + 1);
 
   oldMovieIds = oldMovieIds.concat(firstSlice).concat(secondSlice);
 
   i += INTERVAL_BETWEEN_RANDOM;
 
-  while (i + INTERVAL_BETWEEN_RANDOM < movieIds.length) {
+  while (i + INTERVAL_BETWEEN_RANDOM < movie_ids.length) {
     newMovieIds = newMovieIds.concat(
       oldMovieIds.slice(i, i + INTERVAL_BETWEEN_RANDOM - 1)
     );
 
     randomMovieIndex = getRndInteger(
       i + INTERVAL_BETWEEN_RANDOM,
-      movieIds.length - 1
+      movie_ids.length - 1
     );
 
-    if (randomMovieIndex > movieIds.length) {
-      randomMovieIndex = movieIds.length - 1;
+    if (randomMovieIndex > movie_ids.length) {
+      randomMovieIndex = movie_ids.length - 1;
     }
 
     randomMovie = oldMovieIds[randomMovieIndex];
@@ -140,7 +144,7 @@ const reorderWithRandom = (movieIds: number[]) => {
     oldMovieIds = auxMovieIds;
   }
 
-  if (i < movieIds.length && newMovieIds.length < oldMovieIds.length) {
+  if (i < movie_ids.length && newMovieIds.length < oldMovieIds.length) {
     newMovieIds = newMovieIds.concat(oldMovieIds.slice(i));
   }
 

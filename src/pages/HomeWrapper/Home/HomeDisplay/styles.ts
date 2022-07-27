@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => {
       marginBottom: "-0.1rem",
     },
 
-    originalTitle: {
+    original_title: {
       fontSize: "0.93rem",
       fontWeight: 400,
       fontFamily: "Barlow Condensed, sans-serif",

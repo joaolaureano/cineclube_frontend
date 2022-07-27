@@ -99,14 +99,14 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
     closeSnackbar();
     if (response.data.success) {
       if (currentTab === 0) {
-        const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
+        const movie = wantToWatchMovies.find((movie) => movie.movie_id === id);
         movie!.status = MovieUserStatus.WATCHED_AND_LIKED;
         setWatchedMovies([movie!, ...watchedMovies]);
         setWantToWatchMovies(
-          wantToWatchMovies.filter((movie) => movie.movieId !== id)
+          wantToWatchMovies.filter((movie) => movie.movie_id !== id)
         );
       } else if (currentTab === 1) {
-        const movie = watchedMovies.find((movie) => movie.movieId === id);
+        const movie = watchedMovies.find((movie) => movie.movie_id === id);
         movie!.status = MovieUserStatus.WATCHED_AND_LIKED;
         setWatchedMovies([...watchedMovies]);
       }
@@ -131,14 +131,14 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
     closeSnackbar();
     if (response.data.success) {
       if (currentTab === 0) {
-        const movie = wantToWatchMovies.find((movie) => movie.movieId === id);
+        const movie = wantToWatchMovies.find((movie) => movie.movie_id === id);
         movie!.status = MovieUserStatus.WATCHED_AND_DISLIKED;
         setWatchedMovies([movie!, ...watchedMovies]);
         setWantToWatchMovies(
-          wantToWatchMovies.filter((movie) => movie.movieId !== id)
+          wantToWatchMovies.filter((movie) => movie.movie_id !== id)
         );
       } else if (currentTab === 1) {
-        const movie = watchedMovies.find((movie) => movie.movieId === id);
+        const movie = watchedMovies.find((movie) => movie.movie_id === id);
         movie!.status = MovieUserStatus.WATCHED_AND_DISLIKED;
         setWatchedMovies([...watchedMovies]);
       }
@@ -154,22 +154,24 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
     if (response.data.success) {
       if (currentTab === 0) {
         setWantToWatchMovies(
-          wantToWatchMovies.filter((movie) => movie.movieId !== id)
+          wantToWatchMovies.filter((movie) => movie.movie_id !== id)
         );
       } else if (currentTab === 1) {
-        setWatchedMovies(watchedMovies.filter((movie) => movie.movieId !== id));
+        setWatchedMovies(
+          watchedMovies.filter((movie) => movie.movie_id !== id)
+        );
       }
       closeModal();
     }
   };
 
-  const handleOpenDeleteModal = (movieId: number) => {
-    setSelectedMovieId(movieId);
+  const handleOpenDeleteModal = (movie_id: number) => {
+    setSelectedMovieId(movie_id);
     setIsDeleteModalOpen(true);
   };
 
-  const handleOpenLikeModal = (movieId: number) => {
-    setSelectedMovieId(movieId);
+  const handleOpenLikeModal = (movie_id: number) => {
+    setSelectedMovieId(movie_id);
     setIsLikeModalOpen(true);
   };
 
@@ -201,7 +203,7 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
               movie={{
                 id: movie.movie.id,
                 title: movie.movie.title,
-                pathBanner: movie.movie.pathBanner,
+                path_banner: movie.movie.path_banner,
                 platforms: movie.movie.platforms,
               }}
             />
@@ -222,7 +224,7 @@ export const MovieLists = ({ match }: RouteComponentProps<Params>) => {
               movie={{
                 id: movie.movie.id,
                 title: movie.movie.title,
-                pathBanner: movie.movie.pathBanner,
+                path_banner: movie.movie.path_banner,
                 platforms: movie.movie.platforms,
               }}
             />

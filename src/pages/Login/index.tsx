@@ -24,9 +24,9 @@ const Login = (): JSX.Element => {
         const loginResponse = await UserService.auth();
         const user = loginResponse.data;
         if (user) {
-          auth.setIsFirstLogin(!!user.firstLogin);
+          auth.setIsFirstLogin(!!user.first_login);
           openSnackbar("Login bem-sucedido", "success");
-          if (user.firstLogin) {
+          if (user.first_login) {
             auth.setIsLoggingIn(false);
             return history.push("/signupPreferences");
           } else {

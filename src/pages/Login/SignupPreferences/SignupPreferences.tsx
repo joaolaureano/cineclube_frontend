@@ -115,8 +115,8 @@ export const LoginSignupPreferences: React.FC = () => {
 
     if (filters) {
       const oldSelectedListTag = [...selectedTagList];
-      filters.tags.forEach((tagId: number) => {
-        oldSelectedListTag.push(tagId);
+      filters.tags.forEach((tag_id: number) => {
+        oldSelectedListTag.push(tag_id);
       });
 
       const oldSelectedListPlatform = [...platformList];

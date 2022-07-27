@@ -2,7 +2,7 @@ export interface User {
   id: string;
   name: string;
   email: string;
-  photoPath: string;
+  photo_path: string;
   randomness: number;
-  firstLogin: boolean;
+  first_login: boolean;
 }

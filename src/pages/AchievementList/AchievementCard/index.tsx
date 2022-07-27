@@ -26,7 +26,7 @@ export const AchievementCard = (props: AchievementCardProps): JSX.Element => {
         <div className={styles.imageWrapper}>
           <img
             className={styles.image}
-            src={props.achievement.pathImage}
+            src={props.achievement.path_image}
             alt={props.achievement.description}
           />
         </div>

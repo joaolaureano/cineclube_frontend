@@ -42,7 +42,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
     return (
       <Container className={classes.content}>
         <img
-          src={movie.pathBanner}
+          src={movie.path_banner}
           alt="movie cover"
           className={classes.cover}
         />
@@ -56,12 +56,12 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
             {movie.title}
           </Typography>
           <Typography
-            className={classes.originalTitle}
+            className={classes.original_title}
             gutterBottom
             variant="body1"
             component="p"
           >
-            {`(${movie.originalTitle})`}
+            {`(${movie.original_title})`}
           </Typography>
           <Typography
             className={classes.year}
@@ -144,7 +144,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
           </div>
 
           <div className={classes.tags}>
-            {movie.moviesTags.map(({ tag }) => {
+            {movie.movies_Tags.map(({ tag }) => {
               return (
                 <Chip
                   variant="outlined"
@@ -253,7 +253,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
               <MessageModal
                 movie={{
                   platform: props.recommendedMovie!.platform,
-                  sizeList: props.recommendedMovie!.sizeList,
+                  size_list: props.recommendedMovie!.size_list,
                   title: props.recommendedMovie!.title,
                 }}
                 open={props.modalRecommendedMovie}
