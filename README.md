@@ -2,6 +2,9 @@
 
 > Descrição do projeto
 
+# Deploy
+Você pode ver a aplicação rodando <a href="https://cineclube-frontend.herokuapp.com/">aqui</a>
+
 ## **Links**
 
 - Tutorial ReactJS: [Link](https://www.youtube.com/playlist?list=PL4cUxeGkcC9gZD-Tvwfod2gaISzfRiP9d)
