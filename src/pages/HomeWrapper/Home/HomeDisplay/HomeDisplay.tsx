@@ -144,7 +144,7 @@ export const HomeDisplay: React.FC<HomeDisplayProps> = (props) => {
           </div>
 
           <div className={classes.tags}>
-            {movie.movies_Tags.map(({ tag }) => {
+            {movie.movies_tags.map(({ tag }) => {
               return (
                 <Chip
                   variant="outlined"

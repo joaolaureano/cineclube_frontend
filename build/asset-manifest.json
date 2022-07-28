@@ -1,0 +1,34 @@
+{
+  "files": {
+    "main.css": "/static/css/main.963380bf.chunk.css",
+    "main.js": "/static/js/main.033af095.chunk.js",
+    "main.js.map": "/static/js/main.033af095.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.fc2983f5.js",
+    "runtime-main.js.map": "/static/js/runtime-main.fc2983f5.js.map",
+    "static/js/2.712c6273.chunk.js": "/static/js/2.712c6273.chunk.js",
+    "static/js/2.712c6273.chunk.js.map": "/static/js/2.712c6273.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.963380bf.chunk.css.map": "/static/css/main.963380bf.chunk.css.map",
+    "static/js/2.712c6273.chunk.js.LICENSE.txt": "/static/js/2.712c6273.chunk.js.LICENSE.txt",
+    "static/media/actions-dont-want-to-watch.24cd25d4.svg": "/static/media/actions-dont-want-to-watch.24cd25d4.svg",
+    "static/media/actions-undo.68d080c3.svg": "/static/media/actions-undo.68d080c3.svg",
+    "static/media/actions-want-to-watch.bedbd8b0.svg": "/static/media/actions-want-to-watch.bedbd8b0.svg",
+    "static/media/actions-watched.228d296b.svg": "/static/media/actions-watched.228d296b.svg",
+    "static/media/amazon-prime-icon.23e4f428.svg": "/static/media/amazon-prime-icon.23e4f428.svg",
+    "static/media/login-logo.ce501e25.png": "/static/media/login-logo.ce501e25.png",
+    "static/media/menu-achievements.64c94d72.svg": "/static/media/menu-achievements.64c94d72.svg",
+    "static/media/menu-filters.60c05108.svg": "/static/media/menu-filters.60c05108.svg",
+    "static/media/menu-profile.81b30496.svg": "/static/media/menu-profile.81b30496.svg",
+    "static/media/menu-settings.036705cf.svg": "/static/media/menu-settings.036705cf.svg",
+    "static/media/menu-want-to-watch.8e30e84e.svg": "/static/media/menu-want-to-watch.8e30e84e.svg",
+    "static/media/menu-watched.229a968d.svg": "/static/media/menu-watched.229a968d.svg",
+    "static/media/netflix-icon.830da484.svg": "/static/media/netflix-icon.830da484.svg",
+    "static/media/tutorial.d3a3369e.png": "/static/media/tutorial.d3a3369e.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.fc2983f5.js",
+    "static/js/2.712c6273.chunk.js",
+    "static/css/main.963380bf.chunk.css",
+    "static/js/main.033af095.chunk.js"
+  ]
+}

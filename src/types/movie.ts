@@ -11,7 +11,7 @@ export interface Movie {
   year: number;
   path_banner: string;
   platforms: Platform[];
-  movies_Tags: MoviesTags[];
+  movies_tags: MoviesTags[];
   director: string;
   duration: number;
   actors: string[];
@@ -45,7 +45,7 @@ export interface MovieDto {
   year: number;
   path_banner: string;
   platforms: Platform[];
-  movies_Tags: MoviesTags[];
+  movies_tags: MoviesTags[];
   duration: number;
   cast: CastDto[];
 }

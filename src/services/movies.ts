@@ -36,7 +36,7 @@ const mapMovieDtoToMovie = (movieDto: MovieDto): Movie => {
     year: movieDto.year,
     path_banner: movieDto.path_banner,
     platforms: movieDto.platforms,
-    movies_Tags: movieDto.movies_Tags,
+    movies_tags: movieDto.movies_tags,
     duration: movieDto.duration,
     director: "",
     actors: [],
